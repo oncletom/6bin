@@ -1,0 +1,27 @@
+{
+  "name": "6bin",
+  "version": "1.0.0",
+  "description": "User interface for 6element sensors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthill/6bin.git"
+  },
+  "keywords": [
+    "sensors",
+    "user",
+    "interface",
+    "web",
+    "6element",
+    "ants"
+  ],
+  "author": "David Bruant <bruant.d@gmail.com> (https://twitter.com/DavidBruant)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anthill/6bin/issues"
+  },
+  "homepage": "https://github.com/anthill/6bin"
+}
