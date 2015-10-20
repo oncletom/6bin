@@ -9,7 +9,7 @@
     "watch-client": "watchify ./client/main.ts -p [ tsify --noImplicitAny --sourceMap --target ES5 ] --debug -o ./client/browserify-bundle.js -v",
     "build-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
     "watch-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w server/*.ts",  
-    "start": "docker run -t --name 6bin -v /Users/Romain/Documents/Programmation/ants/6bin:/6bin -p 3000:3000 node:0.10 node /6bin/server/main.js"
+    "start": "docker-compose up server"
   },
   "repository": {
     "type": "git",

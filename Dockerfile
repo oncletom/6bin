@@ -1,6 +1,7 @@
-FROM node:4.2
-MAINTAINER Alexandre Vallette <alexandre.vallette@ants.builders>
+FROM node:0.10
+MAINTAINER David Bruant <david.bruant@ants.builders>
 
-RUN mkdir /6bin
-WORKDIR /6bin
+RUN mkdir /usr/6bin
+WORKDIR /usr/6bin
+
 RUN npm install nodemon -g
