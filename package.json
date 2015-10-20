@@ -4,7 +4,12 @@
   "description": "User interface for 6element sensors",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-client": "browserify ./client/main.ts -p [ tsify --noImplicitAny --sourceMap --target ES5 ] --debug > ./client/browerify-bundle.js",
+    "watch-client": "watchify ./client/main.ts -p [ tsify --noImplicitAny --sourceMap --target ES5 ] --debug -o ./client/browserify-bundle.js -v",
+    "build-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
+    "watch-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w server/*.ts",  
+    "start": "docker run -t --name 6bin -v /Users/Romain/Documents/Programmation/ants/6bin:/6bin -p 3000:3000 node:0.10 node /6bin/server/main.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +28,18 @@
   "bugs": {
     "url": "https://github.com/anthill/6bin/issues"
   },
-  "homepage": "https://github.com/anthill/6bin"
+  "homepage": "https://github.com/anthill/6bin",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "browserify": "^11.2.0",
+    "compression": "^1.6.0",
+    "es6-shim": "^0.33.6",
+    "express": "^4.13.3",
+    "react": "^0.14.0",
+    "tsify": "^0.12.2",
+    "typescript": "^1.6.2"
+  },
+  "devDependencies": {
+    "watchify": "^3.4.0"
+  }
 }

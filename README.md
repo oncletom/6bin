@@ -6,4 +6,23 @@ In [6element](https://github.com/anthill/6element), we inform citizens of whethe
 
 This screen can be used to indicate other informations that is normally hard to get in real time like unexpected recycling center closing (due to too many bind being full, an accident, etc.).
 
+Install
+```
+npm install
+npm i tsd -g
+tsd install
+```
 
+Build / Watch 
+```
+npm run build-server
+npm run build-client
+
+npm run watch-server
+npm run watch-client
+```
+
+Start
+```
+npm start
+```
