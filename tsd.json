@@ -24,7 +24,25 @@
       "commit": "b70895565dd5bd5de71c31e573d781409554bbf1"
     },
     "react/react.d.ts": {
-      "commit": "b70895565dd5bd5de71c31e573d781409554bbf1"
+      "commit": "44cbde48eecd1918ed54b3be49a9752688b6c65a"
+    },
+    "assertion-error/assertion-error.d.ts": {
+      "commit": "68548c2daab053869f323d475419c693478bbb73"
+    },
+    "chai/chai.d.ts": {
+      "commit": "68548c2daab053869f323d475419c693478bbb73"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "68548c2daab053869f323d475419c693478bbb73"
+    },
+    "react-dom/react-dom.d.ts": {
+      "commit": "1fe12e478198ea551513ffff30b1452c6d6471a0"
+    },
+    "react-redux/react-redux.d.ts": {
+      "commit": "44cbde48eecd1918ed54b3be49a9752688b6c65a"
+    },
+    "redux/redux.d.ts": {
+      "commit": "44cbde48eecd1918ed54b3be49a9752688b6c65a"
     }
   }
 }
