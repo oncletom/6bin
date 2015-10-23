@@ -5,27 +5,28 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { List } from 'immutable';
 
 import Bin from './Bin';
-import { BinProps } from './Bin';
+import { BinData } from './Bin';
 
 interface BinListProps{
-    bins: List<BinProps>;
+    bins: List<BinData>;
+    onToggleClick: (index: any, available: any) => any;
+    // onToggleClick: (index: any, available: any) => any;
 }
 
-interface BinListState{
-}
+interface BinListState{}
 
 export default class BinList extends React.Component<BinListProps, BinListState> {
     mixins = [PureRenderMixin]
 
     render() {
-        console.log('BIN LIST PROPS', this.props);
-
         return React.createElement('ul', {className: 'bins'}, this.props.bins.map(bin => {
             return React.createElement(Bin, {
+                key: bin.index,
                 index: bin.index,
                 type: bin.type,
                 imageURL: bin.imageURL,
-                available: bin.available
+                available: bin.available,
+                onToggleClick: this.props.onToggleClick
             });
         }));
     }

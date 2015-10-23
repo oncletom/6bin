@@ -3,24 +3,29 @@
 import { combineReducers } from 'redux';
 import { List } from 'immutable';
 
-import { BinProps } from './Dumb/Bin';
-import { ADD_BIN, SET_AVAILABILITY } from './actions';
+import { BinData } from './Dumb/Bin';
+import { SET_BINS, ADD_BIN, SET_AVAILABILITY } from './actions';
 
 
-var initialState = List.of(
-    {index: 0, type: 'Romain', imageURL: './', available: true},
-    {index: 1, type: 'David', imageURL: './', available: true}
-);
+var initialState = List<BinData>([]);
+
+
+console.log('INITIAL', initialState.toJS());
 
 function bins(state = initialState, action: any) {
-// function bins(state = List<BinProps>(), action: any) {
     switch (action.type) {
+        case SET_BINS:
+            return state.merge(state, action.bins);
+
         case ADD_BIN:
             return state.push(action.bin);
+
         case SET_AVAILABILITY:
-            var updatedBin = state.get(action.index);
-            updatedBin.available = action.available;
+            var bin = state.get(action.index)
+            var updatedBin = (<any>Object.assign)({}, bin, {available: !bin.available});
+
             return state.set(action.index, updatedBin);
+
         default:
             return state;
     }

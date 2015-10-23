@@ -8,6 +8,7 @@ import { List } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import { BinProps } from '../Dumb/Bin';
+import { addBin, setAvailability } from '../actions';
 
 interface ReduxPropsMixin{
     dispatch: Dispatch
@@ -17,8 +18,7 @@ interface BinManagerProps extends ReduxPropsMixin{
     bins: List<BinProps>;
 }
 
-interface BinManagerState{
-}
+interface BinManagerState{}
 
 class BinManager extends React.Component<BinManagerProps, BinManagerState> {
     mixins = [PureRenderMixin]
@@ -26,10 +26,13 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
     render() {
         
         const { dispatch, bins } = this.props;
-        console.log('BIN MANAGER PROPS', this.props);
+        console.log('BIN MANAGER PROPS', this.props.bins.toJS());
 
-        return React.createElement('div', {}, 
-            React.createElement(BinList, {bins})
+        return React.createElement('div', {id: 'bin-manager'}, 
+            React.createElement(BinList, {
+                bins,
+                onToggleClick: (index: number, available: boolean) => dispatch(setAvailability(index, available))
+            })
         );
     }
 };
