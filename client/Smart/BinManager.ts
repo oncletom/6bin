@@ -26,7 +26,6 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
     render() {
         
         const { dispatch, bins } = this.props;
-        console.log('BIN MANAGER PROPS', this.props.bins.toJS());
 
         return React.createElement('div', {id: 'bin-manager'}, 
             React.createElement(BinList, {

@@ -1,3 +1,28 @@
-.available {
-	color: blue;
+
+
+.bins {
+	display: flex;
+	flex-direction: row;
+}
+
+.bins li {
+	border: 1px solid black; margin: 2em; padding: .5em;
+	list-style-type: none; cursor: pointer;
+}
+
+.bins svg {
+	width: 5em; height: 5em;
+}
+
+.bins li.available {
+	color: blue; stroke: blue; fill: blue;
+}
+
+.noselect {
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

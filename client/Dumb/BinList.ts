@@ -4,6 +4,9 @@ import * as React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { List } from 'immutable';
 
+// import HTML5Backend from 'react-dnd-html5-backend';
+// import { DragDropContext } from 'react-dnd';
+
 import Bin from './Bin';
 import { BinData } from './Bin';
 
@@ -31,3 +34,5 @@ export default class BinList extends React.Component<BinListProps, BinListState>
         }));
     }
 };
+
+// export default DragDropContext(HTML5Backend)(BinList);
