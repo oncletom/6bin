@@ -24,7 +24,7 @@
       "commit": "b70895565dd5bd5de71c31e573d781409554bbf1"
     },
     "react/react.d.ts": {
-      "commit": "44cbde48eecd1918ed54b3be49a9752688b6c65a"
+      "commit": "3191f6e0088eee07c4d8fd24e4d27a40a60d9eb9"
     },
     "assertion-error/assertion-error.d.ts": {
       "commit": "68548c2daab053869f323d475419c693478bbb73"
@@ -43,6 +43,9 @@
     },
     "redux/redux.d.ts": {
       "commit": "44cbde48eecd1918ed54b3be49a9752688b6c65a"
+    },
+    "react-dnd/react-dnd.d.ts": {
+      "commit": "3191f6e0088eee07c4d8fd24e4d27a40a60d9eb9"
     }
   }
 }
