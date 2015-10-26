@@ -23,6 +23,10 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
+app.use('/img', express.static(path.join(__dirname, '..', 'img')));
+
+
+console.log('PATH', path.join(__dirname, '..', 'img'));
 
 app.listen(PORT, function () {
     console.log('Server running on', [
