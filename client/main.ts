@@ -5,6 +5,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import * as thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { List } from 'immutable';
 
@@ -15,7 +16,10 @@ import BinManager from './Smart/BinManager';
 import { BinData } from './Dumb/Bin';
 
 
-var createStoreWithMiddleware = applyMiddleware(logger)(createStore);
+var createStoreWithMiddleware = applyMiddleware(
+	logger,
+	thunk
+)(createStore);
 var store = createStoreWithMiddleware(reducers);
 
 render(React.createElement(Provider, {store},
@@ -27,11 +31,11 @@ render(React.createElement(Provider, {store},
 
 
 var myNewState = List<BinData>([
-    { index: 0, type: 'Romain', imageURL: '/img/waste/Ameublement.svg', available: true },
-    { index: 1, type: 'Henri', imageURL: '/img/waste/Batteries.svg', available: true },
-    { index: 2, type: 'Micheline', imageURL: '/img/waste/Bois.svg', available: true },
-    { index: 3, type: 'Erika', imageURL: '/img/waste/Ecrans.svg', available: true },
-    { index: 4, type: 'David', imageURL: '/img/waste/Metaux.svg', available: true }
+    { id: 0, position: 0, type: 'Romain', imageURL: '/img/waste/Ameublement.svg', isAvailable: true, isPending: false },
+    { id: 1, position: 1, type: 'Henri', imageURL: '/img/waste/Batteries.svg', isAvailable: true, isPending: false },
+    { id: 2, position: 2, type: 'Micheline', imageURL: '/img/waste/Bois.svg', isAvailable: true, isPending: false },
+    { id: 3, position: 3, type: 'Erika', imageURL: '/img/waste/Ecrans.svg', isAvailable: true, isPending: false },
+    { id: 4, position: 4, type: 'David', imageURL: '/img/waste/Metaux.svg', isAvailable: true, isPending: false }
 ]);
 
 

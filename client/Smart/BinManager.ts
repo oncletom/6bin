@@ -8,7 +8,7 @@ import { List } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import { BinProps } from '../Dumb/Bin';
-import { addBin, setAvailability } from '../actions';
+import { State, addBin, setBinAvailability, sendData } from '../actions';
 
 interface ReduxPropsMixin{
     dispatch: Dispatch
@@ -30,14 +30,14 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         return React.createElement('div', {id: 'bin-manager'}, 
             React.createElement(BinList, {
                 bins,
-                onToggleClick: (index: number, available: boolean) => dispatch(setAvailability(index, available))
+                onToggleClick: (index: number, isAvailable: boolean) => dispatch(sendData(setBinAvailability(index, isAvailable)))
             })
         );
     }
 };
 
 // Select only the part of the global state that is needed
-function select(state: any) {
+function select(state: State) {
     return {
         bins: state.bins
     };

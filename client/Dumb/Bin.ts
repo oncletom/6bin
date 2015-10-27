@@ -9,40 +9,19 @@ import SVGComponent from './SVG';
 // import { DragSource } from 'react-dnd';
 
 export interface BinData {
-    index: number;
+    id: number;
+    position: number;
     type: string;
     imageURL: string;
-    available: boolean;
+    isAvailable: boolean;
+    isPending: boolean;
 }
 
 export interface BinProps extends BinData{
-    onToggleClick: (index: any, available: any) => any;
-    // injected by React DnD
-    // isDragging: boolean;
-    // connectDragSource: () => any;
+    onToggleClick: (id: any, isAvailable: any) => any;
 }
 
 interface BinState{}
-
-
-// const cardSource = {
-//     beginDrag(props: any) {
-//         return {
-//             index: props.index,
-//             type: props.type,
-//             imageURL: props.imageURL,
-//             available: props.available,
-//             onToggleClick: props.onToggleClick
-//         };
-//     }
-// };
-
-// function collect(connect: any, monitor: any) {
-//     return {
-//         connectDragSource: connect.dragSource(),
-//         isDragging: monitor.isDragging()
-//     };
-// }
 
 
 export default class Bin extends React.Component<BinProps, BinState> {
@@ -54,18 +33,15 @@ export default class Bin extends React.Component<BinProps, BinState> {
             'li', 
             {
                 className: [
-                    this.props.available ? 'available' : '',
+                    this.props.isAvailable ? 'available' : '',
+                    this.props.isPending ? 'pending' : '',
                     'noselect'
                 ].join(' '),
-                key: this.props.index,
-                onClick: () => this.props.onToggleClick(this.props.index, !this.props.available)
+                onClick: () => this.props.onToggleClick(this.props.id, !this.props.isAvailable)
             }, 
             React.createElement('div', {}, this.props.type),
             React.createElement(SVGComponent, {path: this.props.imageURL}),
-            // React.createElement('img', {src: this.props.imageURL}),
-            React.createElement('div', {}, this.props.index)
+            React.createElement('div', {}, this.props.position)
         )
     }
 };
-
-// export default DragSource('CARD', cardSource, collect)(Bin);

@@ -11,7 +11,11 @@ function svgConfig (args: any): any {
   	};
 };
 
-interface SVGProps{}
+interface SVGProps{
+    className: string;
+    path: string;
+    fallbackPath: string;
+}
 interface SVGState{}
 
 export default class SVGComponent extends React.Component<SVGProps, SVGState> {
