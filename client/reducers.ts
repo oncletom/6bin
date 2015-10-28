@@ -8,8 +8,6 @@ import { Action, SET_BINS, ADD_BIN, SET_BIN_AVAILABILITY, SET_BIN_PENDING } from
 
 var initialState = List<BinData>([]);
 
-console.log('INITIAL State', initialState.toJS());
-
 function bins(state = initialState, action: Action) {
     switch (action.type) {
         case SET_BINS:

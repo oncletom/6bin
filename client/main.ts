@@ -30,7 +30,7 @@ render(React.createElement(Provider, {store},
 );
 
 
-var myNewState = List<BinData>([
+var myNewBins = List<BinData>([
     { id: 0, position: 0, type: 'Romain', imageURL: '/img/waste/Ameublement.svg', isAvailable: true, isPending: false },
     { id: 1, position: 1, type: 'Henri', imageURL: '/img/waste/Batteries.svg', isAvailable: true, isPending: false },
     { id: 2, position: 2, type: 'Micheline', imageURL: '/img/waste/Bois.svg', isAvailable: true, isPending: false },
@@ -39,4 +39,4 @@ var myNewState = List<BinData>([
 ]);
 
 
-store.dispatch(setBins(myNewState));
+store.dispatch(setBins(myNewBins));

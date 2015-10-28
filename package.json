@@ -4,13 +4,15 @@
   "description": "User interface for 6element sensors",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build-client": "browserify ./client/main.ts -p [ tsify --noImplicitAny --sourceMap --target ES5 ] -p [minifyify --map false --output /dev/null] --debug > ./client/browserify-bundle.js",
     "watch-client": "watchify ./client/main.js  --debug -o ./client/browserify-bundle.js -v",
     "watch-client-2": "tsc client/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w client/*.ts",
     "build-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
     "watch-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w server/*.ts",
-    "start": "docker-compose up server"
+    "build-test": "tsc test/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
+    "watch-test": "tsc test/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w test/*.ts",
+    "start": "docker-compose up server",
+    "test": "mocha --recursive test/*.js"
   },
   "repository": {
     "type": "git",
@@ -33,11 +35,14 @@
   "dependencies": {
     "body-parser": "^1.14.1",
     "browserify": "^11.2.0",
+    "chai": "^3.4.0",
+    "chai-as-promised": "^5.1.0",
     "compression": "^1.6.0",
     "es6-shim": "^0.33.6",
     "express": "^4.13.3",
     "immutable": "^3.7.5",
     "minifyify": "^7.1.0",
+    "mocha": "^2.3.3",
     "react": "^0.14.0",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dnd": "^2.0.2",

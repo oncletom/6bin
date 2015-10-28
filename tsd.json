@@ -27,10 +27,10 @@
       "commit": "3191f6e0088eee07c4d8fd24e4d27a40a60d9eb9"
     },
     "assertion-error/assertion-error.d.ts": {
-      "commit": "68548c2daab053869f323d475419c693478bbb73"
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
     },
     "chai/chai.d.ts": {
-      "commit": "68548c2daab053869f323d475419c693478bbb73"
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
     },
     "mocha/mocha.d.ts": {
       "commit": "68548c2daab053869f323d475419c693478bbb73"
@@ -54,6 +54,12 @@
       "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
     },
     "socket.io-client/socket.io-client.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "chai-as-promised/chai-as-promised.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "promises-a-plus/promises-a-plus.d.ts": {
       "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
     }
   }
