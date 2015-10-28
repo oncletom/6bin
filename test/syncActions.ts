@@ -25,7 +25,7 @@ var createStoreWithMiddleware = applyMiddleware(
 var store = createStoreWithMiddleware(reducers);
 
 
-describe('Synchronous Action', () => {
+describe('Synchronous Actions', () => {
 
     it('SET_BINS', () => {
 
