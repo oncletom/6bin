@@ -3,7 +3,7 @@
 import { combineReducers } from 'redux';
 import { List } from 'immutable';
 
-import { BinData } from './Dumb/Bin';
+import { BinData } from './Components/Dumb/Bin';
 import { Action, SET_BINS, ADD_BIN, SET_BIN_AVAILABILITY, SET_BIN_PENDING } from './actions';
 
 var initialState = List<BinData>([]);

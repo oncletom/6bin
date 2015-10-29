@@ -8,7 +8,7 @@ import { List } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import { BinProps } from '../Dumb/Bin';
-import { State, addBin, setBinAvailability, sendData } from '../actions';
+import { State, addBin, setBinAvailability, sendData } from '../../actions';
 
 interface ReduxPropsMixin{
     dispatch: Dispatch

@@ -4,13 +4,10 @@
   "description": "User interface for 6element sensors",
   "main": "index.js",
   "scripts": {
-    "build-client": "browserify ./client/main.ts -p [ tsify --noImplicitAny --sourceMap --target ES5 ] -p [minifyify --map false --output /dev/null] --debug > ./client/browserify-bundle.js",
-    "watch-client": "watchify ./client/main.js  --debug -o ./client/browserify-bundle.js -v",
-    "watch-client-2": "tsc client/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w client/*.ts",
-    "build-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
-    "watch-server": "tsc server/main.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w server/*.ts",
     "build-test": "tsc test/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
-    "watch-test": "tsc test/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w test/*.ts",
+    "watch-test": "tsc test/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w test/**/*.ts",
+    "dev": "node_modules/gulp/bin/gulp.js dev",
+    "prod": "node_modules/gulp/bin/gulp.js prod",
     "start": "docker-compose up server",
     "test": "mocha --recursive test/*.js"
   },
@@ -40,6 +37,8 @@
     "compression": "^1.6.0",
     "es6-shim": "^0.33.6",
     "express": "^4.13.3",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.9.2",
     "immutable": "^3.7.5",
     "minifyify": "^7.1.0",
     "mocha": "^2.3.3",
@@ -55,7 +54,9 @@
     "socket.io-client": "^1.3.7",
     "svg-injector": "^1.1.3",
     "tsify": "^0.12.2",
-    "typescript": "^1.6.2"
+    "typescript": "^1.6.2",
+    "typescript-compiler": "^1.4.1-2",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^1.1.1",

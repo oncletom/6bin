@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 
 'use strict';
 
@@ -12,8 +12,8 @@ import { List } from 'immutable';
 import { setBins } from './actions';
 import reducers from './reducers';
 import { logger } from './middleware';
-import BinManager from './Smart/BinManager';
-import { BinData } from './Dumb/Bin';
+import BinManager from './Components/Smart/BinManager';
+import { BinData } from './Components/Dumb/Bin';
 
 
 var createStoreWithMiddleware = applyMiddleware(

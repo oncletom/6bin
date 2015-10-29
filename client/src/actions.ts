@@ -1,7 +1,7 @@
 'use strict';
 
 import { List } from 'immutable';
-import { BinData } from './Dumb/Bin';
+import { BinData } from './Components/Dumb/Bin';
 import * as io from 'socket.io-client';
 
 export interface State {

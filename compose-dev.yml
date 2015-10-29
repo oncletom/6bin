@@ -1,6 +1,6 @@
 server:
     build: ./
-    command: nodemon --watch server server/main.js
+    command: nodemon --watch server server/src/main.js
     ports:
         - 3000:3000
     environment:
