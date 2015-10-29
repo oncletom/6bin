@@ -1,0 +1,11 @@
+server:
+    build: ./
+    command: nodemon server/src/main.js
+    ports:
+        - 3000:3000
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/usr/6bin
+    tty: true
+    restart: always
