@@ -25,8 +25,8 @@ app.use(compression());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, '..', 'client')));
-app.use('/img', express.static(path.join(__dirname, '..', 'img')));
+app.use(express.static(path.join(__dirname, '..', '..', 'client')));
+app.use('/img', express.static(path.join(__dirname, '..', '..', 'img')));
 
 server.listen(PORT, function () {
     console.log('Server running on', [
