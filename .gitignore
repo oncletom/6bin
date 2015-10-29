@@ -1,5 +1,6 @@
 
 *.js
+!gulpfile.js
 *.js.map
 
 typings/
