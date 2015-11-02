@@ -10,6 +10,7 @@ Install
 ```
 npm install
 npm i tsd -g
+tsd init
 tsd install
 ```
 

@@ -14,8 +14,6 @@ import * as socketIO from 'socket.io';
 
 var app = express();
 
-// when trying to integrate socket.io, try http://socket.io/docs/#using-with-the-express-framework
-//var server = new http.Server(app);
 var PORT = 3000;
 
 var server = new http.Server(app);

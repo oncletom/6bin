@@ -4,7 +4,7 @@ server:
     ports:
         - 3000:3000
     environment:
-      - NODE_ENV=development
+        - NODE_ENV=development
     volumes:
-      - .:/usr/6bin
+        - .:/usr/6bin
     tty: true

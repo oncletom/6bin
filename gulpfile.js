@@ -16,10 +16,10 @@ var spawn = require('child_process').spawn;
 var path = require('path'); 
 var join = path.join;
 
-var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var ts = require('gulp-typescript');
 var browserify = require('browserify');
+var gulp = require('gulp');
+var ts = require('gulp-typescript');
+var sourcemaps = require('gulp-sourcemaps');
 var source = require('vinyl-source-stream');
 
 
@@ -109,6 +109,20 @@ gulp.task('tsc-server-prod', function(){
     return tscProd('server');
 });
 
+// Typescript compile the tools
+gulp.task('tsc-tools-dev', function(){
+    return tscDev('tools');
+});
+
+gulp.task('tsc-tools-prod', function(){
+    return tscProd('tools');
+});
+
+// Typescript compile the tests
+gulp.task('tsc-tests-dev', function(){
+    return tscDev('tests');
+});
+
 // Watch client
 gulp.task('watch-client', ['build-dev'], function() {
     console.log('Watching client');
@@ -131,15 +145,37 @@ gulp.task('watch-server', ['build-dev'], function() {
     console.log('Watching server');
 
     // When a .ts updates, Typescript compile the server
-    var tsClientWatcher = gulp.watch('./server/src/**/*.ts', ['tsc-server-dev']);
-    tsClientWatcher.on('change', function(event) {
+    var tsServerWatcher = gulp.watch('./server/src/**/*.ts', ['tsc-server-dev']);
+    tsServerWatcher.on('change', function(event) {
         console.log('** TS Server ** File ' + path.relative(__dirname, event.path) + ' was ' + event.type);
     });
 });
 
-gulp.task('watch', ['watch-client', 'watch-server']);
-gulp.task('build-dev', ['build-client-dev', 'tsc-server-dev']);
-gulp.task('build-prod', ['build-client-prod', 'tsc-server-prod']);
+// Watch tools
+gulp.task('watch-tools', ['build-dev'], function() {
+    console.log('Watching tools');
+
+    // When a .ts updates, Typescript compile the server
+    var tsToolsWatcher = gulp.watch('./tools/**/*.ts', ['tsc-tools-dev']);
+    tsToolsWatcher.on('change', function(event) {
+        console.log('** TS Tools ** File ' + path.relative(__dirname, event.path) + ' was ' + event.type);
+    });
+});
+
+// Watch tests
+gulp.task('watch-tests', ['build-dev'], function() {
+    console.log('Watching tests');
+
+    // When a .ts updates, Typescript compile the server
+    var tsTestsWatcher = gulp.watch('./tests/**/*.ts', ['tsc-tests-dev']);
+    tsTestsWatcher.on('change', function(event) {
+        console.log('** TS Tests ** File ' + path.relative(__dirname, event.path) + ' was ' + event.type);
+    });
+});
+
+gulp.task('watch', ['watch-client', 'watch-server', 'watch-tools', 'watch-tests']);
+gulp.task('build-dev', ['build-client-dev', 'tsc-server-dev', 'tsc-tools-dev', 'tsc-tests-dev']);
+gulp.task('build-prod', ['build-client-prod', 'tsc-server-prod', 'tsc-tools-prod']);
 
 gulp.task('start-containers-dev', ['build-dev'], function(){
     spawn('docker-compose', ['-f', 'compose-dev.yml', 'up'], {stdio: 'inherit'});

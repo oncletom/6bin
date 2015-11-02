@@ -1,0 +1,23 @@
+server:
+   build: ./Dockerfiles
+   dockerfile: Server
+   command: nodemon --watch server server/src/main.js
+   ports:
+      - 3000:3000
+   environment:
+      - NODE_ENV=test
+   volumes:
+      - .:/usr/6bin
+   tty: true
+
+tests:
+   build: ./Dockerfiles
+   dockerfile: Test
+   command: node tests/index.js
+   links:
+      - server
+   environment:
+      - NODE_ENV=test
+   volumes:
+      - ./:/usr/6bin/
+   tty: true

@@ -4,12 +4,12 @@
   "description": "User interface for 6element sensors",
   "main": "index.js",
   "scripts": {
-    "build-test": "tsc test/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
-    "watch-test": "tsc test/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w test/**/*.ts",
+    "build-test": "tsc tests/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
+    "watch-test": "tsc tests/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w tests/**/*.ts",
     "dev": "node_modules/gulp/bin/gulp.js dev",
     "prod": "node_modules/gulp/bin/gulp.js prod",
-    "start": "docker-compose up server",
-    "test": "mocha --recursive test/*.js"
+    "test": "docker-compose -f compose-test.yml up",
+    "test2": "mocha --recursive tests/mocha"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,6 @@
     "compression": "^1.6.0",
     "es6-shim": "^0.33.6",
     "express": "^4.13.3",
-    "gulp-sourcemaps": "^1.6.0",
     "gulp-typescript": "^2.9.2",
     "immutable": "^3.7.5",
     "minifyify": "^7.1.0",
@@ -50,6 +49,7 @@
     "react-redux": "^4.0.0",
     "redux": "^3.0.3",
     "redux-thunk": "^1.0.0",
+    "request": "^2.65.0",
     "socket.io": "^1.3.7",
     "socket.io-client": "^1.3.7",
     "svg-injector": "^1.1.3",
@@ -63,6 +63,7 @@
     "babelify": "^6.4.0",
     "chai": "^3.4.0",
     "chai-immutable": "^1.3.0",
+    "gulp-sourcemaps": "^1.6.0",
     "livereactload": "^2.0.4",
     "mocha": "^2.3.3",
     "react-proxy": "^1.1.1",
