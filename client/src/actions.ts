@@ -17,7 +17,7 @@ export interface Action {
 	isPending?: boolean;
 }
 
-var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:4000');
+var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
 
 // action creators
 export const SET_BINS = 'SET_BINS';

@@ -14,7 +14,7 @@ import * as socketIO from 'socket.io';
 
 var app = express();
 
-var PORT = 3000;
+var PORT = process.env.VIRTUAL_PORT;
 
 var server = new http.Server(app);
 var io = socketIO(server);

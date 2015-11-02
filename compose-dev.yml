@@ -1,10 +1,12 @@
 server:
-    build: ./
+    build: ./Dockerfiles
+    dockerfile: Server
     command: nodemon --watch server server/src/main.js
     ports:
         - 3000:3000
     environment:
         - NODE_ENV=development
+        - VIRTUAL_PORT=3000
     volumes:
         - .:/usr/6bin
     tty: true

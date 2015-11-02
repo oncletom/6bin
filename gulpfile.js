@@ -185,12 +185,16 @@ gulp.task('start-containers-prod', ['build-prod'], function(){
     spawn('docker-compose', ['-f', 'compose-prod.yml', 'up', '-d'], {stdio: 'inherit'});
 });
 
+gulp.task('start-containers-test', function(){
+    spawn('docker-compose', ['-f', 'compose-test.yml', 'up'], {stdio: 'inherit'});
+});
+
 /*
     Top-level tasks
 */
 
 gulp.task('dev', ['start-containers-dev', 'watch']);
-
 gulp.task('prod', ['start-containers-prod']);
+gulp.task('test', ['start-containers-test']);
 
 

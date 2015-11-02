@@ -6,7 +6,7 @@ require('es6-shim');
 import tryConnectTo from '../tools/tryConnectTo';
 import { spawn } from 'child_process';
 
-var apiConnectP = tryConnectTo('http://server:3000');
+var apiConnectP = tryConnectTo('http://server:3100');
 
 apiConnectP
 .then(() => {

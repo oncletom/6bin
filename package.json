@@ -4,12 +4,11 @@
   "description": "User interface for 6element sensors",
   "main": "index.js",
   "scripts": {
-    "build-test": "tsc tests/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs",
-    "watch-test": "tsc tests/*.ts --noImplicitAny --sourceMap --target ES5 --module commonjs -w tests/**/*.ts",
+    "build-dev": "node_modules/gulp/bin/gulp.js build-dev",
+    "build-prod": "node_modules/gulp/bin/gulp.js build-prod",
     "dev": "node_modules/gulp/bin/gulp.js dev",
     "prod": "node_modules/gulp/bin/gulp.js prod",
-    "test": "docker-compose -f compose-test.yml up",
-    "test2": "mocha --recursive tests/mocha"
+    "test": "node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
     "type": "git",
