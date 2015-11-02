@@ -18,7 +18,7 @@ export interface BinData {
 }
 
 export interface BinProps extends BinData{
-    onToggleClick: (id: any, isAvailable: any) => any;
+    onToggleClick: (id: number, isAvailable: boolean) => void;
 }
 
 interface BinState{}

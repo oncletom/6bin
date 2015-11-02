@@ -9,7 +9,7 @@ import { BinData } from './Bin';
 
 interface BinListProps{
     bins: List<BinData>;
-    onToggleClick: (index: any, available: any) => any;
+    onToggleClick: (index: number, isAvailable: boolean) => void;
 }
 
 interface BinListState{}

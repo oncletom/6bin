@@ -30,7 +30,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         return React.createElement('div', {id: 'bin-manager'}, 
             React.createElement(BinList, {
                 bins,
-                onToggleClick: (index: number, isAvailable: boolean) => dispatch(sendData(setBinAvailability(index, isAvailable)))
+                onToggleClick: (index: number, isAvailable: boolean) => {dispatch(sendData(setBinAvailability(index, isAvailable)))}
             })
         );
     }
