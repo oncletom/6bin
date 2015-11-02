@@ -1,14 +1,14 @@
 'use strict';
 
 import { combineReducers } from 'redux';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 
 import { BinData } from './Components/Dumb/Bin';
-import { Action, SET_BINS, ADD_BIN, SET_BIN_AVAILABILITY, SET_BIN_PENDING } from './actions';
+import { Action, SET_BINS, ADD_BIN, SET_BIN_AVAILABILITY, SET_BIN_PENDING, SET_BIN_EDIT_MODE } from './actions';
 
-var initialState = List<BinData>([]);
+var initialBinState = List<BinData>([]);
 
-function bins(state = initialState, action: Action) {
+function bins (state = initialBinState, action: Action) {
     switch (action.type) {
         case SET_BINS:
             return state.merge(state, action.bins);
@@ -33,8 +33,27 @@ function bins(state = initialState, action: Action) {
     }
 }
 
+var modeState = {
+    isEditingBins: false
+};
+
+var initialModeState = Map(modeState);
+
+function modes (state = initialModeState, action: Action){
+    switch (action.type) {
+        case SET_BIN_EDIT_MODE:
+            var updatedState = state.set('isEditingBins', action.isEditingBins);
+            console.log('updatedState', updatedState);
+            return updatedState;
+
+        default:
+            return state;
+    }
+}
+
 const binApp = combineReducers({
-    bins
+    bins,
+    modes
 });
 
 export default binApp;

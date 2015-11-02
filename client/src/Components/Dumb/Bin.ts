@@ -15,10 +15,11 @@ export interface BinData {
     imageURL: string;
     isAvailable: boolean;
     isPending: boolean;
+    isEditing: boolean;
 }
 
 export interface BinProps extends BinData{
-    onToggleClick: (id: number, isAvailable: boolean) => void;
+    onClickSetPending: (id: number, isAvailable: boolean) => void;
 }
 
 interface BinState{}
@@ -29,6 +30,12 @@ export default class Bin extends React.Component<BinProps, BinState> {
 
     render() {
 
+        console.log('is EDITING', this.props.isEditing);
+
+        var deleteButton = this.props.isEditing ? 
+            React.createElement('div', {}, 'SUPPR')
+            : undefined ;
+
         return React.createElement(
             'li', 
             {
@@ -37,11 +44,11 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     this.props.isPending ? 'pending' : '',
                     'noselect'
                 ].join(' '),
-                onClick: () => this.props.onToggleClick(this.props.id, !this.props.isAvailable)
+                onClick: () => this.props.onClickSetPending(this.props.id, !this.props.isAvailable)
             }, 
             React.createElement('div', {}, this.props.type),
             React.createElement(SVGComponent, {path: this.props.imageURL}),
-            React.createElement('div', {}, this.props.position)
+            deleteButton
         )
     }
 };

@@ -9,7 +9,8 @@ import { BinData } from './Bin';
 
 interface BinListProps{
     bins: List<BinData>;
-    onToggleClick: (index: number, isAvailable: boolean) => void;
+    isEditing: boolean;
+    onClickSetPending: (index: number, isAvailable: boolean) => void;
 }
 
 interface BinListState{}
@@ -18,7 +19,8 @@ export default class BinList extends React.Component<BinListProps, BinListState>
     mixins = [PureRenderMixin]
 
     render() {
-        return React.createElement('ul', {className: 'bins'}, this.props.bins.map(bin => {
+
+        var binList = this.props.bins.map(bin => {
             return React.createElement(Bin, {
                 key: bin.id,
                 id: bin.id,
@@ -27,8 +29,29 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 imageURL: bin.imageURL,
                 isAvailable: bin.isAvailable,
                 isPending: bin.isPending,
-                onToggleClick: this.props.onToggleClick
+                isEditing: this.props.isEditing,
+                onToggleClick: this.props.onClickSetPending
             });
-        }));
+        });
+
+        var bins = binList.toJS();
+
+        if (this.props.isEditing){
+            var addBinButton = React.createElement('li', {
+                id: 'add-bin',
+                key: bins.length,
+                onClick: () => {
+                    console.log('AJOUTE BORDEL');
+                }
+            }, 'Ajouter benne');
+
+            bins.push(addBinButton);
+        }
+        
+        console.log('bins length', bins.length);
+
+        return React.createElement('ul', {className: 'bins'},
+            bins
+        );
     }
 };

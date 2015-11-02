@@ -1,10 +1,11 @@
 'use strict';
 
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { BinData } from './Components/Dumb/Bin';
 import * as io from 'socket.io-client';
 
 export interface State {
+	modes: Map<string, boolean>;
 	bins: List<BinData>;
 }
 
@@ -15,6 +16,7 @@ export interface Action {
 	id?: number;
 	isAvailable?: boolean;
 	isPending?: boolean;
+	isEditingBins?: boolean;
 }
 
 var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
@@ -40,8 +42,13 @@ export function setBinPending(id: number, isPending: boolean) {
   	return { type: SET_BIN_PENDING, id, isPending };
 };
 
+export const SET_BIN_EDIT_MODE = 'SET_BIN_EDIT_MODE';
+export function setBinEditMode(isEditingBins: boolean) {
+  	return { type: SET_BIN_EDIT_MODE, isEditingBins};
+};
+
 var counter: number = 0;
-var promiseMap: any = new Map();
+var promiseMap: any = Map();
 
 socket.on('response', (response: any) => {
 	var myPromise = promiseMap.get(response.index);
