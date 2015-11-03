@@ -81,7 +81,7 @@ export function sendData(action: Action) {
 	    	});
 	    });
 
-	    promiseMap.set(counter, {
+	    promiseMap = promiseMap.set(counter, {
 	    	p,
 	    	resolve,
 	    	reject

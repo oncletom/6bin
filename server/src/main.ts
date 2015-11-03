@@ -36,6 +36,8 @@ server.listen(PORT, function () {
 io.on('connection', (socket: any) => {
 
 	socket.on('request', (data: any) => {
+		console.log('RECEIVED', data);
+
 		var response = Object.assign({}, {index: data.index}, {isSuccessful: true});
 
 		setTimeout(() => {
