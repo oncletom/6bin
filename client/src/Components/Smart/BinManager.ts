@@ -8,7 +8,7 @@ import { List, Map } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import { BinProps } from '../Dumb/Bin';
-import { State, addBin, setBinAvailability, setBinEditMode, sendData } from '../../actions';
+import { State, addBin, deleteBin, setBinAvailability, setBinEditMode, sendData } from '../../actions';
 
 interface ReduxPropsMixin{
     dispatch: Dispatch
@@ -33,11 +33,15 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         var binList = React.createElement(BinList, {
             bins,
             isEditing: isEditingBins,
-            onClickSetPending: (index: number, isAvailable: boolean) => { 
+            onClickSetPending: (id: number, isAvailable: boolean) => { 
                     if (!isEditingBins)
                         dispatch(
-                            sendData(setBinAvailability(index, isAvailable)));
-                }
+                            sendData(setBinAvailability(id, isAvailable)));
+                },
+            onClickDelete: (id: number) => {
+                dispatch(
+                    sendData(deleteBin(id)));
+            }
         });
 
         var editBinsButton = React.createElement('button', {

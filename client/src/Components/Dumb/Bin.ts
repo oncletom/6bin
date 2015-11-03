@@ -20,6 +20,7 @@ export interface BinData {
 
 export interface BinProps extends BinData{
     onClickSetPending: (id: number, isAvailable: boolean) => void;
+    onClickDelete: (id: number) => void;
 }
 
 interface BinState{}
@@ -29,23 +30,28 @@ export default class Bin extends React.Component<BinProps, BinState> {
     mixins = [PureRenderMixin]
 
     render() {
+        var props = this.props;
 
-        var deleteButton = this.props.isEditing ? 
-            React.createElement('div', {}, 'SUPPR')
+        var deleteButton = props.isEditing ? 
+            React.createElement('div', {
+                onClick: () => {
+                    props.onClickDelete(props.id);
+                }
+            }, 'SUPPR')
             : undefined ;
 
         return React.createElement(
             'li', 
             {
                 className: [
-                    this.props.isAvailable ? 'available' : '',
-                    this.props.isPending ? 'pending' : '',
+                    props.isAvailable ? 'available' : '',
+                    props.isPending ? 'pending' : '',
                     'noselect'
                 ].join(' '),
-                onClick: () => this.props.onClickSetPending(this.props.id, !this.props.isAvailable)
+                onClick: () => { props.onClickSetPending(props.id, !props.isAvailable) }
             }, 
-            React.createElement('div', {}, this.props.type),
-            React.createElement(SVGComponent, {path: this.props.imageURL}),
+            React.createElement('div', {}, props.type),
+            React.createElement(SVGComponent, {path: props.imageURL}),
             deleteButton
         )
     }

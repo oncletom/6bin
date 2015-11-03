@@ -2,15 +2,16 @@
 
 import * as React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { List } from 'immutable';
+import { Map } from 'immutable';
 
 import Bin from './Bin';
 import { BinData } from './Bin';
 
 interface BinListProps{
-    bins: List<BinData>;
+    bins: Map<number, BinData>;
     isEditing: boolean;
     onClickSetPending: (index: number, isAvailable: boolean) => void;
+    onClickDelete: (index: number) => void;
 }
 
 interface BinListState{}
@@ -19,24 +20,26 @@ export default class BinList extends React.Component<BinListProps, BinListState>
     mixins = [PureRenderMixin]
 
     render() {
+        var props = this.props;
 
-        var binList = this.props.bins.map(bin => {
+        var binList = props.bins.map((bin, index) => {
             return React.createElement(Bin, {
-                key: bin.id,
-                id: bin.id,
+                key: index,
+                id: index,
                 position: bin.position,
                 type: bin.type,
                 imageURL: bin.imageURL,
                 isAvailable: bin.isAvailable,
                 isPending: bin.isPending,
-                isEditing: this.props.isEditing,
-                onClickSetPending: this.props.onClickSetPending
+                isEditing: props.isEditing,
+                onClickSetPending: props.onClickSetPending,
+                onClickDelete: props.onClickDelete
             });
         });
 
         var bins = binList.toJS();
 
-        if (this.props.isEditing){
+        if (props.isEditing){
             var addBinButton = React.createElement('li', {
                 id: 'add-bin',
                 key: bins.length,

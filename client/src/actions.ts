@@ -6,7 +6,7 @@ import * as io from 'socket.io-client';
 
 export interface State {
 	modes: Map<string, boolean>;
-	bins: List<BinData>;
+	bins: Map<number, BinData>;
 }
 
 export interface Action {
@@ -30,6 +30,11 @@ export function setBins(bins: List<BinData>) {
 export const ADD_BIN = 'ADD_BIN';
 export function addBin(bin: BinData) {
   	return { type: ADD_BIN, bin };
+};
+
+export const DELETE_BIN = 'DELETE_BIN';
+export function deleteBin(id: number) {
+  	return { type: DELETE_BIN, id };
 };
 
 export const SET_BIN_AVAILABILITY = 'SET_BIN_AVAILABILITY';
@@ -65,8 +70,8 @@ export function sendData(action: Action) {
 
   	return function (dispatch: any) {
 
-	    dispatch(action);
 	    dispatch(setBinPending(action.id, true));
+	    dispatch(action);
 
 	    counter ++;
 	    var resolve: any, reject: any;
