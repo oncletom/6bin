@@ -178,7 +178,7 @@ gulp.task('build-dev', ['build-client-dev', 'tsc-server-dev', 'tsc-tools-dev', '
 gulp.task('build-prod', ['build-client-prod', 'tsc-server-prod', 'tsc-tools-prod']);
 
 gulp.task('start-containers-dev', ['build-dev'], function(){
-    spawn('docker-compose', ['-f', 'compose-dev.yml', 'up'], {stdio: 'inherit'});
+    spawn('docker-compose', ['-f', 'compose-dev.yml', 'up', '--force-recreate'], {stdio: 'inherit'});
 });
 
 gulp.task('start-containers-prod', ['build-prod'], function(){
@@ -186,7 +186,7 @@ gulp.task('start-containers-prod', ['build-prod'], function(){
 });
 
 gulp.task('start-containers-test', function(){
-    spawn('docker-compose', ['-f', 'compose-test.yml', 'up'], {stdio: 'inherit'});
+    spawn('docker-compose', ['-f', 'compose-test.yml', 'up', '--force-recreate'], {stdio: 'inherit'});
 });
 
 /*
