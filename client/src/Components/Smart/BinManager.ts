@@ -28,18 +28,16 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         
         const { dispatch, bins, modes } = this.props;
 
-        console.log('modes', modes);
         var isEditingBins: boolean = modes.get('isEditingBins');
 
         var binList = React.createElement(BinList, {
             bins,
             isEditing: isEditingBins,
-            onClickSetPending: isEditingBins ?
-                (index: number, isAvailable: boolean) => { 
-                    dispatch(
-                        sendData(setBinAvailability(index, isAvailable)))
+            onClickSetPending: (index: number, isAvailable: boolean) => { 
+                    if (!isEditingBins)
+                        dispatch(
+                            sendData(setBinAvailability(index, isAvailable)));
                 }
-                : undefined
         });
 
         var editBinsButton = React.createElement('button', {

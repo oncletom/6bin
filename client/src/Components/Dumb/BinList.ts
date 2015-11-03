@@ -30,7 +30,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 isAvailable: bin.isAvailable,
                 isPending: bin.isPending,
                 isEditing: this.props.isEditing,
-                onToggleClick: this.props.onClickSetPending
+                onClickSetPending: this.props.onClickSetPending
             });
         });
 
@@ -47,8 +47,6 @@ export default class BinList extends React.Component<BinListProps, BinListState>
 
             bins.push(addBinButton);
         }
-        
-        console.log('bins length', bins.length);
 
         return React.createElement('ul', {className: 'bins'},
             bins

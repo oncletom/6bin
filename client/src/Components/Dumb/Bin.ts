@@ -30,8 +30,6 @@ export default class Bin extends React.Component<BinProps, BinState> {
 
     render() {
 
-        console.log('is EDITING', this.props.isEditing);
-
         var deleteButton = this.props.isEditing ? 
             React.createElement('div', {}, 'SUPPR')
             : undefined ;
