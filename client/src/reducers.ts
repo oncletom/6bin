@@ -4,28 +4,28 @@ import { combineReducers } from 'redux';
 import { List, Map } from 'immutable';
 
 import { BinData } from './Components/Dumb/Bin';
-import { Action, SET_BINS, ADD_BIN, SET_BIN_AVAILABILITY, SET_BIN_PENDING, SET_BIN_EDIT_MODE, DELETE_BIN } from './actions';
+import * as actions from './actions';
 
 var initialBinState = List<BinData>([]);
-function bins (state = initialBinState, action: Action) {
+function bins (state = initialBinState, action: actions.Action) {
     switch (action.type) {
-        case SET_BINS:
+        case actions.SET_BINS:
             return state.merge(state, action.bins);
             
-        case ADD_BIN:
+        case actions.ADD_BIN:
             return state.push(action.bin);
 
-        case DELETE_BIN:
+        case actions.DELETE_BIN:
             return state.delete(action.id);
 
-        case SET_BIN_AVAILABILITY:
-            var bin = state.get(action.id)
+        case actions.SET_BIN_AVAILABILITY:
+            var bin = state.get(action.id);
             var updatedBin = (<any>Object.assign)({}, bin, {isAvailable: action.isAvailable});
 
             return state.set(action.id, updatedBin);
 
-        case SET_BIN_PENDING:
-            var bin = state.get(action.id)
+        case actions.SET_BIN_PENDING:
+            var bin = state.get(action.id);
             var updatedBin = (<any>Object.assign)({}, bin, {isPending: action.isPending});
 
             return state.set(action.id, updatedBin);
@@ -36,16 +36,21 @@ function bins (state = initialBinState, action: Action) {
 }
 
 var modeState = {
-    isEditingBins: false
+    isEditingBins: false,
+    isAddingBins: false
 };
 
 var initialModeState = Map(modeState);
 
-function modes (state = initialModeState, action: Action){
+function modes (state = initialModeState, action: actions.Action){
+    console.log('Action', action);
     switch (action.type) {
-        case SET_BIN_EDIT_MODE:
+        case actions.SET_BIN_EDIT_MODE:
             var updatedState = state.set('isEditingBins', action.isEditingBins);
-            // console.log('updatedState', updatedState);
+            return updatedState;
+
+        case actions.SET_BIN_ADD_MODE:
+            var updatedState = state.set('isAddingBins', action.isAddingBins);
             return updatedState;
 
         default:

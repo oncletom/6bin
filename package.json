@@ -38,6 +38,7 @@
     "express": "^4.13.3",
     "gulp-typescript": "^2.9.2",
     "immutable": "^3.7.5",
+    "keymirror": "^0.1.1",
     "minifyify": "^7.1.0",
     "mocha": "^2.3.3",
     "react": "^0.14.0",

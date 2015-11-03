@@ -17,6 +17,7 @@ export interface Action {
 	isAvailable?: boolean;
 	isPending?: boolean;
 	isEditingBins?: boolean;
+	isAddingBins?: boolean;
 }
 
 var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
@@ -50,6 +51,11 @@ export function setBinPending(id: number, isPending: boolean) {
 export const SET_BIN_EDIT_MODE = 'SET_BIN_EDIT_MODE';
 export function setBinEditMode(isEditingBins: boolean) {
   	return { type: SET_BIN_EDIT_MODE, isEditingBins};
+};
+
+export const SET_BIN_ADD_MODE = 'SET_BIN_ADD_MODE';
+export function setBinAddMode(isAddingBins: boolean) {
+  	return { type: SET_BIN_ADD_MODE, isAddingBins};
 };
 
 var counter: number = 0;

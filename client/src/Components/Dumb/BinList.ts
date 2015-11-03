@@ -10,8 +10,10 @@ import { BinData } from './Bin';
 interface BinListProps{
     bins: Map<number, BinData>;
     isEditing: boolean;
-    onClickSetPending: (index: number, isAvailable: boolean) => void;
-    onClickDelete: (index: number) => void;
+    isAdding: boolean;
+    setBinPending: (index: number, isAvailable: boolean) => void;
+    deleteBin: (index: number) => void;
+    setAddMode: (isAdding: boolean) => void;
 }
 
 interface BinListState{}
@@ -32,8 +34,9 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 isAvailable: bin.isAvailable,
                 isPending: bin.isPending,
                 isEditing: props.isEditing,
-                onClickSetPending: props.onClickSetPending,
-                onClickDelete: props.onClickDelete
+                setBinPending: props.setBinPending,
+                deleteBin: props.deleteBin,
+                setAddMode: props.setAddMode
             });
         });
 
@@ -44,7 +47,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 id: 'add-bin',
                 key: bins.length,
                 onClick: () => {
-                    console.log('AJOUTE BORDEL');
+                    props.setAddMode(!props.isAdding);
                 }
             }, 'Ajouter benne');
 
