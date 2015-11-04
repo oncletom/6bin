@@ -58,8 +58,9 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             onClick: () => {
                 dispatch(
                     setBinEditMode(!isEditingBins));
-                dispatch(
-                    setBinAddMode(false));
+                if (isAddingBins)
+                    dispatch(
+                        setBinAddMode(false));
             }
         }, 'Modifier les conteneurs');
 
