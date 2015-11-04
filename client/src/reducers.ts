@@ -4,29 +4,30 @@ import { combineReducers } from 'redux';
 import { List, Map } from 'immutable';
 
 import { BinData } from './Components/Dumb/Bin';
-import * as actions from './actions';
+import { Action } from './actions';
+import { SET_BINS, ADD_BIN, DELETE_BIN, SET_BIN_AVAILABILITY } from './actions';
+import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
+import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE } from './actions';
 
+// console.log('ACTION TYPE', Action);
+// var Action = Action;
+
+// Bins is the state of all bins
 var initialBinState = List<BinData>([]);
-function bins (state = initialBinState, action: actions.Action) {
+function bins (state = initialBinState, action: Action) {
     switch (action.type) {
-        case actions.SET_BINS:
+        case SET_BINS:
             return state.merge(state, action.bins);
             
-        case actions.ADD_BIN:
+        case ADD_BIN:
             return state.push(action.bin);
 
-        case actions.DELETE_BIN:
+        case DELETE_BIN:
             return state.delete(action.id);
 
-        case actions.SET_BIN_AVAILABILITY:
+        case SET_BIN_AVAILABILITY:
             var bin = state.get(action.id);
             var updatedBin = (<any>Object.assign)({}, bin, {isAvailable: action.isAvailable});
-
-            return state.set(action.id, updatedBin);
-
-        case actions.SET_BIN_PENDING:
-            var bin = state.get(action.id);
-            var updatedBin = (<any>Object.assign)({}, bin, {isPending: action.isPending});
 
             return state.set(action.id, updatedBin);
 
@@ -35,20 +36,40 @@ function bins (state = initialBinState, action: actions.Action) {
     }
 }
 
-var modeState = {
+// Pending Actions are actions that need to be validated by the server
+var initialPendingState = List<Action>([]);
+
+function pending (state = initialPendingState, action: Action){
+    switch (action.type) {
+        case ADD_PENDING_ACTION:
+            return state.push(action.pendingAction);
+
+        case DELETE_PENDING_ACTION:
+            var returnState = state.delete(action.id);
+            console.log('returnState', returnState.toJS());
+            return returnState;
+
+        default:
+            return state;
+    }
+}
+
+// Display is the state of what buttons/windows/texts is on the screen
+var displayState = {
     isEditingBins: false,
-    isAddingBins: false
+    isAddingBins: false,
+    isPending: false
 };
 
-var initialModeState = Map(modeState);
+var initialDisplayState = Map(displayState);
 
-function modes (state = initialModeState, action: actions.Action){
+function display (state = initialDisplayState, action: Action){
     switch (action.type) {
-        case actions.SET_BIN_EDIT_MODE:
+        case SET_BIN_EDIT_MODE:
             var updatedState = state.set('isEditingBins', action.isEditingBins);
             return updatedState;
 
-        case actions.SET_BIN_ADD_MODE:
+        case SET_BIN_ADD_MODE:
             var updatedState = state.set('isAddingBins', action.isAddingBins);
             return updatedState;
 
@@ -59,7 +80,8 @@ function modes (state = initialModeState, action: actions.Action){
 
 const binApp = combineReducers({
     bins,
-    modes
+    pending,
+    display
 });
 
 export default binApp;

@@ -20,7 +20,7 @@ export interface BinData {
 
 export interface BinProps extends BinData{
     id: number;
-    setBinPending: (id: number, isAvailable: boolean) => void;
+    setBinAvailability: (id: number, isAvailable: boolean) => void;
     deleteBin: (id: number) => void;
 }
 
@@ -49,7 +49,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     props.isPending ? 'pending' : '',
                     'noselect'
                 ].join(' '),
-                onClick: () => { props.setBinPending(props.id, !props.isAvailable) }
+                onClick: () => { props.setBinAvailability(props.id, !props.isAvailable) }
             }, 
             React.createElement('div', {}, props.type, props.position),
             React.createElement(SVGComponent, {path: props.imageURL}),

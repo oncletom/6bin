@@ -11,7 +11,7 @@ interface BinListProps{
     bins: Map<number, BinData>;
     isEditing: boolean;
     isAdding: boolean;
-    setBinPending: (index: number, isAvailable: boolean) => void;
+    setBinAvailability: (index: number, isAvailable: boolean) => void;
     deleteBin: (index: number) => void;
     setAddMode: (isAdding: boolean) => void;
 }
@@ -34,7 +34,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 isAvailable: bin.isAvailable,
                 isPending: bin.isPending,
                 isEditing: props.isEditing,
-                setBinPending: props.setBinPending,
+                setBinAvailability: props.setBinAvailability,
                 deleteBin: props.deleteBin,
                 setAddMode: props.setAddMode
             });

@@ -9,7 +9,11 @@ import { List, Map } from 'immutable';
 import BinList from '../Dumb/BinList';
 import BinCreator from '../Dumb/BinCreator';
 import { BinData, BinProps } from '../Dumb/Bin';
-import { State, addBin, deleteBin, setBinAvailability, setBinEditMode, setBinAddMode, sendData } from '../../actions';
+import { State, Action } from '../../actions';
+import { sendData } from '../../actions'; // async Actions
+import { addBin, deleteBin, setBinAvailability } from '../../actions'; // Bin actions
+import { setBinEditMode, setBinAddMode } from '../../actions'; // Mode actions
+import { addPendingAction, deletePendingAction } from '../../actions'; // Pending actions
 
 interface ReduxPropsMixin{
     dispatch: Dispatch
@@ -17,7 +21,8 @@ interface ReduxPropsMixin{
 
 interface BinManagerProps extends ReduxPropsMixin{
     bins: List<BinProps>;
-    modes: Map<string, boolean>;
+    pending: List<Action>;
+    display: Map<string, boolean>;
 }
 
 interface BinManagerState{}
@@ -27,23 +32,29 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
     render() {
         
-        const { dispatch, bins, modes } = this.props;
+        const { dispatch, bins, pending, display } = this.props;
 
-        var isEditingBins: boolean = modes.get('isEditingBins');
-        var isAddingBins: boolean = modes.get('isAddingBins');
+        var isEditingBins: boolean = display.get('isEditingBins');
+        var isAddingBins: boolean = display.get('isAddingBins');
 
         var binList = React.createElement(BinList, {
             bins,
             isEditing: isEditingBins,
             isAdding: isAddingBins,
-            setBinPending: (id: number, isAvailable: boolean) => { 
-                    if (!isEditingBins)
+            setBinAvailability: (id: number, isAvailable: boolean) => { 
+                    if (!isEditingBins){
+                        // before and after are actions that will be dispatched before and after async action
+                        var before = addPendingAction(setBinAvailability(id, isAvailable));
+                        var after = deletePendingAction(pending.size);
+
                         dispatch(
-                            sendData(setBinAvailability(id, isAvailable)));
+                            sendData(setBinAvailability(id, isAvailable), before, after));
+                    }
+                        
                 },
             deleteBin: (id: number) => {
                 dispatch(
-                    sendData(deleteBin(id)));
+                    deleteBin(id));
             },
             setAddMode: (isAdding: boolean) => {
                 console.log('Add mode On');
@@ -56,8 +67,16 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             id: 'modify-bins',
             className: isEditingBins ? 'editing' : '',
             onClick: () => {
-                dispatch(
-                    setBinEditMode(!isEditingBins));
+                if(!isEditingBins)
+                    dispatch(
+                        setBinEditMode(true));
+                else {
+                    // var before = 
+
+                    sendData(dispatch(
+                        setBinEditMode(false)));
+                }
+                    
                 if (isAddingBins)
                     dispatch(
                         setBinAddMode(false));
@@ -84,7 +103,8 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 function select(state: State) {
     return {
         bins: state.bins,
-        modes: state.modes
+        pending: state.pending, // => maybe should be in another smart component
+        display: state.display
     };
 }
 
