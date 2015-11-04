@@ -81,7 +81,6 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
 // Select only the part of the global state that is needed
 function select(state: State) {
-    console.log('STATE', state.modes.toJS());
     return {
         bins: state.bins,
         modes: state.modes

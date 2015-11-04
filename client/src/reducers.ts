@@ -43,7 +43,6 @@ var modeState = {
 var initialModeState = Map(modeState);
 
 function modes (state = initialModeState, action: actions.Action){
-    console.log('Action', action);
     switch (action.type) {
         case actions.SET_BIN_EDIT_MODE:
             var updatedState = state.set('isEditingBins', action.isEditingBins);

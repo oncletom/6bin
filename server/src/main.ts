@@ -33,6 +33,8 @@ server.listen(PORT, function () {
     ].join(''));
 });
 
+console.log('DEBUG in server', process.env.NODE_ENV);
+
 io.on('connection', (socket: any) => {
 
 	socket.on('request', (data: any) => {
