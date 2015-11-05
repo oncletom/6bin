@@ -6,8 +6,8 @@ import * as io from 'socket.io-client';
 
 export interface State {
     display: Map<string, boolean>;
-    pending: List<any>;
-    bins: Map<number, BinData>;
+    pendings: List<any>;
+    bins: List<BinData>;
 }
 
 export interface Action {
@@ -79,11 +79,9 @@ socket.on('response', (response: any) => {
         myPromise.reject();
 });
 
-export function sendData(action: Action, before?: Action, after?: Action) {
+export function sendData(action: Action, after?: Action[]) {
 
     return function (dispatch: any) {
-
-        dispatch(before);
         dispatch(action);
 
         counter ++;
@@ -107,7 +105,10 @@ export function sendData(action: Action, before?: Action, after?: Action) {
 
         p.then(() => {
             console.log('YOUHOU !!!! Now you should dispatch the correct action');
-            dispatch(after);
+            
+            after.forEach((action: Action) => {
+                dispatch(action);
+            });
         })
         .catch(() => {
             console.log('Its a SHAME !!!! You should still dispatch the correct action');

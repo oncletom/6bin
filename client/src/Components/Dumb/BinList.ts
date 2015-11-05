@@ -24,7 +24,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
     render() {
         var props = this.props;
 
-        var binList = props.bins.map((bin, index) => {
+        var binList = props.bins.toJS().map((bin: BinData, index: number) => {
             return React.createElement(Bin, {
                 key: index,
                 id: index,
@@ -40,22 +40,22 @@ export default class BinList extends React.Component<BinListProps, BinListState>
             });
         });
 
-        var bins = binList.toJS();
+        // var bins = binList.toJS();
 
         if (props.isEditing){
             var addBinButton = React.createElement('li', {
                 id: 'add-bin',
-                key: bins.length,
+                key: binList.length,
                 onClick: () => {
                     props.setAddMode(!props.isAdding);
                 }
             }, 'Ajouter benne');
 
-            bins.push(addBinButton);
+            binList.push(addBinButton);
         }
 
         return React.createElement('ul', {className: 'bins'},
-            bins
+            binList
         );
     }
 };

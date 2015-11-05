@@ -1,6 +1,7 @@
 'use strict';
 
 import * as React from 'react';
+import { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -21,7 +22,7 @@ interface ReduxPropsMixin{
 
 interface BinManagerProps extends ReduxPropsMixin{
     bins: List<BinProps>;
-    pending: List<Action>;
+    pendings: List<Action>;
     display: Map<string, boolean>;
 }
 
@@ -32,26 +33,28 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
     render() {
         
-        const { dispatch, bins, pending, display } = this.props;
+        const { dispatch, bins, pendings, display } = this.props;
 
         var isEditingBins: boolean = display.get('isEditingBins');
         var isAddingBins: boolean = display.get('isAddingBins');
 
+        // Create the bin list
         var binList = React.createElement(BinList, {
             bins,
             isEditing: isEditingBins,
             isAdding: isAddingBins,
             setBinAvailability: (id: number, isAvailable: boolean) => { 
-                    if (!isEditingBins){
-                        // before and after are actions that will be dispatched before and after async action
-                        var before = addPendingAction(setBinAvailability(id, isAvailable));
-                        var after = deletePendingAction(pending.size);
+                if (!isEditingBins){
+                    // after actions will be dispatched after async action
+                    var action = setBinAvailability(id, isAvailable);
+                    var after = [deletePendingAction(pendings.size)];
 
-                        dispatch(
-                            sendData(setBinAvailability(id, isAvailable), before, after));
-                    }
-                        
-                },
+                    dispatch(addPendingAction(action));
+
+                    dispatch(
+                        sendData(action, after));
+                }        
+            },
             deleteBin: (id: number) => {
                 dispatch(
                     deleteBin(id));
@@ -63,6 +66,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             }
         });
 
+        // Create the button to edit bins
         var editBinsButton = React.createElement('button', {
             id: 'modify-bins',
             className: isEditingBins ? 'editing' : '',
@@ -71,10 +75,14 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                     dispatch(
                         setBinEditMode(true));
                 else {
-                    // var before = 
+                    // after actions will be dispatched after async action
+                    var action = setBinEditMode(false);
+                    var after = [deletePendingAction(pendings.size)];
 
-                    sendData(dispatch(
-                        setBinEditMode(false)));
+                    dispatch(addPendingAction(action));
+
+                    dispatch(
+                        sendData(action, after));
                 }
                     
                 if (isAddingBins)
@@ -83,18 +91,36 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             }
         }, 'Modifier les conteneurs');
 
-        var binCreator = isAddingBins && isEditingBins ? React.createElement(BinCreator, {
-            addBin: (bin: BinData) => {
-                dispatch(
-                    addBin(bin));
-            }
-        })
-        : undefined;
+        // Create the panel with all bin types used to add bins
+        var binCreator = isAddingBins && isEditingBins ?
+            React.createElement(BinCreator, {
+                addBin: (bin: BinData) => {
+                    dispatch(
+                        addBin(bin));
+                }
+            })
+            : undefined;
+
+        // Create the info text
+        var infos: ReactElement<any>;
+
+        if (pendings.size > 0){
+            var pendingActions = pendings.toJS().map((action: Action, key: number) => {
+                return React.createElement('div', {key}, action.type);
+            });
+
+            infos = React.createElement('div', {id: 'infos'},
+                'En cours de transfert:',
+                pendingActions
+            );
+        }
+        
 
         return React.createElement('div', {id: 'bin-manager'}, 
             binList,
             editBinsButton,
-            binCreator
+            binCreator,
+            infos
         );
     }
 };
@@ -103,7 +129,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 function select(state: State) {
     return {
         bins: state.bins,
-        pending: state.pending, // => maybe should be in another smart component
+        pendings: state.pendings, // => maybe should be in another smart component
         display: state.display
     };
 }
