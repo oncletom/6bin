@@ -22,18 +22,23 @@ interface ReduxPropsMixin{
 
 interface BinManagerProps extends ReduxPropsMixin{
     bins: List<BinProps>;
-    pendings: List<Action>;
+    pending: Map<number, Action>;
     display: Map<string, boolean>;
 }
 
 interface BinManagerState{}
+
+var nextPending = 0;
 
 class BinManager extends React.Component<BinManagerProps, BinManagerState> {
     mixins = [PureRenderMixin]
 
     render() {
         
-        const { dispatch, bins, pendings, display } = this.props;
+        const { dispatch, bins, pending, display } = this.props;
+
+        if (pending.size === 0)
+            nextPending = 0; // reinitializing the pending actions counter
 
         var isEditingBins: boolean = display.get('isEditingBins');
         var isAddingBins: boolean = display.get('isAddingBins');
@@ -47,9 +52,11 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 if (!isEditingBins){
                     // after actions will be dispatched after async action
                     var action = setBinAvailability(id, isAvailable);
-                    var after = [deletePendingAction(pendings.size)];
+                    dispatch(addPendingAction(nextPending, action)); // this could be used in a middleware
+                    var after = [deletePendingAction(nextPending)];
 
-                    dispatch(addPendingAction(action)); // this could be used in a middleware
+                    nextPending ++;
+                    console.log('Pending action Number', pending.size);
 
                     dispatch(
                         sendData(action, after));
@@ -77,11 +84,12 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 else {
                     // after actions will be dispatched after async action
                     var action = saveBins(bins);
-                    console.log('bins', bins.size);
-                    var after = [deletePendingAction(pendings.size)];
 
                     dispatch(setBinEditMode(false));
-                    dispatch(addPendingAction(action)); // this could be used in a middleware
+                    dispatch(addPendingAction(nextPending, action)); // this could be used in a middleware
+
+                    var after = [deletePendingAction(nextPending)];
+                    nextPending ++;
 
                     dispatch(
                         sendData(action, after));
@@ -106,8 +114,8 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         // Create the info text
         var infos: ReactElement<any>;
 
-        if (pendings.size > 0){
-            var pendingActions = pendings.toJS().map((action: Action, key: number) => {
+        if (pending.size > 0){
+            var pendingActions = pending.toList().toJS().map((action: Action, key: number) => {
                 return React.createElement('div', {key}, action.type);
             });
 
@@ -131,7 +139,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 function select(state: State) {
     return {
         bins: state.bins,
-        pendings: state.pendings, // => maybe should be in another smart component
+        pending: state.pending, // => maybe should be in another smart component
         display: state.display
     };
 }

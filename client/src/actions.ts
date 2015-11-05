@@ -4,12 +4,6 @@ import { List, Map } from 'immutable';
 import { BinData } from './Components/Dumb/Bin';
 import * as io from 'socket.io-client';
 
-export interface State {
-    display: Map<string, boolean>;
-    pendings: List<any>;
-    bins: List<BinData>;
-}
-
 export interface Action {
     type: string;
     bins?: List<BinData>;
@@ -20,6 +14,12 @@ export interface Action {
     isEditingBins?: boolean;
     isAddingBins?: boolean;
     pendingAction?: Action;
+}
+
+export interface State {
+    display: Map<string, boolean>;
+    pending: Map<number, Action>;
+    bins: List<BinData>;
 }
 
 export interface Request {
@@ -66,8 +66,8 @@ export function setBinAddMode(isAddingBins: boolean) {
 };
 
 export const ADD_PENDING_ACTION = 'ADD_PENDING_ACTION';
-export function addPendingAction(pendingAction: Action) {
-    return { type: ADD_PENDING_ACTION, pendingAction };
+export function addPendingAction(id: number, pendingAction: Action) {
+    return { type: ADD_PENDING_ACTION, id, pendingAction };
 };
 
 export const DELETE_PENDING_ACTION = 'DELETE_PENDING_ACTION';

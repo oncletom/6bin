@@ -40,16 +40,15 @@ function bins (state = initialBinState, action: Action) {
 }
 
 // Pending Actions are actions that need to be validated by the server
-var initialPendingState = List<Action>([]);
+var initialPendingState = Map<number, Action>({});
 
-function pendings (state = initialPendingState, action: Action){
+function pending (state = initialPendingState, action: Action){
     switch (action.type) {
         case ADD_PENDING_ACTION:
-            return state.push(action.pendingAction);
+            return state.set(action.id, action.pendingAction);
 
         case DELETE_PENDING_ACTION:
-            var returnState = state.delete(action.id);
-            return returnState;
+            return state.delete(action.id);
 
         default:
             return state;
@@ -82,7 +81,7 @@ function display (state = initialDisplayState, action: Action){
 
 const binApp = combineReducers({
     bins,
-    pendings,
+    pending,
     display
 });
 
