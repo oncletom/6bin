@@ -30,11 +30,11 @@ render(React.createElement(Provider, {store},
 );
 
 var myNewBins = List<BinData>([
-    { position: 0, type: 'Romain', imageURL: '/img/waste/Ameublement.svg', isAvailable: true, isPending: false },
-    { position: 1, type: 'Henri', imageURL: '/img/waste/Batteries.svg', isAvailable: true, isPending: false },
-    { position: 2, type: 'Micheline', imageURL: '/img/waste/Bois.svg', isAvailable: true, isPending: false },
-    { position: 3, type: 'Erika', imageURL: '/img/waste/Ecrans.svg', isAvailable: true, isPending: false },
-    { position: 4, type: 'David', imageURL: '/img/waste/Metaux.svg', isAvailable: true, isPending: false }
+    { position: 0, type: 'AMEUBLEMENT', imageURL: '/img/waste/Ameublement.svg', isAvailable: true, isPending: false, isSelected: false },
+    { position: 1, type: 'BATTERIES', imageURL: '/img/waste/Batteries.svg', isAvailable: true, isPending: false, isSelected: false },
+    { position: 2, type: 'BOIS', imageURL: '/img/waste/Bois.svg', isAvailable: true, isPending: false, isSelected: false },
+    { position: 3, type: 'ECRANS', imageURL: '/img/waste/Ecrans.svg', isAvailable: true, isPending: false, isSelected: false },
+    { position: 4, type: 'METAUX', imageURL: '/img/waste/Metaux.svg', isAvailable: true, isPending: false, isSelected: false }
 ]);
 
 

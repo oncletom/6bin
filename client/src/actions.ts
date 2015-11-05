@@ -12,12 +12,12 @@ export interface Action {
     isAvailable?: boolean;
     isPending?: boolean;
     isEditingBins?: boolean;
-    isAddingBins?: boolean;
+    isSelectingWaste?: boolean;
     pendingAction?: Action;
 }
 
 export interface State {
-    display: Map<string, boolean>;
+    display: Map<string, any>;
     pending: Map<number, Action>;
     bins: List<BinData>;
 }
@@ -33,6 +33,11 @@ var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
 export const SET_BINS = 'SET_BINS';
 export function setBins(bins: List<BinData>) {
     return { type: SET_BINS, bins };
+};
+
+export const SELECT_BIN = 'SELECT_BIN';
+export function selectBin(id: number) {
+    return { type: SELECT_BIN, id };
 };
 
 export const ADD_BIN = 'ADD_BIN';
@@ -60,9 +65,9 @@ export function setBinEditMode(isEditingBins: boolean) {
     return { type: SET_BIN_EDIT_MODE, isEditingBins};
 };
 
-export const SET_BIN_ADD_MODE = 'SET_BIN_ADD_MODE';
-export function setBinAddMode(isAddingBins: boolean) {
-    return { type: SET_BIN_ADD_MODE, isAddingBins};
+export const SET_WASTE_SELECT_MODE = 'SET_WASTE_SELECT_MODE';
+export function setWasteSelectMode(isSelectingWaste: boolean) {
+    return { type: SET_WASTE_SELECT_MODE, isSelectingWaste};
 };
 
 export const ADD_PENDING_ACTION = 'ADD_PENDING_ACTION';

@@ -8,12 +8,12 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { List, Map } from 'immutable';
 
 import BinList from '../Dumb/BinList';
-import BinCreator from '../Dumb/BinCreator';
+import WastePicker from '../Dumb/WastePicker';
 import { BinData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { sendData } from '../../actions'; // async Actions
 import { addBin, deleteBin, setBinAvailability, saveBins } from '../../actions'; // Bin actions
-import { setBinEditMode, setBinAddMode } from '../../actions'; // Mode actions
+import { setBinEditMode, setWasteSelectMode, selectBin } from '../../actions'; // Display actions
 import { addPendingAction, deletePendingAction } from '../../actions'; // Pending actions
 
 interface ReduxPropsMixin{
@@ -41,13 +41,15 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             nextPending = 0; // reinitializing the pending actions counter
 
         var isEditingBins: boolean = display.get('isEditingBins');
-        var isAddingBins: boolean = display.get('isAddingBins');
+        var isSelectingWaste: boolean = display.get('isSelectingWaste');
+        var selectedBin: number = display.get('selectedBin');
 
         // Create the bin list
         var binList = React.createElement(BinList, {
             bins,
+            selectedBin,
             isEditing: isEditingBins,
-            isAdding: isAddingBins,
+            isAdding: isSelectingWaste,
             setBinAvailability: (id: number, isAvailable: boolean) => { 
                 if (!isEditingBins){
                     // after actions will be dispatched after async action
@@ -62,6 +64,10 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                         sendData(action, after));
                 }        
             },
+            selectBin: (id: number) => {
+                dispatch(
+                    selectBin(id));
+            },
             deleteBin: (id: number) => {
                 dispatch(
                     deleteBin(id));
@@ -69,7 +75,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             setAddMode: (isAdding: boolean) => {
                 console.log('Add mode On');
                 dispatch(
-                    setBinAddMode(isAdding));
+                    setWasteSelectMode(isAdding));
             }
         });
 
@@ -95,15 +101,15 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                         sendData(action, after));
                 }
                     
-                if (isAddingBins)
+                if (isSelectingWaste)
                     dispatch(
-                        setBinAddMode(false));
+                        setWasteSelectMode(false));
             }
         }, 'Modifier les conteneurs');
 
         // Create the panel with all bin types used to add bins
-        var binCreator = isAddingBins && isEditingBins ?
-            React.createElement(BinCreator, {
+        var binCreator = isEditingBins && isSelectingWaste ?
+            React.createElement(WastePicker, {
                 addBin: (bin: BinData) => {
                     dispatch(
                         addBin(bin));

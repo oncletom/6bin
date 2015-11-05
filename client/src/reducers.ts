@@ -7,7 +7,7 @@ import { BinData } from './Components/Dumb/Bin';
 import { Action } from './actions';
 import { SET_BINS, SAVE_BINS, ADD_BIN, DELETE_BIN, SET_BIN_AVAILABILITY } from './actions';
 import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
-import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE } from './actions';
+import { SET_BIN_EDIT_MODE, SET_WASTE_SELECT_MODE, SELECT_BIN } from './actions';
 
 // console.log('ACTION TYPE', Action);
 // var Action = Action;
@@ -56,10 +56,16 @@ function pending (state = initialPendingState, action: Action){
 }
 
 // Display is the state of what buttons/windows/texts is on the screen
-var displayState = {
+interface DisplayState {
+    isEditingBins: boolean;
+    isSelectingWaste: boolean;
+    selectedBin: number;
+}
+
+var displayState: DisplayState = {
     isEditingBins: false,
-    isAddingBins: false,
-    isPending: false
+    isSelectingWaste: false,
+    selectedBin: undefined
 };
 
 var initialDisplayState = Map(displayState);
@@ -67,12 +73,15 @@ var initialDisplayState = Map(displayState);
 function display (state = initialDisplayState, action: Action){
     switch (action.type) {
         case SET_BIN_EDIT_MODE:
-            var updatedState = state.set('isEditingBins', action.isEditingBins);
-            return updatedState;
+            return state.set('isEditingBins', action.isEditingBins);
 
-        case SET_BIN_ADD_MODE:
-            var updatedState = state.set('isAddingBins', action.isAddingBins);
-            return updatedState;
+        case SET_WASTE_SELECT_MODE:
+            return state.set('isSelectingWaste', action.isSelectingWaste);
+
+        case SELECT_BIN:
+            // var current = state.get('selectedBin', action.id);
+            console.log('select', action.id);
+            return state.set('selectedBin', action.id);
 
         default:
             return state;

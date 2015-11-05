@@ -7,13 +7,13 @@ import SVGComponent from './SVG';
 import { BinData } from './Bin';
 import { binDico } from '../../binTypes'
 
-interface BinCreatorProps{
+interface WastePickerProps{
     addBin: (bin: BinData) => void;
 }
 
-interface BinCreatorState{}
+interface WastePickerState{}
 
-export default class BinCreator extends React.Component<BinCreatorProps, BinCreatorState> {
+export default class WastePicker extends React.Component<WastePickerProps, WastePickerState> {
     mixins = [PureRenderMixin]
 
     render() {
@@ -30,7 +30,8 @@ export default class BinCreator extends React.Component<BinCreatorProps, BinCrea
                             imageURL: url,
                             isAvailable: true,
                             isPending: false,
-                            isEditing: false
+                            isEditing: false,
+                            isSelected: false
                         };
 
                         props.addBin(bin);

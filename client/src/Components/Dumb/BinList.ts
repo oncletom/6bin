@@ -9,9 +9,11 @@ import { BinData } from './Bin';
 
 interface BinListProps{
     bins: Map<number, BinData>;
+    selectedBin: number;
     isEditing: boolean;
     isAdding: boolean;
     setBinAvailability: (index: number, isAvailable: boolean) => void;
+    selectBin: (index: number) => void;
     deleteBin: (index: number) => void;
     setAddMode: (isAdding: boolean) => void;
 }
@@ -32,15 +34,15 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 type: bin.type,
                 imageURL: bin.imageURL,
                 isAvailable: bin.isAvailable,
-                isPending: bin.isPending,
+                isSelected: props.selectedBin === index,
+                // isPending: bin.isPending,
                 isEditing: props.isEditing,
                 setBinAvailability: props.setBinAvailability,
+                selectBin: props.selectBin,
                 deleteBin: props.deleteBin,
                 setAddMode: props.setAddMode
             });
         });
-
-        // var bins = binList.toJS();
 
         if (props.isEditing){
             var addBinButton = React.createElement('li', {

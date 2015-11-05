@@ -14,13 +14,15 @@ export interface BinData {
     type: string;
     imageURL: string;
     isAvailable: boolean;
-    isPending: boolean;
-    isEditing: boolean;
 }
 
 export interface BinProps extends BinData{
     id: number;
+    isPending: boolean;
+    isEditing: boolean;
+    isSelected: boolean;
     setBinAvailability: (id: number, isAvailable: boolean) => void;
+    selectBin: (id: number) => void;
     deleteBin: (id: number) => void;
 }
 
@@ -32,7 +34,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
 
     render() {
         var props = this.props;
-
+        
         var deleteButton = props.isEditing ? 
             React.createElement('div', {
                 onClick: () => {
@@ -47,12 +49,21 @@ export default class Bin extends React.Component<BinProps, BinState> {
                 className: [
                     props.isAvailable ? 'available' : '',
                     props.isPending ? 'pending' : '',
+                    props.isSelected ? 'selected' : '',
                     'noselect'
                 ].join(' '),
-                onClick: () => { props.setBinAvailability(props.id, !props.isAvailable) }
+                onClick: props.isEditing ?
+                    // select/deselect Bin
+                    () => { 
+                        var toSelect: number = props.isSelected ? undefined : props.id;
+                        props.selectBin(toSelect);
+                    }
+                    // set Bin Availability
+                    : () => { props.setBinAvailability(props.id, !props.isAvailable) }
             }, 
-            React.createElement('div', {}, props.type, props.position),
+            React.createElement('div', {}, props.position),
             React.createElement(SVGComponent, {path: props.imageURL}),
+            React.createElement('div', {}, props.type),
             deleteButton
         )
     }

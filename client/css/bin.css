@@ -6,7 +6,7 @@
 }
 
 .bins li {
-	border: 1px solid black; margin: 2em; padding: .5em;
+	outline: 1px solid black; margin: 2em; padding: .5em;
 	list-style-type: none; cursor: pointer;
 }
 
@@ -20,6 +20,10 @@
 
 .bins li.pending div {
 	color: red;
+}
+
+.bins li.selected {
+	outline: 2px solid green;
 }
 
 .noselect {
