@@ -12,7 +12,7 @@ import BinCreator from '../Dumb/BinCreator';
 import { BinData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { sendData } from '../../actions'; // async Actions
-import { addBin, deleteBin, setBinAvailability } from '../../actions'; // Bin actions
+import { addBin, deleteBin, setBinAvailability, saveBins } from '../../actions'; // Bin actions
 import { setBinEditMode, setBinAddMode } from '../../actions'; // Mode actions
 import { addPendingAction, deletePendingAction } from '../../actions'; // Pending actions
 
@@ -49,7 +49,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                     var action = setBinAvailability(id, isAvailable);
                     var after = [deletePendingAction(pendings.size)];
 
-                    dispatch(addPendingAction(action));
+                    dispatch(addPendingAction(action)); // this could be used in a middleware
 
                     dispatch(
                         sendData(action, after));
@@ -76,10 +76,12 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                         setBinEditMode(true));
                 else {
                     // after actions will be dispatched after async action
-                    var action = setBinEditMode(false);
+                    var action = saveBins(bins);
+                    console.log('bins', bins.size);
                     var after = [deletePendingAction(pendings.size)];
 
-                    dispatch(addPendingAction(action));
+                    dispatch(setBinEditMode(false));
+                    dispatch(addPendingAction(action)); // this could be used in a middleware
 
                     dispatch(
                         sendData(action, after));

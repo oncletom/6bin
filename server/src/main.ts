@@ -12,6 +12,8 @@ import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as socketIO from 'socket.io';
 
+import { Request } from '../../client/src/actions';
+
 var app = express();
 
 var PORT = process.env.VIRTUAL_PORT;
@@ -37,8 +39,11 @@ console.log('DEBUG in server', process.env.NODE_ENV);
 
 io.on('connection', (socket: any) => {
 
-	socket.on('request', (data: any) => {
+	socket.on('request', (data: Request) => {
 		console.log('RECEIVED', data);
+
+		if (data.action.type === 'SAVE_BINS')
+			console.log('SAVING BIIIIIIIIINS !!!', data.action.bins.length, data.action.bins.size); // this is weird
 
 		var response = Object.assign({}, {index: data.index}, {isSuccessful: true});
 

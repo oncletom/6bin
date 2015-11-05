@@ -5,7 +5,7 @@ import { List, Map } from 'immutable';
 
 import { BinData } from './Components/Dumb/Bin';
 import { Action } from './actions';
-import { SET_BINS, ADD_BIN, DELETE_BIN, SET_BIN_AVAILABILITY } from './actions';
+import { SET_BINS, SAVE_BINS, ADD_BIN, DELETE_BIN, SET_BIN_AVAILABILITY } from './actions';
 import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
 import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE } from './actions';
 
@@ -18,6 +18,9 @@ function bins (state = initialBinState, action: Action) {
     switch (action.type) {
         case SET_BINS:
             return state.merge(state, action.bins);
+
+        case SAVE_BINS: // dummy action, just to be sent over to server
+            return state;
             
         case ADD_BIN:
             return state.push(action.bin);

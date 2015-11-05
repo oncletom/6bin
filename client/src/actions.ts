@@ -22,6 +22,11 @@ export interface Action {
     pendingAction?: Action;
 }
 
+export interface Request {
+    index: number;
+    action: Action;
+}
+
 var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
 
 // action creators
@@ -40,9 +45,14 @@ export function deleteBin(id: number) {
     return { type: DELETE_BIN, id };
 };
 
-export const SET_BIN_AVAILABILITY = 'SET_BIN_AVAILABILITY';
+export const SET_BIN_AVAILABILITY = 'SET_BIN_AVAILABILITY'; // needs to be sent
 export function setBinAvailability(id: number, isAvailable: boolean) {
     return { type: SET_BIN_AVAILABILITY, id, isAvailable };
+};
+
+export const SAVE_BINS = 'SAVE_BINS'; // needs to be sent
+export function saveBins(bins: List<BinData>) {
+    return { type: SAVE_BINS, bins };
 };
 
 export const SET_BIN_EDIT_MODE = 'SET_BIN_EDIT_MODE';
