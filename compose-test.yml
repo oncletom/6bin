@@ -1,7 +1,7 @@
 server:
     build: ./Dockerfiles
     dockerfile: Server
-    command: nodemon --watch server server/src/main.js
+    command: node server/src/main.js
     ports:
         - 3100:3100
     environment:

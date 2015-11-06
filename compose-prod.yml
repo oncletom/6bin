@@ -1,7 +1,7 @@
 server:
     build: ./Dockerfiles
     dockerfile: Server
-    command: nodemon server/src/main.js
+    command: node server/src/main.js
     ports:
         - 3000:3000
     environment:
