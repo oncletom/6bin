@@ -10,19 +10,16 @@ Install
 ```
 npm install
 npm i tsd -g
+tsd init
 tsd install
 ```
 
-Build / Watch 
+Run the project in dev 
 ```
-npm run build-server
-npm run build-client
-
-npm run watch-server
-npm run watch-client
+npm run dev
 ```
 
-Start
+Run the project in prod
 ```
-npm start
+npm run prod
 ```

@@ -1,3 +1,16 @@
+
+*.js
+!gulpfile.js
+*.js.map
+
+typings/
+
+
+
+
+
+###### added by default by Git
+
 .DS_Store
 
 # Logs
@@ -27,8 +40,3 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-
-*.js
-*.js.map
-
-typings/

@@ -6,7 +6,7 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "b70895565dd5bd5de71c31e573d781409554bbf1"
+      "commit": "ac5cd185d007f6aacd6eeaaecfb75dae3ff59553"
     },
     "express/express.d.ts": {
       "commit": "b70895565dd5bd5de71c31e573d781409554bbf1"
@@ -24,7 +24,49 @@
       "commit": "b70895565dd5bd5de71c31e573d781409554bbf1"
     },
     "react/react.d.ts": {
-      "commit": "b70895565dd5bd5de71c31e573d781409554bbf1"
+      "commit": "3191f6e0088eee07c4d8fd24e4d27a40a60d9eb9"
+    },
+    "assertion-error/assertion-error.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "chai/chai.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "68548c2daab053869f323d475419c693478bbb73"
+    },
+    "react-dom/react-dom.d.ts": {
+      "commit": "1fe12e478198ea551513ffff30b1452c6d6471a0"
+    },
+    "react-redux/react-redux.d.ts": {
+      "commit": "44cbde48eecd1918ed54b3be49a9752688b6c65a"
+    },
+    "redux/redux.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "react-dnd/react-dnd.d.ts": {
+      "commit": "3191f6e0088eee07c4d8fd24e4d27a40a60d9eb9"
+    },
+    "redux-thunk/redux-thunk.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "socket.io/socket.io.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "socket.io-client/socket.io-client.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "chai-as-promised/chai-as-promised.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "promises-a-plus/promises-a-plus.d.ts": {
+      "commit": "62eedc3121a5e28c50473d2e4a9cefbcb9c3957f"
+    },
+    "form-data/form-data.d.ts": {
+      "commit": "ac5cd185d007f6aacd6eeaaecfb75dae3ff59553"
+    },
+    "request/request.d.ts": {
+      "commit": "ac5cd185d007f6aacd6eeaaecfb75dae3ff59553"
     }
   }
 }
