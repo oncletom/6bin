@@ -39,7 +39,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
         var deleteButton = props.isEditing ? 
             React.createElement('div', {
                 onClick: () => {
-                    props.deleteBin(props.id);
+                    props.onBinDeletion(props.id);
                 }
             }, 'SUPPR')
             : undefined ;
