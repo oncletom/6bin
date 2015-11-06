@@ -14,15 +14,15 @@
 	width: 5em; height: 5em;
 }
 
-.bins li.available {
+.bin.available {
 	color: blue; stroke: blue; fill: blue;
 }
 
-.bins li.pending div {
+.bin.pending div {
 	color: red;
 }
 
-.bins li.selected {
+.bin.selected {
 	outline: 2px solid green;
 }
 

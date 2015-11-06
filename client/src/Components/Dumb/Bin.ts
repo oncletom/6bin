@@ -44,10 +44,10 @@ export default class Bin extends React.Component<BinProps, BinState> {
             }, 'SUPPR')
             : undefined ;
 
-        return React.createElement(
-            'li', 
+        var actualElement = React.createElement('div', 
             {
                 className: [
+                    'bin',
                     props.isAvailable ? 'available' : '',
                     props.isPending ? 'pending' : '',
                     props.isSelected ? 'selected' : '',
@@ -61,11 +61,16 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     }
                     // set Bin Availability
                     : () => { props.onBinAvailabilityChange(props.id, !props.isAvailable) }
-            }, 
+            },
             React.createElement('div', {}, props.position),
             React.createElement(SVGComponent, {path: props.imageURL}),
-            React.createElement('div', {}, props.type),
+            React.createElement('div', {}, props.type)
+        );
+
+        return React.createElement(
+            'li', {},
+            actualElement,
             deleteButton
-        )
+        );
     }
 };
