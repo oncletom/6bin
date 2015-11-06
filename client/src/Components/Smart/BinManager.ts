@@ -50,7 +50,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             selectedBin,
             isEditing: isEditingBins,
             isAdding: isSelectingWaste,
-            setBinAvailability: (id: number, isAvailable: boolean) => { 
+            onBinAvailabilityChange: (id: number, isAvailable: boolean) => { 
                 if (!isEditingBins){
                     // after actions will be dispatched after async action
                     var action = setBinAvailability(id, isAvailable);
@@ -64,15 +64,15 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                         sendData(action, after));
                 }        
             },
-            selectBin: (id: number) => {
+            onBinSelection: (id: number) => {
                 dispatch(
                     selectBin(id));
             },
-            deleteBin: (id: number) => {
+            onBinDeletion: (id: number) => {
                 dispatch(
                     deleteBin(id));
             },
-            setAddMode: (isAdding: boolean) => {
+            onWasteSelectionModeActivation: (isAdding: boolean) => {
                 console.log('Add mode On');
                 dispatch(
                     setWasteSelectMode(isAdding));

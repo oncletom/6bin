@@ -21,9 +21,10 @@ export interface BinProps extends BinData{
     isPending: boolean;
     isEditing: boolean;
     isSelected: boolean;
-    setBinAvailability: (id: number, isAvailable: boolean) => void;
-    selectBin: (id: number) => void;
-    deleteBin: (id: number) => void;
+    onWasteSelectionModeActivation: (id: number, isAvailable: boolean) => void;
+    onBinAvailabilityChange: (id: number, isAvailable: boolean) => void;
+    onBinSelection: (id: number) => void;
+    onBinDeletion: (id: number) => void;
 }
 
 interface BinState{}
@@ -56,10 +57,10 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     // select/deselect Bin
                     () => { 
                         var toSelect: number = props.isSelected ? undefined : props.id;
-                        props.selectBin(toSelect);
+                        props.onBinSelection(toSelect);
                     }
                     // set Bin Availability
-                    : () => { props.setBinAvailability(props.id, !props.isAvailable) }
+                    : () => { props.onBinAvailabilityChange(props.id, !props.isAvailable) }
             }, 
             React.createElement('div', {}, props.position),
             React.createElement(SVGComponent, {path: props.imageURL}),
