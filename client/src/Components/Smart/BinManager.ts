@@ -68,7 +68,6 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 }        
             },
             onBinSelection: (id: number) => {
-                // console.log('TEST', id !== selectedId, id, selectedId);
                 dispatch(
                     selectBin(id));
                 dispatch(
@@ -82,13 +81,14 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                     deleteBin(id));
             },
             onAddModeActivation: () => {
+                console.log('TEST', isAddingBins);
                 if (isBinPanelOpen)
                     dispatch(
                         selectBin(undefined));
                 dispatch(
-                    openBinPanel(true));
+                    openBinPanel(!isAddingBins));
                 dispatch(
-                    setBinAddMode(true));
+                    setBinAddMode(!isAddingBins));
             }
         });
 
