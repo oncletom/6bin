@@ -6,11 +6,16 @@
 }
 
 .bins li {
-	outline: 1px solid black; margin: 2em; padding: .5em;
-	list-style-type: none; cursor: pointer;
+	margin: 2em; padding: .5em;
+	list-style-type: none;
 }
 
-.bins svg {
+.bin {
+	outline: 1px solid black; padding: .2em;
+	cursor: pointer;
+}
+
+svg {
 	width: 5em; height: 5em;
 }
 
@@ -18,11 +23,7 @@
 	color: blue; stroke: blue; fill: blue;
 }
 
-.bin.pending div {
-	color: red;
-}
-
-.bin.selected {
+.bin.selected, #add-bin.selected {
 	outline: 2px solid green;
 }
 

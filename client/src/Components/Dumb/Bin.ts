@@ -57,9 +57,9 @@ export default class Bin extends React.Component<BinProps, BinState> {
             {
                 className: [
                     'bin',
+                    props.isSelected ? 'selected' : '',
                     props.isAvailable ? 'available' : '',
                     props.isPending ? 'pending' : '',
-                    props.isSelected ? 'selected' : '',
                     'noselect'
                 ].join(' '),
                 onClick: props.isEditing ?
