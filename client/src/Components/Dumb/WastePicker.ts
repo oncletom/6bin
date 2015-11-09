@@ -3,12 +3,12 @@
 import * as React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-import SVGComponent from './SVG';
-import { BinData } from './Bin';
-import { binDico } from '../../binTypes'
+import * as SVGComponent from 'react-inlinesvg';
+import { BinPartialData } from './Bin';
+import { binDico } from '../../binTypes';
 
 interface WastePickerProps{
-    addBin: (bin: BinData) => void;
+    onWasteSelection: (delta: BinPartialData) => void;
 }
 
 interface WastePickerState{}
@@ -23,21 +23,10 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
             return React.createElement('li', {
                     key: type,
                     onClick: () => {
-
-                        var bin = {
-                            position: 123,
-                            type: type,
-                            imageURL: url,
-                            isAvailable: true,
-                            isPending: false,
-                            isEditing: false,
-                            isSelected: false
-                        };
-
-                        props.addBin(bin);
+                        props.onWasteSelection({ type });
                     }
                 },
-                React.createElement(SVGComponent, {path: url}),
+                React.createElement(SVGComponent, {src: url}),
                 React.createElement('div', {}, type)
             )
         });

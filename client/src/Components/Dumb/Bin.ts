@@ -4,16 +4,22 @@ import * as React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Map } from 'immutable';
 
-import SVGComponent from './SVG';
+import * as SVGComponent from 'react-inlinesvg';
 
-// import { DragSource } from 'react-dnd';
+// import SVGComponent from './SVG';
+import { binDico } from '../../binTypes'
 
 export interface BinData {
     // id: number;
     position: number;
     type: string;
-    imageURL: string;
     isAvailable: boolean;
+}
+
+export interface BinPartialData {
+    position?: number;
+    type?: string;
+    isAvailable?: boolean;
 }
 
 export interface BinProps extends BinData{
@@ -21,10 +27,9 @@ export interface BinProps extends BinData{
     isPending: boolean;
     isEditing: boolean;
     isSelected: boolean;
-    onWasteSelectionModeActivation: (id: number, isAvailable: boolean) => void;
-    onBinAvailabilityChange: (id: number, isAvailable: boolean) => void;
-    onBinSelection: (id: number) => void;
-    onBinDeletion: (id: number) => void;
+    onAvailabilityChange: (id: number, isAvailable: boolean) => void;
+    onSelection: (id: number) => void;
+    onDeletion: (id: number) => void;
 }
 
 interface BinState{}
@@ -39,10 +44,14 @@ export default class Bin extends React.Component<BinProps, BinState> {
         var deleteButton = props.isEditing ? 
             React.createElement('div', {
                 onClick: () => {
-                    props.onBinDeletion(props.id);
+                    props.onDeletion(props.id);
                 }
             }, 'SUPPR')
             : undefined ;
+
+        var imageURL = binDico.get(props.type);
+
+        var mySVG = React.createElement(SVGComponent, {key: props.type, src: imageURL}, );
 
         var actualElement = React.createElement('div', 
             {
@@ -57,13 +66,13 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     // select/deselect Bin
                     () => { 
                         var toSelect: number = props.isSelected ? undefined : props.id;
-                        props.onBinSelection(toSelect);
+                        props.onSelection(toSelect);
                     }
                     // set Bin Availability
-                    : () => { props.onBinAvailabilityChange(props.id, !props.isAvailable) }
+                    : () => { props.onAvailabilityChange(props.id, !props.isAvailable) }
             },
             React.createElement('div', {}, props.position),
-            React.createElement(SVGComponent, {path: props.imageURL}),
+            mySVG,
             React.createElement('div', {}, props.type)
         );
 

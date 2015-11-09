@@ -12,10 +12,11 @@ interface BinListProps{
     selectedBin: number;
     isEditing: boolean;
     isAdding: boolean;
+    isSelecting: boolean;
     onBinAvailabilityChange: (index: number, isAvailable: boolean) => void;
     onBinSelection: (index: number) => void;
     onBinDeletion: (index: number) => void;
-    onWasteSelectionModeActivation: (isAdding: boolean) => void;
+    onAddModeActivation: (isAddingBin: boolean) => void;
 }
 
 interface BinListState{}
@@ -32,28 +33,26 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 id: index,
                 position: bin.position,
                 type: bin.type,
-                imageURL: bin.imageURL,
                 isAvailable: bin.isAvailable,
                 isSelected: props.selectedBin === index,
                 // isPending: bin.isPending,
                 isEditing: props.isEditing,
-                onBinAvailabilityChange: props.onBinAvailabilityChange,
-                onBinSelection: props.onBinSelection,
-                onBinDeletion: props.onBinDeletion,
-                onWasteSelectionModeActivation: props.onWasteSelectionModeActivation
+                onAvailabilityChange: props.onBinAvailabilityChange,
+                onSelection: props.onBinSelection,
+                onDeletion: props.onBinDeletion
             });
         });
 
         if (props.isEditing){
-            var addBinButton = React.createElement('li', {
+            var addButton = React.createElement('li', {
                 id: 'add-bin',
                 key: binList.length,
                 onClick: () => {
-                    props.onWasteSelectionModeActivation(!props.isAdding);
+                    props.onAddModeActivation(!props.isAdding);
                 }
             }, 'Ajouter benne');
 
-            binList.push(addBinButton);
+            binList.push(addButton);
         }
 
         return React.createElement('ul', {className: 'bins'},

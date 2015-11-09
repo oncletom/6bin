@@ -30,11 +30,11 @@ render(React.createElement(Provider, {store},
 );
 
 var myNewBins = List<BinData>([
-    { position: 0, type: 'AMEUBLEMENT', imageURL: '/img/waste/Ameublement.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 1, type: 'BATTERIES', imageURL: '/img/waste/Batteries.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 2, type: 'BOIS', imageURL: '/img/waste/Bois.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 3, type: 'ECRANS', imageURL: '/img/waste/Ecrans.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 4, type: 'METAUX', imageURL: '/img/waste/Metaux.svg', isAvailable: true, isPending: false, isSelected: false }
+    { position: 0, type: 'CARTONS', isAvailable: true },
+    { position: 1, type: 'BATTERIES', isAvailable: true },
+    { position: 2, type: 'BOIS', isAvailable: true },
+    { position: 3, type: 'ECRANS', isAvailable: true },
+    { position: 4, type: 'EXTINCTEURS', isAvailable: true }
 ]);
 
 
