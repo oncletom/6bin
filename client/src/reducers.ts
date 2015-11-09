@@ -7,7 +7,7 @@ import { BinData } from './Components/Dumb/Bin';
 import { Action } from './actions';
 import { SET_BINS, SAVE_BINS, ADD_BIN, UPDATE_BIN, DELETE_BIN, SET_BIN_AVAILABILITY } from './actions';
 import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
-import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, SET_WASTE_SELECT_MODE, SELECT_BIN } from './actions';
+import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN } from './actions';
 
 // console.log('ACTION TYPE', Action);
 // var Action = Action;
@@ -64,14 +64,14 @@ function pending (state = initialPendingState, action: Action){
 interface DisplayState {
     isEditingBins: boolean;
     isAddingBins: boolean;
-    hasBinSelected: boolean;
+    isBinPanelOpen: boolean;
     selectedBin: number;
 }
 
 var displayState: DisplayState = {
     isEditingBins: false,
     isAddingBins: false,
-    hasBinSelected: false,
+    isBinPanelOpen: false,
     selectedBin: undefined
 };
 
@@ -85,8 +85,8 @@ function display (state = initialDisplayState, action: Action){
         case SET_BIN_ADD_MODE:
             return state.set('isAddingBins', action.isAddingBins);
 
-        case SET_WASTE_SELECT_MODE:
-            return state.set('hasBinSelected', action.hasBinSelected);
+        case OPEN_BIN_PANEL:
+            return state.set('isBinPanelOpen', action.isBinPanelOpen);
 
         case SELECT_BIN:
             return state.set('selectedBin', action.id);

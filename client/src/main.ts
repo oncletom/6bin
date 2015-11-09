@@ -12,7 +12,7 @@ import { List } from 'immutable';
 import { setBins } from './actions';
 import reducers from './reducers';
 import { logger } from './middleware';
-import Application from './Components/Dumb/Application';
+import Application from './Components/Smart/Application';
 import { BinData } from './Components/Dumb/Bin';
 
 

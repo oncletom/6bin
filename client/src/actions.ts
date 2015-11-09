@@ -14,7 +14,7 @@ export interface Action {
     isPending?: boolean;
     isEditingBins?: boolean;
     isAddingBins?: boolean;
-    hasBinSelected?: boolean;
+    isBinPanelOpen?: boolean;
     pendingAction?: Action;
 }
 
@@ -78,9 +78,9 @@ export function setBinAddMode(isAddingBins: boolean) {
     return { type: SET_BIN_ADD_MODE, isAddingBins};
 };
 
-export const SET_WASTE_SELECT_MODE = 'SET_WASTE_SELECT_MODE';
-export function setWasteSelectMode(hasBinSelected: boolean) {
-    return { type: SET_WASTE_SELECT_MODE, hasBinSelected};
+export const OPEN_BIN_PANEL = 'OPEN_BIN_PANEL';
+export function openBinPanel(isBinPanelOpen: boolean) {
+    return { type: OPEN_BIN_PANEL, isBinPanelOpen};
 };
 
 // Pending Actions
