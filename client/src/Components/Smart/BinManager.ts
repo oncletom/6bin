@@ -43,12 +43,12 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         var isEditingBins: boolean = display.get('isEditingBins');
         var isSelectingWaste: boolean = display.get('isSelectingWaste');
         var isAddingBins: boolean = display.get('isAddingBins');
-        var selectedBin: number = display.get('selectedBin');
+        var selectedId: number = display.get('selectedBin');
 
         // Create the bin list
         var binList = React.createElement(BinList, {
             bins,
-            selectedBin,
+            selectedId,
             isEditing: isEditingBins,
             isAdding: isAddingBins,
             isSelectingWaste: isSelectingWaste,
@@ -91,40 +91,44 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
         // Create the button to edit bins
         var editBinsButton = React.createElement('button', {
-            id: 'modify-bins',
-            className: isEditingBins ? 'editing' : '',
-            onClick: () => {
-                if(!isEditingBins)
-                    dispatch(
-                        setBinEditMode(true));
-                else {
-                    // after actions will be dispatched after async action
-                    var action = saveBins(bins);
+                id: 'modify-bins',
+                className: isEditingBins ? 'editing' : '',
+                onClick: () => {
+                    if(!isEditingBins)
+                        dispatch(
+                            setBinEditMode(true));
+                    else {
+                        // after actions will be dispatched after async action
+                        var action = saveBins(bins);
 
-                    dispatch(
-                        setBinEditMode(false));
-                    dispatch(
-                        selectBin(undefined));
-                    dispatch(
-                        addPendingAction(nextPending, action)); // this could be used in a middleware
+                        dispatch(
+                            setBinEditMode(false));
+                        dispatch(
+                            selectBin(undefined));
+                        dispatch(
+                            addPendingAction(nextPending, action)); // this could be used in a middleware
 
-                    var after = [deletePendingAction(nextPending)];
-                    nextPending ++;
+                        var after = [deletePendingAction(nextPending)];
+                        nextPending ++;
 
-                    dispatch(
-                        sendData(action, after));
+                        dispatch(
+                            sendData(action, after));
+                    }
+                        
+                    if (isSelectingWaste)
+                        dispatch(
+                            setWasteSelectMode(false));
                 }
-                    
-                if (isSelectingWaste)
-                    dispatch(
-                        setWasteSelectMode(false));
-            }
-        }, 'Modifier les conteneurs');
+            }, 
+            isEditingBins ? 'Valider': 'Modifier les conteneurs'
+        );
 
         // Create the panel with all bin types used to add bins
         var binSelector = isEditingBins && isSelectingWaste ?
             React.createElement(WastePicker, {
+                type: bins.get(selectedId) ? bins.get(selectedId).type : undefined,
                 onWasteSelection: (delta: BinPartialData) => {
+                    // when waste selected, add Bin, select it and disable Add mode
                     if (isAddingBins){
                         var newBin = Object.assign(delta, {
                             position: bins.size,
@@ -133,10 +137,14 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
                         dispatch(
                             addBin(newBin));
+                        dispatch(
+                            selectBin(newBin.position));
+                        dispatch(
+                            setBinAddMode(false));
                     }
                     else
                         dispatch(
-                            updateBin(selectedBin, delta));
+                            updateBin(selectedId, delta));
                 }
             })
             : undefined;

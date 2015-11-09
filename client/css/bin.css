@@ -19,6 +19,10 @@ svg {
 	width: 5em; height: 5em;
 }
 
+.current{
+	color: #BBB; stroke: #BBB; fill: #BBB;
+}
+
 .bin.available {
 	color: blue; stroke: blue; fill: blue;
 }

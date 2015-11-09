@@ -43,7 +43,7 @@ export default class SVGComponent extends React.Component<SVGProps, SVGState> {
 
     componentDidMount (){
         // console.log('SVG', this.refs.svg);
-        SVGInjector([this.getDOMNode()], svgConfig(this.props));
+        SVGInjector([this.refs.svg], svgConfig(this.props));
 
     }
 

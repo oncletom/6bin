@@ -8,6 +8,7 @@ import { BinPartialData } from './Bin';
 import { binDico } from '../../binTypes';
 
 interface WastePickerProps{
+    type: string;
     onWasteSelection: (delta: BinPartialData) => void;
 }
 
@@ -18,10 +19,12 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
 
     render() {
         var props = this.props;
+        
 
         var bins = binDico.map((url: string, type: string) => {
             return React.createElement('li', {
                     key: type,
+                    className: props.type === undefined || props.type === type ? '' : 'current',
                     onClick: () => {
                         props.onWasteSelection({ type });
                     }

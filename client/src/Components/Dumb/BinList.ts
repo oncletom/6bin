@@ -9,7 +9,7 @@ import { BinData } from './Bin';
 
 interface BinListProps{
     bins: Map<number, BinData>;
-    selectedBin: number;
+    selectedId: number;
     isEditing: boolean;
     isAdding: boolean;
     isSelecting: boolean;
@@ -34,7 +34,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 position: bin.position,
                 type: bin.type,
                 isAvailable: bin.isAvailable,
-                isSelected: props.selectedBin === index,
+                isSelected: props.selectedId === index,
                 // isPending: bin.isPending,
                 isEditing: props.isEditing,
                 onAvailabilityChange: props.onBinAvailabilityChange,
