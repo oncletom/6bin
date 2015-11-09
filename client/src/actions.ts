@@ -14,7 +14,7 @@ export interface Action {
     isPending?: boolean;
     isEditingBins?: boolean;
     isAddingBins?: boolean;
-    isSelectingWaste?: boolean;
+    hasBinSelected?: boolean;
     pendingAction?: Action;
 }
 
@@ -79,8 +79,8 @@ export function setBinAddMode(isAddingBins: boolean) {
 };
 
 export const SET_WASTE_SELECT_MODE = 'SET_WASTE_SELECT_MODE';
-export function setWasteSelectMode(isSelectingWaste: boolean) {
-    return { type: SET_WASTE_SELECT_MODE, isSelectingWaste};
+export function setWasteSelectMode(hasBinSelected: boolean) {
+    return { type: SET_WASTE_SELECT_MODE, hasBinSelected};
 };
 
 // Pending Actions

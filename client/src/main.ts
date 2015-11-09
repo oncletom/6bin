@@ -12,7 +12,7 @@ import { List } from 'immutable';
 import { setBins } from './actions';
 import reducers from './reducers';
 import { logger } from './middleware';
-import BinManager from './Components/Smart/BinManager';
+import Application from './Components/Dumb/Application';
 import { BinData } from './Components/Dumb/Bin';
 
 
@@ -24,7 +24,7 @@ var store = createStoreWithMiddleware(reducers);
 
 render(React.createElement(Provider, {store},
     React.createElement(
-        BinManager
+        Application
     )), 
 	document.getElementById('6bin')
 );

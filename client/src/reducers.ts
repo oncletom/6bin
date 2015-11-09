@@ -64,14 +64,14 @@ function pending (state = initialPendingState, action: Action){
 interface DisplayState {
     isEditingBins: boolean;
     isAddingBins: boolean;
-    isSelectingWaste: boolean;
+    hasBinSelected: boolean;
     selectedBin: number;
 }
 
 var displayState: DisplayState = {
     isEditingBins: false,
     isAddingBins: false,
-    isSelectingWaste: false,
+    hasBinSelected: false,
     selectedBin: undefined
 };
 
@@ -86,7 +86,7 @@ function display (state = initialDisplayState, action: Action){
             return state.set('isAddingBins', action.isAddingBins);
 
         case SET_WASTE_SELECT_MODE:
-            return state.set('isSelectingWaste', action.isSelectingWaste);
+            return state.set('hasBinSelected', action.hasBinSelected);
 
         case SELECT_BIN:
             return state.set('selectedBin', action.id);

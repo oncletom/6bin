@@ -9,6 +9,7 @@ import { binDico } from '../../binTypes';
 
 interface WastePickerProps{
     type: string;
+    isAddingBins: boolean;
     onWasteSelection: (delta: BinPartialData) => void;
 }
 
@@ -20,7 +21,7 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
     render() {
         var props = this.props;
         
-
+        // create the binPicker buttons
         var bins = binDico.map((url: string, type: string) => {
             return React.createElement('li', {
                     key: type,
@@ -33,7 +34,7 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
                 React.createElement('div', {}, type)
             )
         });
-
+        
         return React.createElement('ul', {className: 'bins'},
             bins.toList()
         );

@@ -41,7 +41,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             nextPending = 0; // reinitializing the pending actions counter
 
         var isEditingBins: boolean = display.get('isEditingBins');
-        var isSelectingWaste: boolean = display.get('isSelectingWaste');
+        var hasBinSelected: boolean = display.get('hasBinSelected');
         var isAddingBins: boolean = display.get('isAddingBins');
         var selectedId: number = display.get('selectedBin');
 
@@ -51,7 +51,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             selectedId,
             isEditing: isEditingBins,
             isAdding: isAddingBins,
-            isSelectingWaste: isSelectingWaste,
+            hasBinSelected: hasBinSelected,
             onBinAvailabilityChange: (id: number, isAvailable: boolean) => { 
                 if (!isEditingBins){
                     // after actions will be dispatched after async action
@@ -115,7 +115,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                             sendData(action, after));
                     }
                         
-                    if (isSelectingWaste)
+                    if (hasBinSelected)
                         dispatch(
                             setWasteSelectMode(false));
                 }
@@ -123,31 +123,31 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             isEditingBins ? 'Valider': 'Modifier les conteneurs'
         );
 
-        // Create the panel with all bin types used to add bins
-        var binSelector = isEditingBins && isSelectingWaste ?
-            React.createElement(WastePicker, {
-                type: bins.get(selectedId) ? bins.get(selectedId).type : undefined,
-                onWasteSelection: (delta: BinPartialData) => {
-                    // when waste selected, add Bin, select it and disable Add mode
-                    if (isAddingBins){
-                        var newBin = Object.assign(delta, {
-                            position: bins.size,
-                            isAvailable: true
-                        });
+        // // Create the panel with all bin types used to add bins
+        // var binSelector = hasBinSelected ?
+        //     React.createElement(WastePicker, {
+        //         type: bins.get(selectedId) ? bins.get(selectedId).type : undefined,
+        //         onWasteSelection: (delta: BinPartialData) => {
+        //             // when waste selected, add Bin, select it and disable Add mode
+        //             if (isAddingBins){
+        //                 var newBin = Object.assign(delta, {
+        //                     position: bins.size,
+        //                     isAvailable: true
+        //                 });
 
-                        dispatch(
-                            addBin(newBin));
-                        dispatch(
-                            selectBin(newBin.position));
-                        dispatch(
-                            setBinAddMode(false));
-                    }
-                    else
-                        dispatch(
-                            updateBin(selectedId, delta));
-                }
-            })
-            : undefined;
+        //                 dispatch(
+        //                     addBin(newBin));
+        //                 dispatch(
+        //                     selectBin(newBin.position));
+        //                 dispatch(
+        //                     setBinAddMode(false));
+        //             }
+        //             else
+        //                 dispatch(
+        //                     updateBin(selectedId, delta));
+        //         }
+        //     })
+        //     : undefined;
 
         // Create the info text
         var infos: ReactElement<any>;
@@ -167,7 +167,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         return React.createElement('div', {id: 'bin-manager'}, 
             binList,
             editBinsButton,
-            binSelector,
+            // binSelector,
             infos
         );
     }
