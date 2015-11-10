@@ -5,7 +5,7 @@ import { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import WastePicker from '../Dumb/WastePicker';
@@ -21,7 +21,7 @@ interface ReduxPropsMixin{
 }
 
 interface BinManagerProps extends ReduxPropsMixin{
-    bins: List<BinProps>;
+    bins: Map<string, BinProps>;
     pending: Map<number, Action>;
     display: Map<string, any>;
 }
@@ -43,7 +43,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         var isEditingBins: boolean = display.get('isEditingBins');
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBins: boolean = display.get('isAddingBins');
-        var selectedId: number = display.get('selectedBin');
+        var selectedId: string = display.get('selectedBin');
 
         // Create the bin list
         var binList = React.createElement(BinList, {
@@ -52,7 +52,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             isEditing: isEditingBins,
             isAdding: isAddingBins,
             isBinPanelOpen: isBinPanelOpen,
-            onBinAvailabilityChange: (id: number, isAvailable: boolean) => { 
+            onBinAvailabilityChange: (id: string, isAvailable: boolean) => { 
                 if (!isEditingBins){
                     // after actions will be dispatched after async action
                     var action = setBinAvailability(id, isAvailable);
@@ -67,7 +67,8 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                         sendData(action, after));
                 }        
             },
-            onBinSelection: (id: number) => {
+            onBinSelection: (id: string) => {
+                console.log('Selected', id);
                 dispatch(
                     selectBin(id));
                 dispatch(
@@ -76,7 +77,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                     dispatch(
                         setBinAddMode(false));
             },
-            onBinDeletion: (id: number) => {
+            onBinDeletion: (id: string) => {
                 dispatch(
                     selectBin(undefined));
                 dispatch(

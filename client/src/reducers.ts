@@ -13,7 +13,7 @@ import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN } from 
 // var Action = Action;
 
 // Bins is the state of all bins
-var initialBinState = List<BinData>([]);
+var initialBinState = Map<string, BinData>({});
 function bins (state = initialBinState, action: Action) {
     switch (action.type) {
         case SET_BINS:
@@ -23,11 +23,10 @@ function bins (state = initialBinState, action: Action) {
             return state;
             
         case ADD_BIN:
-            return state.push(action.bin);
+            return state.set(action.bin.id, action.bin);
 
         case UPDATE_BIN:
             var updatedBin = Object.assign({}, state.get(action.id), action.delta);
-            console.log('updated', updatedBin);
             return state.set(action.id, updatedBin);
 
         case DELETE_BIN:
@@ -50,10 +49,10 @@ var initialPendingState = Map<number, Action>({});
 function pending (state = initialPendingState, action: Action){
     switch (action.type) {
         case ADD_PENDING_ACTION:
-            return state.set(action.id, action.pendingAction);
+            return state.set(action.index, action.pendingAction);
 
         case DELETE_PENDING_ACTION:
-            return state.delete(action.id);
+            return state.delete(action.index);
 
         default:
             return state;
@@ -65,7 +64,7 @@ interface DisplayState {
     isEditingBins: boolean;
     isAddingBins: boolean;
     isBinPanelOpen: boolean;
-    selectedBin: number;
+    selectedBin: string;
 }
 
 var displayState: DisplayState = {

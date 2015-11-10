@@ -13,9 +13,9 @@ interface BinListProps{
     isEditing: boolean;
     isAdding: boolean;
     isSelecting: boolean;
-    onBinAvailabilityChange: (index: number, isAvailable: boolean) => void;
-    onBinSelection: (index: number) => void;
-    onBinDeletion: (index: number) => void;
+    onBinAvailabilityChange: (index: string, isAvailable: boolean) => void;
+    onBinSelection: (index: string) => void;
+    onBinDeletion: (index: string) => void;
     onAddModeActivation: (isAddingBin: boolean) => void;
 }
 
@@ -27,10 +27,10 @@ export default class BinList extends React.Component<BinListProps, BinListState>
     render() {
         var props = this.props;
 
-        var binList = props.bins.toJS().map((bin: BinData, index: number) => {
+        var binList = props.bins.toList().map((bin: BinData, index: number) => {
             return React.createElement(Bin, {
                 key: index,
-                id: index,
+                id: bin.id,
                 position: bin.position,
                 type: bin.type,
                 isAvailable: bin.isAvailable,
@@ -41,7 +41,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 onSelection: props.onBinSelection,
                 onDeletion: props.onBinDeletion
             });
-        });
+        }).toJS();
 
         if (props.isEditing){
 
