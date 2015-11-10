@@ -4,7 +4,6 @@ import * as React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { List, Map } from 'immutable';
 
 import { State, Action } from '../../actions';
 import BinManager from '../Smart/BinManager';
@@ -29,8 +28,6 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBin: boolean = display.get('isAddingBin');
-
-        console.log('props', isBinPanelOpen, isAddingBin);
 
         return React.createElement('div', {},
             React.createElement(BinManager),

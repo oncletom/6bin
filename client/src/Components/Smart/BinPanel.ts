@@ -5,10 +5,11 @@ import { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { List, Map } from 'immutable';
+import { Set, List } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import WastePicker from '../Dumb/WastePicker';
+import PositionPicker from '../Dumb/PositionPicker';
 import { BinData, BinPartialData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { addBin, updateBin, selectBin } from '../../actions'; // Bin actions
@@ -38,7 +39,7 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
         var isAddingBins: boolean = display.get('isAddingBins');
         var selectedId: number = display.get('selectedBin');
  
-        // Create the panel with all bin types used to add bins
+        // Create the list with all bin types
         var wastePicker = React.createElement(WastePicker, {
             type: bins.get(selectedId) ? bins.get(selectedId).type : undefined,
             onWasteSelection: (delta: BinPartialData) => {
@@ -62,9 +63,22 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
             }
         });
 
+        // Create the list with all positions
+        var assigned = Set(bins.map((bin: BinData) => {
+            return bin.position;
+        }));
+
+        var positionPicker = React.createElement(PositionPicker, {
+            assigned: assigned,
+            max: 30,
+            onPositionSelection: () => {
+                console.log('YOUOHU')
+            }
+        });
+
         return React.createElement('div', {id: 'editor'}, 
-            wastePicker
-            // positionSelector
+            wastePicker,
+            positionPicker
         );
     }
 };

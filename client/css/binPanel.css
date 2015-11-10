@@ -1,0 +1,15 @@
+.current{
+	color: #BBB; stroke: #BBB; fill: #BBB;
+}
+
+.positions {
+	list-style-type: none;
+}
+
+.positions li {
+	display: inline-block;
+}
+
+.positions li.assigned {
+	color: orange;
+}

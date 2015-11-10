@@ -71,7 +71,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 dispatch(
                     selectBin(id));
                 dispatch(
-                    openBinPanel(id)); // close panel when id === undefined
+                    openBinPanel(id !== undefined)); // close panel when id === undefined
                 if (isAddingBins) 
                     dispatch(
                         setBinAddMode(false));
@@ -81,7 +81,6 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                     deleteBin(id));
             },
             onAddModeActivation: () => {
-                console.log('TEST', isAddingBins);
                 if (isBinPanelOpen)
                     dispatch(
                         selectBin(undefined));

@@ -9,7 +9,6 @@ import { binDico } from '../../binTypes';
 
 interface WastePickerProps{
     type: string;
-    isAddingBins: boolean;
     onWasteSelection: (delta: BinPartialData) => void;
 }
 

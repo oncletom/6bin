@@ -6,21 +6,17 @@
 }
 
 .bins li {
-	margin: 2em; padding: .5em;
+	margin: .5rem 2rem; padding: .5rem;
 	list-style-type: none;
 }
 
 .bin {
-	outline: 1px solid black; padding: .2em;
+	outline: 1px solid black; padding: .2rem;
 	cursor: pointer;
 }
 
 svg {
-	width: 5em; height: 5em;
-}
-
-.current{
-	color: #BBB; stroke: #BBB; fill: #BBB;
+	width: 5rem; height: 5rem;
 }
 
 .bin.available {

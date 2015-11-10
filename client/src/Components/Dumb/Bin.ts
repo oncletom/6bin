@@ -65,7 +65,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
                 onClick: props.isEditing ?
                     // select/deselect Bin
                     () => { 
-                        var toSelect: number = props.isSelected ? undefined : props.id;
+                        var toSelect: number = props.isSelected ? undefined : props.position - 1;
                         props.onSelection(toSelect);
                     }
                     // set Bin Availability

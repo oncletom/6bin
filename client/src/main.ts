@@ -30,11 +30,11 @@ render(React.createElement(Provider, {store},
 );
 
 var myNewBins = List<BinData>([
-    { position: 0, type: 'CARTONS', isAvailable: true },
-    { position: 1, type: 'BATTERIES', isAvailable: true },
-    { position: 2, type: 'BOIS', isAvailable: true },
-    { position: 3, type: 'ECRANS', isAvailable: true },
-    { position: 4, type: 'EXTINCTEURS', isAvailable: true }
+    { position: 1, type: 'CARTONS', isAvailable: true },
+    { position: 2, type: 'BATTERIES', isAvailable: true },
+    { position: 3, type: 'BOIS', isAvailable: true },
+    { position: 4, type: 'ECRANS', isAvailable: true },
+    { position: 5, type: 'EXTINCTEURS', isAvailable: true }
 ]);
 
 
