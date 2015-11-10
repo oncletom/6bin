@@ -78,6 +78,8 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             },
             onBinDeletion: (id: number) => {
                 dispatch(
+                    selectBin(undefined));
+                dispatch(
                     deleteBin(id));
             },
             onAddModeActivation: () => {
