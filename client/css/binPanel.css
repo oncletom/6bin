@@ -7,9 +7,15 @@
 }
 
 .positions li {
-	display: inline-block;
+	display: inline-block; margin: .2rem; padding: .2rem;
+	font-size: 3rem;
+	cursor: pointer;
 }
 
 .positions li.assigned {
-	color: orange;
+	color: orange; font-size: 2rem;
+}
+
+.positions li.selected {
+	border: 1px solid black; border-radius: 50%;
 }

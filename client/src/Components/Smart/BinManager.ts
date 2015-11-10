@@ -125,32 +125,6 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             isEditingBins ? 'Valider': 'Modifier les conteneurs'
         );
 
-        // // Create the panel with all bin types used to add bins
-        // var binSelector = isBinPanelOpen ?
-        //     React.createElement(WastePicker, {
-        //         type: bins.get(selectedId) ? bins.get(selectedId).type : undefined,
-        //         onWasteSelection: (delta: BinPartialData) => {
-        //             // when waste selected, add Bin, select it and disable Add mode
-        //             if (isAddingBins){
-        //                 var newBin = Object.assign(delta, {
-        //                     position: bins.size,
-        //                     isAvailable: true
-        //                 });
-
-        //                 dispatch(
-        //                     addBin(newBin));
-        //                 dispatch(
-        //                     selectBin(newBin.position));
-        //                 dispatch(
-        //                     setBinAddMode(false));
-        //             }
-        //             else
-        //                 dispatch(
-        //                     updateBin(selectedId, delta));
-        //         }
-        //     })
-        //     : undefined;
-
         // Create the info text
         var infos: ReactElement<any>;
 
@@ -169,7 +143,6 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         return React.createElement('div', {id: 'bin-manager'}, 
             binList,
             editBinsButton,
-            // binSelector,
             infos
         );
     }

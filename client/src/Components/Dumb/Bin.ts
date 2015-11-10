@@ -10,7 +10,6 @@ import * as SVGComponent from 'react-inlinesvg';
 import { binDico } from '../../binTypes'
 
 export interface BinData {
-    // id: number;
     position: number;
     type: string;
     isAvailable: boolean;
@@ -23,7 +22,7 @@ export interface BinPartialData {
 }
 
 export interface BinProps extends BinData{
-    id: number;
+    id: number; // separating id from position is relevant because you might have bin without associated position
     isPending: boolean;
     isEditing: boolean;
     isSelected: boolean;
@@ -65,7 +64,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
                 onClick: props.isEditing ?
                     // select/deselect Bin
                     () => { 
-                        var toSelect: number = props.isSelected ? undefined : props.position - 1;
+                        var toSelect: number = props.isSelected ? undefined : props.id;
                         props.onSelection(toSelect);
                     }
                     // set Bin Availability

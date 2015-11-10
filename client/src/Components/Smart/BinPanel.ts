@@ -38,22 +38,22 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBins: boolean = display.get('isAddingBins');
         var selectedId: number = display.get('selectedBin');
- 
+
         // Create the list with all bin types
         var wastePicker = React.createElement(WastePicker, {
-            type: bins.get(selectedId) ? bins.get(selectedId).type : undefined,
+            type: selectedId !== undefined ? bins.get(selectedId).type : undefined, // bins is a list, from 0 to n-1
             onWasteSelection: (delta: BinPartialData) => {
                 // when waste selected, add Bin, select it and disable Add mode
                 if (isAddingBins){
                     var newBin = Object.assign(delta, {
-                        position: bins.size,
+                        id: bins.size,
                         isAvailable: true
                     });
 
                     dispatch(
                         addBin(newBin));
                     dispatch(
-                        selectBin(newBin.position));
+                        selectBin(newBin.id));
                     dispatch(
                         setBinAddMode(false));
                 }
@@ -68,13 +68,16 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
             return bin.position;
         }));
 
-        var positionPicker = React.createElement(PositionPicker, {
-            assigned: assigned,
-            max: 30,
-            onPositionSelection: () => {
-                console.log('YOUOHU')
-            }
-        });
+        var positionPicker = !isAddingBins ?
+            React.createElement(PositionPicker, {
+                assigned: assigned,
+                max: 30,
+                selected: selectedId !== undefined ? bins.get(selectedId).position : undefined,
+                onPositionSelection: () => {
+                    console.log('YOUOHU')
+                }
+            })
+            : undefined;
 
         return React.createElement('div', {id: 'editor'}, 
             wastePicker,
