@@ -14,7 +14,7 @@ interface PositionPickerProps{
     assigned: Set<number>;
     max: number;
     selected: number;
-    onWasteSelection: (delta: BinPartialData) => void;
+    onPositionSelection: (position: number) => void;
 }
 
 interface PositionPickerState{}
@@ -36,7 +36,7 @@ export default class PositionPicker extends React.Component<PositionPickerProps,
                         props.selected === position ? 'selected': ''
                     ].join(' '),
                     onClick: () => {
-                        console.log('YOUHOU', position);
+                        props.onPositionSelection(position);
                     }
                 },
                 position

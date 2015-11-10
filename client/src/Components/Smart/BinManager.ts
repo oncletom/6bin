@@ -12,7 +12,7 @@ import WastePicker from '../Dumb/WastePicker';
 import { BinData, BinPartialData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { sendData } from '../../actions'; // async Actions
-import { addBin, updateBin, deleteBin, setBinAvailability, saveBins } from '../../actions'; // Bin actions
+import { addBin, deleteBin, setBinAvailability, saveBins } from '../../actions'; // Bin actions
 import { setBinEditMode, openBinPanel, setBinAddMode, selectBin } from '../../actions'; // Display actions
 import { addPendingAction, deletePendingAction } from '../../actions'; // Pending actions
 
