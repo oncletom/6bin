@@ -43,33 +43,27 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
         var wastePicker = React.createElement(WastePicker, {
             type: selectedId !== undefined ? bins.get(selectedId).type : undefined, // bins is a list, from 0 to n-1
             onWasteSelection: (type: string) => {
-                var delta: BinPartialData = { type };
 
                 // check how many bin of same type are present in bins (say n), and create the new bin with the id type + n+1
                 var nextId: number = 1;
 
-                bins.forEach((bin: BinData) => {                    
+                bins.forEach((bin: BinData) => {
                     if (bin.type === type)
                         nextId ++;
                 });
 
                 // when waste selected, add Bin, select it and disable Add mode
                 if (isAddingBins){
-                    var newBin = Object.assign(delta, {
-                        id: type + '_' + nextId,
-                        isAvailable: true
-                    });
-
                     dispatch(
-                        addBin(newBin.id, newBin));
+                        addBin(nextId, type));
                     dispatch(
-                        selectBin(newBin.id));
+                        selectBin(type + '_' + nextId)); // the newly created bin has an id such as TYPE_1
                     dispatch(
                         setBinAddMode(false));
                 }
                 else
                     dispatch(
-                        updateBin(selectedId, delta));
+                        updateBin(selectedId, { type }));
             }
         });
 

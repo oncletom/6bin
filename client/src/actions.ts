@@ -6,8 +6,9 @@ import * as io from 'socket.io-client';
 
 export interface Action {
     type: string;
+    waste?: string;
     bins?: Map<string, BinData>;
-    bin?: BinData;
+    // bin?: BinData;
     delta?: BinPartialData;
     index?: number;
     id?: string;
@@ -23,6 +24,7 @@ export interface State {
     display: Map<string, any>;
     pending: Map<number, Action>;
     bins: Map<string, BinData>;
+    tempBins: Map<string, BinData>;
 }
 
 export interface Request {
@@ -39,8 +41,8 @@ export function setBins(bins: Map<string, BinData>) {
 };
 
 export const ADD_BIN = 'ADD_BIN';
-export function addBin(id: string, bin: BinData) {
-    return { type: ADD_BIN, id, bin };
+export function addBin(id: number, waste: string) {
+    return { type: ADD_BIN, id, waste };
 };
 
 export const UPDATE_BIN = 'UPDATE_BIN';

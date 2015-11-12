@@ -9,7 +9,7 @@ import { BinData } from './Bin';
 
 interface BinListProps{
     bins: Map<number, BinData>;
-    selectedId: number;
+    selectedId: string;
     isEditing: boolean;
     isAdding: boolean;
     isSelecting: boolean;

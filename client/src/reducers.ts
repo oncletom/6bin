@@ -10,9 +10,6 @@ import { STORE_TEMP_BINS, CLEAR_TEMP_BINS } from './actions';
 import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
 import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN } from './actions';
 
-// console.log('ACTION TYPE', Action);
-// var Action = Action;
-
 // Bins is the state of all bins
 var initialBinState = Map<string, BinData>({});
 function bins (state = initialBinState, action: Action) {
@@ -25,7 +22,16 @@ function bins (state = initialBinState, action: Action) {
             return state;
             
         case ADD_BIN:
-            return state.set(action.bin.id, action.bin);
+            console.log('action', action);
+
+            var newBin: BinData = {
+                id: action.waste + '_' + action.id,
+                isAvailable: true,
+                type: action.waste,
+                position: undefined
+            };
+
+            return state.set(newBin.id, newBin);
 
         case UPDATE_BIN:
             var updatedBin = Object.assign({}, state.get(action.id), action.delta);
