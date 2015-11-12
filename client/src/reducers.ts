@@ -6,6 +6,7 @@ import { List, Map } from 'immutable';
 import { BinData } from './Components/Dumb/Bin';
 import { Action } from './actions';
 import { SET_BINS, SAVE_BINS, ADD_BIN, UPDATE_BIN, DELETE_BIN, SET_BIN_AVAILABILITY } from './actions';
+import { STORE_TEMP_BINS, CLEAR_TEMP_BINS } from './actions';
 import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
 import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN } from './actions';
 
@@ -17,7 +18,8 @@ var initialBinState = Map<string, BinData>({});
 function bins (state = initialBinState, action: Action) {
     switch (action.type) {
         case SET_BINS:
-            return state.merge(state, action.bins);
+            return action.bins;
+            // return state.merge(state, action.bins);
 
         case SAVE_BINS: // dummy action, just to be sent over to server
             return state;
@@ -38,6 +40,20 @@ function bins (state = initialBinState, action: Action) {
 
             return state.set(action.id, updatedBin);
 
+        default:
+            return state;
+    }
+}
+
+var initialTempBinState = Map<string, BinData>({});
+function tempBins (state = initialTempBinState, action: Action) {
+    switch (action.type) {
+        case STORE_TEMP_BINS:
+            return state.merge(state, action.bins);
+
+        case CLEAR_TEMP_BINS:
+            return Map({});
+        
         default:
             return state;
     }
@@ -97,6 +113,7 @@ function display (state = initialDisplayState, action: Action){
 
 const binApp = combineReducers({
     bins,
+    tempBins,
     pending,
     display
 });

@@ -12,7 +12,8 @@ import WastePicker from '../Dumb/WastePicker';
 import { BinData, BinPartialData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { sendData } from '../../actions'; // async Actions
-import { addBin, deleteBin, setBinAvailability, saveBins } from '../../actions'; // Bin actions
+import { setBins, addBin, deleteBin, setBinAvailability, saveBins } from '../../actions'; // Bin actions
+import { storeTempBins, clearTempBins } from '../../actions'; // TempBin actions
 import { setBinEditMode, openBinPanel, setBinAddMode, selectBin } from '../../actions'; // Display actions
 import { addPendingAction, deletePendingAction } from '../../actions'; // Pending actions
 
@@ -22,6 +23,7 @@ interface ReduxPropsMixin{
 
 interface BinManagerProps extends ReduxPropsMixin{
     bins: Map<string, BinProps>;
+    tempBins: Map<string, BinProps>;
     pending: Map<number, Action>;
     display: Map<string, any>;
 }
@@ -35,7 +37,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
     render() {
         
-        const { dispatch, bins, pending, display } = this.props;
+        const { dispatch, bins, tempBins, pending, display } = this.props;
 
         if (pending.size === 0)
             nextPending = 0; // reinitializing the pending actions counter
@@ -44,6 +46,8 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBins: boolean = display.get('isAddingBins');
         var selectedId: string = display.get('selectedBin');
+
+        console.log('BINS SIZE', bins.size);
 
         // Create the bin list
         var binList = React.createElement(BinList, {
@@ -99,9 +103,12 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 id: 'modify-bins',
                 className: isEditingBins ? 'editing' : '',
                 onClick: () => {
-                    if(!isEditingBins)
+                    if(!isEditingBins) {
+                        dispatch(
+                            storeTempBins(bins));
                         dispatch(
                             setBinEditMode(true));
+                    }
                     else {
                         // after actions will be dispatched after async action
                         var action = saveBins(bins);
@@ -112,6 +119,9 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                             selectBin(undefined));
                         dispatch(
                             addPendingAction(nextPending, action)); // this could be used in a middleware
+
+                        dispatch(
+                            clearTempBins());
 
                         var after = [deletePendingAction(nextPending)];
                         nextPending ++;
@@ -127,6 +137,23 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             }, 
             isEditingBins ? 'Valider': 'Modifier les conteneurs'
         );
+
+        var cancelButton = isEditingBins ?
+            React.createElement('button', {
+                onClick: () => {
+                    dispatch(
+                        setBins(tempBins));
+                    dispatch(
+                        clearTempBins());
+                    dispatch(
+                        setBinEditMode(false));
+                    dispatch(
+                        openBinPanel(false));
+                    dispatch(
+                        selectBin(undefined));
+                } 
+            }, 'Annuler')
+            : undefined;
 
         // Create the info text
         var infos: ReactElement<any>;
@@ -146,6 +173,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         return React.createElement('div', {id: 'bin-manager'}, 
             binList,
             editBinsButton,
+            cancelButton
             infos
         );
     }
@@ -155,6 +183,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 function select(state: State) {
     return {
         bins: state.bins,
+        tempBins: state.tempBins,
         pending: state.pending, // => maybe should be in another smart component
         display: state.display
     };

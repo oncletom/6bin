@@ -63,6 +63,17 @@ export function saveBins(bins: Map<string, BinData>) {
     return { type: SAVE_BINS, bins };
 };
 
+// Temp Bins
+export const STORE_TEMP_BINS = 'STORE_TEMP_BINS';
+export function storeTempBins(bins: Map<string, BinData>) {
+    return { type: STORE_TEMP_BINS, bins };
+};
+
+export const CLEAR_TEMP_BINS = 'CLEAR_TEMP_BINS';
+export function clearTempBins() {
+    return { type: CLEAR_TEMP_BINS };
+};
+
 // Display Actions
 export const SELECT_BIN = 'SELECT_BIN';
 export function selectBin(id: string) {
