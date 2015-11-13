@@ -150,26 +150,11 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             }, 'Annuler')
             : undefined;
 
-        // Create the info text
-        var infos: ReactElement<any>;
-
-        if (pending.size > 0){
-            var pendingActions = pending.toList().toJS().map((action: Action, key: number) => {
-                return React.createElement('div', {key}, action.type);
-            });
-
-            infos = React.createElement('div', {id: 'infos'},
-                'En cours de transfert:',
-                pendingActions
-            );
-        }        
-
         return React.createElement('div', {id: 'bin-manager'}, 
             binList,
             React.createElement('div', {}, // maybe this could be in App component
                 editBinsButton,
-                cancelButton,
-                infos
+                cancelButton
             )
         );
     }

@@ -1,9 +1,10 @@
 #app {
-	width: 100vw; height: 100vh;
+	display: flex; width: 100vw; height: 100vh;
+	flex-direction: column;
 	background-color:  #CCC;
 }
 
-#app.edit {
+#app.edit, #footer.edit {
 	background-color: #77aaff;
 }
 
@@ -12,7 +13,19 @@
 }
 
 #editor {
+	width: 100vw; margin: 1rem 0;
+	position: absolute; top: 90vh;
 	background-color: #EEE;
+	transition: top .7s ease;
+	z-index: 0;
+}
+
+.panel-open #editor {
+	top: 50vh;
+}
+
+#editor > div:first-child {
+	display: inline-block; position: absolute; bottom: 0; right: 0;
 }
 
 #editor ul {
@@ -25,6 +38,7 @@
 	border: 1px solid black; border-radius: 5px;
 	background-color: #EEE;
 	text-align: center;
+	z-index: 2;
 }
 
 #cancel-bins {
@@ -35,4 +49,15 @@
 	width: 50vw;
 	font-size: .7rem; font-style: italic;
 	background-color: rgba(180, 180, 180, 0.3);
+	z-index: 4;
+}
+
+#footer {
+	position: absolute; height: 10vh; bottom: 0; right: 0; left: 0;
+	background-color: #CCC;
+	z-index: 1;
+}
+
+.edit #footer {
+	background-color: #77aaff;
 }
