@@ -12,7 +12,7 @@ import WastePicker from '../Dumb/WastePicker';
 import { BinData, BinPartialData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { sendData } from '../../actions'; // async Actions
-import { setBins, deleteBin, setBinAvailability, saveBins } from '../../actions'; // Bin actions
+import { setBins, setBinAvailability, saveBins } from '../../actions'; // Bin actions
 import { storeTempBins, clearTempBins } from '../../actions'; // TempBin actions
 import { setBinEditMode, openBinPanel, setBinAddMode, selectBin } from '../../actions'; // Display actions
 import { addPendingAction, deletePendingAction } from '../../actions'; // Pending actions
@@ -80,12 +80,6 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 if (isAddingBins) 
                     dispatch(
                         setBinAddMode(false));
-            },
-            onBinDeletion: (id: string) => {
-                dispatch(
-                    selectBin(undefined));
-                dispatch(
-                    deleteBin(id));
             },
             onAddModeActivation: () => {
                 if (isBinPanelOpen)

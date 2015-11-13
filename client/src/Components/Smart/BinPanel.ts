@@ -12,7 +12,7 @@ import WastePicker from '../Dumb/WastePicker';
 import PositionPicker from '../Dumb/PositionPicker';
 import { BinData, BinPartialData } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
-import { addBin, updateBin, selectBin } from '../../actions'; // Bin actions
+import { addBin, deleteBin, updateBin, selectBin } from '../../actions'; // Bin actions
 import { openBinPanel, setBinAddMode } from '../../actions'; // Display actions
 
 interface ReduxPropsMixin{
@@ -38,6 +38,19 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBins: boolean = display.get('isAddingBins');
         var selectedId: string = display.get('selectedBin');
+
+        var deleteButton = selectedId ? 
+            React.createElement('div', {
+                onClick: () => {
+                    dispatch(
+                        selectBin(undefined));
+                    dispatch(
+                        deleteBin(selectedId));
+                    dispatch(
+                            openBinPanel(false));
+                }
+            }, 'SUPPR')
+            : undefined ;
 
         // Create the list with all bin types
         var wastePicker = React.createElement(WastePicker, {
@@ -99,6 +112,7 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
             : undefined;
 
         return React.createElement('div', {id: 'editor'}, 
+            deleteButton,
             wastePicker,
             positionPicker
         );

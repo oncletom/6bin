@@ -41,19 +41,11 @@ export default class Bin extends React.Component<BinProps, BinState> {
     render() {
         var props = this.props;
 
-        var deleteButton = props.isEditing ? 
-            React.createElement('div', {
-                onClick: () => {
-                    props.onDeletion(props.id);
-                }
-            }, 'SUPPR')
-            : undefined ;
-
         var imageURL = binDico.get(props.type);
 
         var mySVG = React.createElement(SVGComponent, {key: props.type, src: imageURL});
 
-        var actualElement = React.createElement('div', 
+        var bin = React.createElement('li', 
             {
                 className: [
                     'bin',
@@ -76,10 +68,6 @@ export default class Bin extends React.Component<BinProps, BinState> {
             React.createElement('div', {}, props.type.toLowerCase())
         );
 
-        return React.createElement(
-            'li', {},
-            actualElement,
-            deleteButton
-        );
+        return bin;
     }
 };

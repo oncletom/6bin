@@ -9,7 +9,7 @@
 	text-align: center;
 }
 
-.bins li div div:last-child {
+.bins li div:last-child {
 	cursor: pointer;
 	font-size: .8rem;
 }

@@ -31,7 +31,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         var isEditingBins: boolean = display.get('isEditingBins');
 
         return React.createElement('div', {
-                id: 'app';
+                id: 'app',
                 className: isEditingBins ? 'edit' : ''
             },
             React.createElement(BinManager),
