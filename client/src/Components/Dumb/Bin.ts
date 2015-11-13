@@ -43,7 +43,11 @@ export default class Bin extends React.Component<BinProps, BinState> {
 
         var imageURL = binDico.get(props.type);
 
-        var mySVG = React.createElement(SVGComponent, {key: props.type, src: imageURL});
+        var mySVG = React.createElement(SVGComponent, {
+                key: props.type,
+                src: imageURL
+            }
+        );
 
         var bin = React.createElement('li', 
             {
@@ -63,7 +67,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     // set Bin Availability
                     : () => { props.onAvailabilityChange(props.id, !props.isAvailable) }
             },
-            React.createElement('div', {}, props.position),
+            React.createElement('div', {className: 'position'}, props.position),
             mySVG,
             React.createElement('div', {}, props.type.toLowerCase())
         );
