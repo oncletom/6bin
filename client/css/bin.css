@@ -1,34 +1,36 @@
-
-
 .bins {
 	display: flex;
-	flex-direction: row;
+	flex-direction: row; justify-content: left; flex-wrap: wrap;
 }
 
 .bins li {
-	margin: .5rem 2rem; padding: .5rem;
+	margin: .5rem;
 	list-style-type: none;
+	text-align: center;
 }
 
-.bins li div:last-child {
+.bins li div div:last-child {
 	cursor: pointer;
+	font-size: .8rem;
 }
 
 .bin {
-	outline: 1px solid black; padding: .2rem;
-	cursor: pointer;
+	display: flex; flex-direction: column; justify-content: center; width: 4rem; height: 6rem; padding: .2rem;
+	border: 3px solid #EEE; border-radius: 5px; padding: 2px;
+	background-color: #EEE;
+	cursor: pointer; text-transform: capitalize;
 }
 
 svg {
-	width: 5rem; height: 5rem;
+	display: block; margin: 0 auto; width: 4rem; height: 4rem;
 }
 
-.bin.available {
+.bin.available svg{
 	color: blue; stroke: blue; fill: blue;
 }
 
 .bin.selected, #add-bin.selected {
-	outline: 2px solid green;
+	border-color: green;
 }
 
 .noselect {

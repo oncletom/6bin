@@ -28,8 +28,12 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBin: boolean = display.get('isAddingBin');
+        var isEditingBins: boolean = display.get('isEditingBins');
 
-        return React.createElement('div', {},
+        return React.createElement('div', {
+                id: 'app';
+                className: isEditingBins ? 'edit' : ''
+            },
             React.createElement(BinManager),
             isBinPanelOpen || isAddingBin ? React.createElement(BinPanel) : undefined
         );

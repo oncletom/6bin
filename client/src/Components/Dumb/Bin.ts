@@ -73,7 +73,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
             },
             React.createElement('div', {}, props.position),
             mySVG,
-            React.createElement('div', {}, props.type)
+            React.createElement('div', {}, props.type.toLowerCase())
         );
 
         return React.createElement(

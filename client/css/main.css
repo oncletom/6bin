@@ -1,0 +1,38 @@
+#app {
+	width: 100vw; height: 100vh;
+	background-color:  #CCC;
+}
+
+#app.edit {
+	background-color: #77aaff;
+}
+
+#bin-manager > div:last-child {
+	position: absolute; bottom: 0; right: 0; left: 0; padding: 0 .5rem;
+}
+
+#editor {
+	background-color: #EEE;
+}
+
+#editor ul {
+	display: flex;
+	flex-direction: row; justify-content: center; flex-wrap: wrap;
+}
+
+#edit-bins, #cancel-bins {
+	position: absolute; bottom: 1rem; right: 1rem; width: 5rem;
+	border: 1px solid black; border-radius: 5px;
+	background-color: #EEE;
+	text-align: center;
+}
+
+#cancel-bins {
+	right: 6.5rem;
+}
+
+#infos {
+	width: 50vw;
+	font-size: .7rem; font-style: italic;
+	background-color: rgba(180, 180, 180, 0.3);
+}

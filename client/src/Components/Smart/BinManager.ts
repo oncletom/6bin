@@ -99,8 +99,8 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         });
 
         // Create the button to edit bins
-        var editBinsButton = React.createElement('button', {
-                id: 'modify-bins',
+        var editBinsButton = React.createElement('div', {
+                id: 'edit-bins',
                 className: isEditingBins ? 'editing' : '',
                 onClick: () => {
                     if(!isEditingBins) {
@@ -135,11 +135,12 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                             openBinPanel(false));
                 }
             }, 
-            isEditingBins ? 'Valider': 'Modifier les conteneurs'
+            isEditingBins ? 'Valider': 'Gérer'
         );
 
         var cancelButton = isEditingBins ?
-            React.createElement('button', {
+            React.createElement('div', {
+                id: 'cancel-bins',
                 onClick: () => {
                     dispatch(
                         setBins(tempBins));
@@ -167,14 +168,15 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 'En cours de transfert:',
                 pendingActions
             );
-        }
-        
+        }        
 
         return React.createElement('div', {id: 'bin-manager'}, 
             binList,
-            editBinsButton,
-            cancelButton,
-            infos
+            React.createElement('div', {}, // maybe this could be in App component
+                editBinsButton,
+                cancelButton,
+                infos
+            )
         );
     }
 };
