@@ -30,7 +30,7 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
                     }
                 },
                 React.createElement(SVGComponent, {src: url}),
-                React.createElement('div', {}, type)
+                React.createElement('div', {}, type.toLowerCase())
             )
         });
         

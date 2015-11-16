@@ -1,21 +1,60 @@
+#editor {
+	width: 100vw; margin: 1rem 0;
+	position: absolute; top: 90vh;
+	background-color: #EEE;
+	transition: top .7s ease;
+	z-index: 0;
+}
+
+.panel-open #editor {
+	top: 50vh;
+}
+
+#editor > div:first-child {
+	display: inline-block; position: absolute; bottom: 0; right: 0;
+}
+
+#editor ul {
+	display: flex;
+	flex-direction: row; justify-content: center; flex-wrap: wrap;
+	background-color: #EEE;
+	position: relative;
+}
+
+#editor .bins {
+	z-index: 2;
+}
+
+#editor .bins li {
+	text-transform: capitalize;
+}
+
 .current{
 	color: #BBB; stroke: #BBB; fill: #BBB;
 }
 
-.positions {
+.positions{
+	margin-top: -3rem;
 	list-style-type: none;
+	transition: margin-top .5s;
+}
+
+.positions.visible {
+	margin-top: 0;
 }
 
 .positions li {
 	display: inline-block; margin: .2rem; padding: .2rem;
-	font-size: 3rem;
+	font-size: 1.5rem;
 	cursor: pointer;
 }
 
 .positions li.assigned {
-	color: orange; font-size: 2rem;
+	color: orange;
 }
 
 .positions li.selected {
-	border: 1px solid black; border-radius: 50%;
+	color: #EEE;
+	background-color: #111;
+	border-radius: 5px;
 }

@@ -85,10 +85,13 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
             return bin.position;
         }));
 
-        var positionPicker = !isAddingBins ?
+        console.log('isAddingBins', isAddingBins);
+
+        var positionPicker = 
             React.createElement(PositionPicker, {
+                visible: isBinPanelOpen && !isAddingBins,
                 assigned: assigned,
-                max: 30,
+                max: 20,
                 selected: selectedId !== undefined ? bins.get(selectedId).position : undefined,
                 onPositionSelection: (position: number) => {
                     var delta = { position };
@@ -107,7 +110,7 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
                             updateBin(nonPositionedBin.id, { position: undefined }));
                     dispatch(
                         updateBin(selectedId, delta));
-                },
+                }
             })
             : undefined;
 

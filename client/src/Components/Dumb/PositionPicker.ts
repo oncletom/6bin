@@ -11,6 +11,7 @@ import { BinPartialData } from './Bin';
 import range from '../../../../tools/range';
 
 interface PositionPickerProps{
+    visible: boolean;
     assigned: Set<number>;
     max: number;
     selected: number;
@@ -24,7 +25,7 @@ export default class PositionPicker extends React.Component<PositionPickerProps,
 
     render() {
         var props = this.props;
-        var allPositions = OrderedSet(range(1, 10));
+        var allPositions = OrderedSet(range(1, props.max));
 
         // create the positionPicker buttons
         var positions = allPositions.map((position: number) => {
@@ -43,7 +44,12 @@ export default class PositionPicker extends React.Component<PositionPickerProps,
             );
         }).toList();
         
-        return React.createElement('ul', {className: 'positions'},
+        return React.createElement('ul', {
+                className: [
+                    'positions',
+                    props.visible ? 'visible' : ''
+                ].join(' ')
+            },
             positions.toList()
         );
     }

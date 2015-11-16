@@ -12,27 +12,6 @@
 	position: absolute; bottom: 0; right: 0; left: 0; padding: 0 .5rem;
 }
 
-#editor {
-	width: 100vw; margin: 1rem 0;
-	position: absolute; top: 90vh;
-	background-color: #EEE;
-	transition: top .7s ease;
-	z-index: 0;
-}
-
-.panel-open #editor {
-	top: 50vh;
-}
-
-#editor > div:first-child {
-	display: inline-block; position: absolute; bottom: 0; right: 0;
-}
-
-#editor ul {
-	display: flex;
-	flex-direction: row; justify-content: center; flex-wrap: wrap;
-}
-
 #edit-bins, #cancel-bins {
 	position: absolute; bottom: 1rem; right: 1rem; width: 5rem;
 	border: 1px solid black; border-radius: 5px;

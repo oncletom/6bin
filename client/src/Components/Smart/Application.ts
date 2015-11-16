@@ -1,9 +1,11 @@
 'use strict';
 
 import * as React from 'react';
+import { ReactElement } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Map } from 'immutable';
 
 import { State, Action } from '../../actions';
 import BinManager from '../Smart/BinManager';
@@ -15,6 +17,7 @@ interface ReduxPropsMixin{
 
 interface ApplicationProps extends ReduxPropsMixin{
     display: Map<string, any>;
+    pending: Map<number, Action>;
 }
 
 interface ApplicationState{}
