@@ -87,32 +87,28 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
 
         console.log('isAddingBins', isAddingBins);
 
-        var positionPicker = 
-            React.createElement(PositionPicker, {
-                visible: isBinPanelOpen && !isAddingBins,
-                assigned: assigned,
-                max: 20,
-                selected: selectedId !== undefined ? bins.get(selectedId).position : undefined,
-                onPositionSelection: (position: number) => {
-                    var delta = { position };
+        var positionPicker = React.createElement(PositionPicker, {
+            visible: isBinPanelOpen && !isAddingBins,
+            assigned: assigned,
+            max: 20,
+            selected: selectedId !== undefined ? bins.get(selectedId).position : undefined,
+            onPositionSelection: (position: number) => {
+                var delta = { position };
 
-                    var nonPositionedBin: BinData;
+                var nonPositionedBin: BinData;
 
-                    bins.forEach((bin: BinData) => {
-                        if (bin.position === position)
-                            nonPositionedBin = bin;
-                    });
+                bins.forEach((bin: BinData) => { // check if the clicked position is already assigned
+                    if (bin.position === position)
+                        nonPositionedBin = bin;
+                });
 
-                    console.log('nonPositionedBin', nonPositionedBin);
-
-                    if (nonPositionedBin)
-                        dispatch(
-                            updateBin(nonPositionedBin.id, { position: undefined }));
+                if (nonPositionedBin) // is position is already assigned to a bin, unposition this bin 
                     dispatch(
-                        updateBin(selectedId, delta));
+                        updateBin(nonPositionedBin.id, { position: undefined }));
+                dispatch(
+                    updateBin(selectedId, delta));
                 }
-            })
-            : undefined;
+        });
 
         return React.createElement('div', {id: 'editor'}, 
             deleteButton,
