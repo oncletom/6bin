@@ -16,7 +16,8 @@ import { Request } from '../../client/src/actions';
 
 var app = express();
 
-var PORT = process.env.VIRTUAL_PORT;
+var PORT = process.env.VIRTUAL_PORT || 3000;
+// var PORT = process.env.VIRTUAL_PORT;
 
 var server = new http.Server(app);
 var io = socketIO(server);

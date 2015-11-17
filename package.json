@@ -8,6 +8,7 @@
     "build-prod": "node_modules/gulp/bin/gulp.js build-prod",
     "dev": "node_modules/gulp/bin/gulp.js dev",
     "prod": "node_modules/gulp/bin/gulp.js prod",
+    "start": "node server/src/main.js",
     "test": "node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
