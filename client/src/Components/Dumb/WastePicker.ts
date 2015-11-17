@@ -14,8 +14,44 @@ interface WastePickerProps{
 
 interface WastePickerState{}
 
+
 export default class WastePicker extends React.Component<WastePickerProps, WastePickerState> {
     mixins = [PureRenderMixin]
+
+    drag(startLeft: any, initX: number){
+        return (event: any) => {
+            var touches = event.changedTouches;
+            var x = touches[0].clientX; // the touch position
+            var dX = x - initX; // the delta induced by touch movement
+
+            this.refs.wastelist.style.setProperty('left', startLeft + dX);
+
+            console.log('Move', dX);
+            console.log('startLeft', startLeft);
+        };
+    }
+
+    componentDidMount() {
+        var element = this.refs.wastelist;
+
+        var drag: Function; // this is to keep the reference to be able to remove the listener
+
+        element.addEventListener('touchstart', (event: any) => {
+            event.preventDefault();
+            console.log('events added');
+            
+            var initX = event.changedTouches[0].clientX; // the initial touch position
+            var left = parseInt(element.style.getPropertyValue('left')) || 0; // initial left position
+            drag = this.drag(left, initX);
+
+            element.addEventListener('touchmove', drag);  
+        });
+
+        element.addEventListener('touchend', () => {
+            console.log('removing listener');
+            element.removeEventListener('touchmove', drag);
+        });
+    }
 
     render() {
         var props = this.props;
@@ -34,7 +70,12 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
             )
         });
         
-        return React.createElement('ul', {className: 'bins'},
+        return React.createElement('ul', {
+                ref: 'wastelist',
+                id: 'wastelist',
+                className: 'bins',
+                
+            },
             bins.toList()
         );
     }
