@@ -26,7 +26,7 @@ render(React.createElement(Provider, {store},
     React.createElement(
         Application // the Application component is just a wrapper of several smart components
     )), 
-	document.getElementById('6bin')
+	document.getElementById('sixbin')
 );
 
 var myNewBins = Map<string, BinData>({

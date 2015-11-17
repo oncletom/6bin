@@ -34,7 +34,7 @@
 
 #editor .bins {
 	position: relative; height: 16vh;
-	z-index: 1; overflow-y: scroll;
+	z-index: 1; overflow-y: scroll; overflow-x: hidden;
 }
 
 #editor .bins li {
