@@ -32,7 +32,8 @@ export interface Request {
     action: Action;
 }
 
-var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
+// var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
+var socket = io('http://localhost:3000');
 
 // Bin Actions
 export const SET_BINS = 'SET_BINS';

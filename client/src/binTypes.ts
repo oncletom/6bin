@@ -1,7 +1,7 @@
 'use strict';
 
 import { Map } from 'immutable';
-import * as keyMirror from 'keyMirror';
+import * as keyMirror from 'keymirror';
 
 export const binTypes = keyMirror({
 	AMEUBLEMENT: null,
