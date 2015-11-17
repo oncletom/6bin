@@ -1,5 +1,5 @@
 .bins {
-	display: flex;
+	display: flex; padding: 0 5vw;
 	flex-direction: row; justify-content: flex-start; flex-wrap: wrap; align-content: space-around;
 }
 

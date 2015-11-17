@@ -1,6 +1,6 @@
 #editor {
-	width: 100vw; height: 24vh;
-	position: absolute; top: 92vh;
+	width: 100vw; /*height: 23vh;*/
+	position: absolute; top: 94vh;
 	font-size: .8rem;
 	background-color: #EEE;
 	transition: top .7s ease;
@@ -12,8 +12,11 @@
 }
 
 #delete-button {
-	display: inline-block; position: absolute; bottom: 0; right: 0;
-	z-index: 2;
+	display: inline-block; position: relative; margin: -9vh auto; margin-bottom: .4rem; padding: .1rem 1.1rem; /*width: 200px;*/
+	border: 1px solid black; border-radius: 5px;
+	background-color: #EEE;
+	font-size: .8rem; color: #E00; text-align: center;
+	transition: margin-top .5s;
 }
 
 #editor ul {
@@ -30,12 +33,14 @@
 }
 
 #editor .bins {
-	position: relative; height: 20vh;
+	position: relative; height: 16vh;
 	z-index: 1; overflow-y: scroll;
 }
 
 #editor .bins li {
 	text-transform: capitalize;
+	height: 4rem;
+	width: 3rem;
 }
 
 .current{
@@ -43,13 +48,14 @@
 }
 
 .positions{
-	position: absolute; top: 13vh; left: 0; right: 0; height: 11vh;
+	position: relative; margin-top: -9vh;
 	list-style-type: none; z-index: 0;
-	transition: top .5s;
+	transition: margin-top .5s;
 }
 
-.positions.visible {
-	top: 23vh;
+.positions.visible, #delete-button {
+	margin-top: 0;
+	/*top: 19vh;*/
 }
 
 .positions li {

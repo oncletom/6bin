@@ -50,7 +50,7 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
                     dispatch(
                             openBinPanel(false));
                 }
-            }, 'SUPPR')
+            }, 'Supprimer la benne')
             : undefined ;
 
         // Create the list with all bin types
