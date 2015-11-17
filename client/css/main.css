@@ -4,23 +4,28 @@
 	background-color:  #CCC;
 }
 
-#app.edit, #footer.edit {
+#app.edit, #footer.edit, #bin-manager.edit {
 	background-color: #77aaff;
+}
+
+#bin-manager {
+	height: 60vh;
+	z-index: 2;
 }
 
 #bin-manager > div:last-child {
 	position: absolute; bottom: 0; right: 0; left: 0; padding: 0 .5rem;
 }
 
-#edit-bins, #cancel-bins {
-	position: absolute; bottom: 1rem; right: 1rem; width: 5rem;
+#edit-bins-button, #cancel-bins-button {
+	position: absolute; bottom: .5rem; right: .5rem; width: 5rem;
 	border: 1px solid black; border-radius: 5px;
 	background-color: #EEE;
 	text-align: center;
 	z-index: 2;
 }
 
-#cancel-bins {
+#cancel-bins-button {
 	right: 6.5rem;
 }
 
@@ -32,7 +37,7 @@
 }
 
 #footer {
-	position: absolute; height: 10vh; bottom: 0; right: 0; left: 0;
+	position: absolute; height: 8vh; bottom: 0; right: 0; left: 0;
 	background-color: #CCC;
 	z-index: 1;
 }

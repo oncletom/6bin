@@ -1,28 +1,37 @@
 #editor {
-	width: 100vw; margin: 1rem 0;
-	position: absolute; top: 90vh;
+	width: 100vw; height: 24vh;
+	position: absolute; top: 92vh;
+	font-size: .8rem;
 	background-color: #EEE;
 	transition: top .7s ease;
 	z-index: 0;
 }
 
 .panel-open #editor {
-	top: 50vh;
+	top: 60vh;
 }
 
-#editor > div:first-child {
+#delete-button {
 	display: inline-block; position: absolute; bottom: 0; right: 0;
+	z-index: 2;
 }
 
 #editor ul {
 	display: flex;
-	flex-direction: row; justify-content: center; flex-wrap: wrap;
+	flex-direction: row; justify-content: space-around; flex-wrap: wrap; align-content: flex-start;
+	font-size: 1.2rem; line-height: 1rem;
 	background-color: #EEE;
-	position: relative;
+}
+
+#editor span {
+	display: block; position: relative;
+	background-color: #EEE;
+	z-index: 2;
 }
 
 #editor .bins {
-	z-index: 2;
+	position: relative; height: 20vh;
+	z-index: 1; overflow-y: scroll;
 }
 
 #editor .bins li {
@@ -34,18 +43,17 @@
 }
 
 .positions{
-	margin-top: -3rem;
-	list-style-type: none;
-	transition: margin-top .5s;
+	position: absolute; top: 13vh; left: 0; right: 0; height: 11vh;
+	list-style-type: none; z-index: 0;
+	transition: top .5s;
 }
 
 .positions.visible {
-	margin-top: 0;
+	top: 23vh;
 }
 
 .positions li {
 	display: inline-block; margin: .2rem; padding: .2rem;
-	font-size: 1.5rem;
 	cursor: pointer;
 }
 

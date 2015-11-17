@@ -94,7 +94,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
         // Create the button to edit bins
         var editBinsButton = React.createElement('div', {
-                id: 'edit-bins',
+                id: 'edit-bins-button',
                 className: isEditingBins ? 'editing' : '',
                 onClick: () => {
                     if(!isEditingBins) {
@@ -134,7 +134,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
         var cancelButton = isEditingBins ?
             React.createElement('div', {
-                id: 'cancel-bins',
+                id: 'cancel-bins-button',
                 onClick: () => {
                     dispatch(
                         setBins(tempBins));
@@ -150,7 +150,10 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             }, 'Annuler')
             : undefined;
 
-        return React.createElement('div', {id: 'bin-manager'}, 
+        return React.createElement('div', {
+                id: 'bin-manager',
+                className: isEditingBins ? 'edit' : ''
+            }, 
             binList,
             React.createElement('div', {}, // maybe this could be in App component
                 editBinsButton,

@@ -18,40 +18,46 @@ interface WastePickerState{}
 export default class WastePicker extends React.Component<WastePickerProps, WastePickerState> {
     mixins = [PureRenderMixin]
 
-    drag(startLeft: any, initX: number){
-        return (event: any) => {
-            var touches = event.changedTouches;
-            var x = touches[0].clientX; // the touch position
-            var dX = x - initX; // the delta induced by touch movement
+    // drag(event: any, startTop: any, initY: number){
+    //     event.preventDefault();
 
-            this.refs.wastelist.style.setProperty('left', startLeft + dX);
+    //     return (e: any) => {
+    //         var touches = e.changedTouches;
+    //         var y = touches[0].clientY; // the touch position
+    //         var dY = y - initY; // the delta induced by touch movement
 
-            console.log('Move', dX);
-            console.log('startLeft', startLeft);
-        };
-    }
+    //         var element = this.refs.wastelist;
+    //         var height = parseInt(element.style.height) || 0;
+    //         // var top = parseInt(element.style.top) || 0;
+    //         // if (dY > height)
+    //             element.style.setProperty('top', startTop + dY);
 
-    componentDidMount() {
-        var element = this.refs.wastelist;
+    //         console.log('Move', dY);
+    //         console.log('startLeft', startTop);
+    //     };
+    // }
 
-        var drag: Function; // this is to keep the reference to be able to remove the listener
+    // componentDidMount() {
+    //     var element = this.refs.wastelist;
 
-        element.addEventListener('touchstart', (event: any) => {
-            event.preventDefault();
-            console.log('events added');
+    //     var drag: Function; // this is to keep the reference to be able to remove the listener
+
+    //     element.addEventListener('touchstart', (event: any) => {
+    //         console.log('events added', event.currentTarget);
+    //         event.preventDefault();
             
-            var initX = event.changedTouches[0].clientX; // the initial touch position
-            var left = parseInt(element.style.getPropertyValue('left')) || 0; // initial left position
-            drag = this.drag(left, initX);
+    //         var initY = event.changedTouches[0].clientY; // the initial touch position
+    //         var top = parseInt(element.style.getPropertyValue('top')) || 0; // initial left position
+    //         drag = this.drag(event, top, initY);
 
-            element.addEventListener('touchmove', drag);  
-        });
+    //         element.addEventListener('touchmove', drag);  
+    //     });
 
-        element.addEventListener('touchend', () => {
-            console.log('removing listener');
-            element.removeEventListener('touchmove', drag);
-        });
-    }
+    //     element.addEventListener('touchend', () => {
+    //         console.log('removing listener');
+    //         element.removeEventListener('touchmove', drag);
+    //     });
+    // }
 
     render() {
         var props = this.props;
@@ -61,7 +67,8 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
             return React.createElement('li', {
                     key: type,
                     className: props.type === undefined || props.type === type ? '' : 'current',
-                    onClick: () => {
+                    onClick: (event: any) => {
+                        console.log('CLICK');
                         props.onWasteSelection(type);
                     }
                 },

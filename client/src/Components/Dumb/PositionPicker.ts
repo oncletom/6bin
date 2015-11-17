@@ -44,13 +44,16 @@ export default class PositionPicker extends React.Component<PositionPickerProps,
             );
         }).toList();
         
-        return React.createElement('ul', {
+        return React.createElement('div', {
                 className: [
                     'positions',
                     props.visible ? 'visible' : ''
                 ].join(' ')
             },
-            positions.toList()
+            'Numéro de benne',
+            React.createElement('ul', {},
+                positions.toList()
+            )
         );
     }
 };

@@ -41,6 +41,7 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
 
         var deleteButton = selectedId ? 
             React.createElement('div', {
+                id: 'delete-button',
                 onClick: () => {
                     dispatch(
                         selectBin(undefined));
@@ -111,9 +112,10 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
         });
 
         return React.createElement('div', {id: 'editor'}, 
-            deleteButton,
+            'Type de déchets',
             wastePicker,
-            positionPicker
+            positionPicker,
+            deleteButton
         );
     }
 };
