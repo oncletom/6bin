@@ -6,7 +6,7 @@
 .bins li {
 	display: flex; flex-direction: column; justify-content: flex-start;
 	margin: 1rem; height: 5rem; width: 4rem; padding: .2rem; position: relative;
-	border-radius: .8rem; box-shadow: 3px 5px 5px #444;
+	border-radius: 10px; box-shadow: 3px 5px 5px #444;
 	font-size: .8rem;
 	background-color: #EEE;
 	cursor: pointer;
@@ -55,11 +55,13 @@
 }
 
 svg {
-	display: block; margin: 0 auto; width: auto; height: auto; /*position: absolute; top: 0; left: 0;*/
+	display: block; margin: 0 auto; width: auto; height: auto;
+	border-radius: 10px;
+	background-color: #FF2727;
 }
 
 .bin.available svg{
-	color: blue; stroke: blue; fill: blue;
+	background-color: #28D628;
 }
 
 .bin.selected, #add-bin.selected {

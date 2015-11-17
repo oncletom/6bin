@@ -43,6 +43,10 @@
 	width: 3rem;
 }
 
+#editor svg {
+	background-color: #EEE;
+}
+
 .current{
 	color: #BBB; stroke: #BBB; fill: #BBB;
 }
