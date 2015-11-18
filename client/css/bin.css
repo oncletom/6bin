@@ -9,7 +9,6 @@
 	border-radius: 10px; box-shadow: 3px 5px 5px #444;
 	font-size: .8rem;
 	background-color: #EEE;
-	cursor: pointer;
 	list-style-type: none;
 	text-align: center; text-transform: capitalize;
 	transition: margin .5s ease-out;
@@ -42,10 +41,6 @@
 
 .add #add-bin {
 	box-shadow: 3px 5px 5px #444;
-}
-
-.bins li:last-child {
-	cursor: pointer;
 }
 
 .position {
