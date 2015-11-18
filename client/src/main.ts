@@ -7,12 +7,12 @@ import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 
 import { setBins } from './actions';
 import reducers from './reducers';
 import { logger } from './middleware';
-import BinManager from './Components/Smart/BinManager';
+import Application from './Components/Smart/Application';
 import { BinData } from './Components/Dumb/Bin';
 
 
@@ -24,18 +24,23 @@ var store = createStoreWithMiddleware(reducers);
 
 render(React.createElement(Provider, {store},
     React.createElement(
-        BinManager
+        Application // the Application component is just a wrapper of several smart components
     )), 
-	document.getElementById('6bin')
+	document.getElementById('sixbin')
 );
 
-var myNewBins = List<BinData>([
-    { position: 0, type: 'AMEUBLEMENT', imageURL: '/img/waste/Ameublement.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 1, type: 'BATTERIES', imageURL: '/img/waste/Batteries.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 2, type: 'BOIS', imageURL: '/img/waste/Bois.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 3, type: 'ECRANS', imageURL: '/img/waste/Ecrans.svg', isAvailable: true, isPending: false, isSelected: false },
-    { position: 4, type: 'METAUX', imageURL: '/img/waste/Metaux.svg', isAvailable: true, isPending: false, isSelected: false }
-]);
+var myNewBins = Map<string, BinData>({
+    CARTONS_1: { id: 'CARTONS_1', position: 1, type: 'CARTONS', isAvailable: true },
+    BATTERIES_1: { id: 'BATTERIES_1', position: 2, type: 'BATTERIES', isAvailable: true },
+    BOIS_1: { id: 'BOIS_1', position: 3, type: 'BOIS', isAvailable: true },
+    ECRANS_1: { id: 'ECRANS_1', position: 4, type: 'ECRANS', isAvailable: true },
+    EXTINCTEURS_1: { id: 'EXTINCTEURS_1', position: 5, type: 'EXTINCTEURS', isAvailable: true },
+    CARTONS_2: { id: 'CARTONS_2', position: 6, type: 'CARTONS', isAvailable: true },
+    BATTERIES_2: { id: 'BATTERIES_2', position: 7, type: 'BATTERIES', isAvailable: true },
+    BOIS_2: { id: 'BOIS_2', position: 8, type: 'BOIS', isAvailable: true },
+    ECRANS_2: { id: 'ECRANS_2', position: 9, type: 'ECRANS', isAvailable: true },
+    EXTINCTEURS_2: { id: 'EXTINCTEURS_2', position: 10, type: 'EXTINCTEURS', isAvailable: true }
+});
 
 
 store.dispatch(setBins(myNewBins));

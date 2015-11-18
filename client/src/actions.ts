@@ -1,25 +1,30 @@
 'use strict';
 
 import { List, Map } from 'immutable';
-import { BinData } from './Components/Dumb/Bin';
+import { BinData, BinPartialData } from './Components/Dumb/Bin';
 import * as io from 'socket.io-client';
 
 export interface Action {
     type: string;
-    bins?: List<BinData>;
-    bin?: BinData;
-    id?: number;
+    waste?: string;
+    bins?: Map<string, BinData>;
+    // bin?: BinData;
+    delta?: BinPartialData;
+    index?: number;
+    id?: string;
     isAvailable?: boolean;
     isPending?: boolean;
     isEditingBins?: boolean;
-    isSelectingWaste?: boolean;
+    isAddingBins?: boolean;
+    isBinPanelOpen?: boolean;
     pendingAction?: Action;
 }
 
 export interface State {
     display: Map<string, any>;
     pending: Map<number, Action>;
-    bins: List<BinData>;
+    bins: Map<string, BinData>;
+    tempBins: Map<string, BinData>;
 }
 
 export interface Request {
@@ -27,37 +32,55 @@ export interface Request {
     action: Action;
 }
 
-var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
+// var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
+var socket = io('http://localhost:3000');
 
-// action creators
+// Bin Actions
 export const SET_BINS = 'SET_BINS';
-export function setBins(bins: List<BinData>) {
+export function setBins(bins: Map<string, BinData>) {
     return { type: SET_BINS, bins };
 };
 
-export const SELECT_BIN = 'SELECT_BIN';
-export function selectBin(id: number) {
-    return { type: SELECT_BIN, id };
+export const ADD_BIN = 'ADD_BIN';
+export function addBin(id: number, waste: string) {
+    return { type: ADD_BIN, id, waste };
 };
 
-export const ADD_BIN = 'ADD_BIN';
-export function addBin(bin: BinData) {
-    return { type: ADD_BIN, bin };
+export const UPDATE_BIN = 'UPDATE_BIN';
+export function updateBin(id: string, delta: BinPartialData) {
+    return { type: UPDATE_BIN, id, delta };
 };
 
 export const DELETE_BIN = 'DELETE_BIN';
-export function deleteBin(id: number) {
+export function deleteBin(id: string) {
     return { type: DELETE_BIN, id };
 };
 
 export const SET_BIN_AVAILABILITY = 'SET_BIN_AVAILABILITY'; // needs to be sent
-export function setBinAvailability(id: number, isAvailable: boolean) {
+export function setBinAvailability(id: string, isAvailable: boolean) {
     return { type: SET_BIN_AVAILABILITY, id, isAvailable };
 };
 
 export const SAVE_BINS = 'SAVE_BINS'; // needs to be sent
-export function saveBins(bins: List<BinData>) {
+export function saveBins(bins: Map<string, BinData>) {
     return { type: SAVE_BINS, bins };
+};
+
+// Temp Bins
+export const STORE_TEMP_BINS = 'STORE_TEMP_BINS';
+export function storeTempBins(bins: Map<string, BinData>) {
+    return { type: STORE_TEMP_BINS, bins };
+};
+
+export const CLEAR_TEMP_BINS = 'CLEAR_TEMP_BINS';
+export function clearTempBins() {
+    return { type: CLEAR_TEMP_BINS };
+};
+
+// Display Actions
+export const SELECT_BIN = 'SELECT_BIN';
+export function selectBin(id: string) {
+    return { type: SELECT_BIN, id };
 };
 
 export const SET_BIN_EDIT_MODE = 'SET_BIN_EDIT_MODE';
@@ -65,19 +88,25 @@ export function setBinEditMode(isEditingBins: boolean) {
     return { type: SET_BIN_EDIT_MODE, isEditingBins};
 };
 
-export const SET_WASTE_SELECT_MODE = 'SET_WASTE_SELECT_MODE';
-export function setWasteSelectMode(isSelectingWaste: boolean) {
-    return { type: SET_WASTE_SELECT_MODE, isSelectingWaste};
+export const SET_BIN_ADD_MODE = 'SET_BIN_ADD_MODE';
+export function setBinAddMode(isAddingBins: boolean) {
+    return { type: SET_BIN_ADD_MODE, isAddingBins};
 };
 
+export const OPEN_BIN_PANEL = 'OPEN_BIN_PANEL';
+export function openBinPanel(isBinPanelOpen: boolean) {
+    return { type: OPEN_BIN_PANEL, isBinPanelOpen};
+};
+
+// Pending Actions
 export const ADD_PENDING_ACTION = 'ADD_PENDING_ACTION';
-export function addPendingAction(id: number, pendingAction: Action) {
-    return { type: ADD_PENDING_ACTION, id, pendingAction };
+export function addPendingAction(index: number, pendingAction: Action) {
+    return { type: ADD_PENDING_ACTION, index, pendingAction };
 };
 
 export const DELETE_PENDING_ACTION = 'DELETE_PENDING_ACTION';
-export function deletePendingAction(id: number) {
-    return { type: DELETE_PENDING_ACTION, id };
+export function deletePendingAction(index: number) {
+    return { type: DELETE_PENDING_ACTION, index };
 };
 
 var counter: number = 0;

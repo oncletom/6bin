@@ -16,7 +16,8 @@ import { Request } from '../../client/src/actions';
 
 var app = express();
 
-var PORT = process.env.VIRTUAL_PORT;
+var PORT = process.env.VIRTUAL_PORT || 3000;
+// var PORT = process.env.VIRTUAL_PORT;
 
 var server = new http.Server(app);
 var io = socketIO(server);
@@ -43,7 +44,7 @@ io.on('connection', (socket: any) => {
 		console.log('RECEIVED', data);
 
 		if (data.action.type === 'SAVE_BINS')
-			console.log('SAVING BIIIIIIIIINS !!!', data.action.bins.length, data.action.bins.size); // this is weird
+			console.log('SAVING BIIIIIIIIINS !!!', data.action.bins.size, data.action.bins.length); // this is weird
 
 		var response = Object.assign({}, {index: data.index}, {isSuccessful: true});
 

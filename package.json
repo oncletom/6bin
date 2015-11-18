@@ -8,6 +8,7 @@
     "build-prod": "node_modules/gulp/bin/gulp.js build-prod",
     "dev": "node_modules/gulp/bin/gulp.js dev",
     "prod": "node_modules/gulp/bin/gulp.js prod",
+    "start": "node server/src/main.js",
     "test": "node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
@@ -42,6 +43,7 @@
     "react": "^0.14.0",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dom": "^0.14.0",
+    "react-inlinesvg": "^0.4.2",
     "react-redux": "^4.0.0",
     "redux": "^3.0.3",
     "redux-thunk": "^1.0.0",

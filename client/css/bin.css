@@ -1,30 +1,74 @@
-
-
 .bins {
-	display: flex;
-	flex-direction: row;
+	display: flex; padding: 0 5vw;
+	flex-direction: row; justify-content: flex-start; flex-wrap: wrap; align-content: space-around;
 }
 
 .bins li {
-	outline: 1px solid black; margin: 2em; padding: .5em;
-	list-style-type: none; cursor: pointer;
+	display: flex; flex-direction: column; justify-content: flex-start;
+	margin: 1rem; height: 5rem; width: 4rem; padding: .2rem; position: relative;
+	border-radius: 10px; box-shadow: 3px 5px 5px #444;
+	font-size: .8rem;
+	background-color: #EEE;
+	cursor: pointer;
+	list-style-type: none;
+	text-align: center; text-transform: capitalize;
+	transition: margin .5s ease-out;
+	z-index: 1;
 }
 
-.bins svg {
-	width: 5em; height: 5em;
+.edit .bins li {
+	box-shadow: none;
 }
 
-.bins li.available {
-	color: blue; stroke: blue; fill: blue;
+.panel-open .bins li {
+	margin: .3rem 1rem;
 }
 
-.bins li.pending div {
-	color: red;
+#add-bin {
+	position: relative; right: 6.4rem;
+	justify-content: center;
+	z-index: 0;
+	box-shadow: none;
+	transition: right .5s;
 }
 
-.bins li.selected {
-	outline: 2px solid green;
+.edit .bins li.selected {
+	box-shadow: 3px 5px 5px #444;
 }
+
+.edit #add-bin {
+	right: 0;
+}
+
+.add #add-bin {
+	box-shadow: 3px 5px 5px #444;
+}
+
+.bins li:last-child {
+	cursor: pointer;
+}
+
+.position {
+	position: absolute; top: 0; left: 0; width: 1.2rem; height: 1.2rem;
+	border: 1px solid black; border-radius: 50%;
+	background-color: #EEE;
+}
+
+svg {
+	display: block; margin: 0 auto; width: auto; height: auto;
+	border-radius: 10px;
+	background-color: #FF2727;
+}
+
+.bin.available svg{
+	background-color: #28D628;
+}
+
+.bin.selected, #add-bin.selected {
+	box-shadow: 3px 5px 5px #444;
+	/*height: 5.5rem; margin-bottom: 0;
+	border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+*/}
 
 .noselect {
 	-webkit-touch-callout: none;

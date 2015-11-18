@@ -4,7 +4,7 @@
 require('es6-shim');
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { List } from 'immutable';
+import { Map } from 'immutable';
 
 import * as actions from '../../client/src/actions';
 import reducers from '../../client/src/reducers';
@@ -29,13 +29,13 @@ describe('Synchronous Actions', () => {
 
     it('SET_BINS', () => {
 
-        var bins = List<BinData>([
-            { position: 0, type: 'Romain', imageURL: '/img/waste/Ameublement.svg', isAvailable: true, isPending: false, isEditing: false },
-            { position: 1, type: 'Henri', imageURL: '/img/waste/Batteries.svg', isAvailable: true, isPending: false, isEditing: false },
-            { position: 2, type: 'Micheline', imageURL: '/img/waste/Bois.svg', isAvailable: true, isPending: false, isEditing: false },
-            { position: 3, type: 'Erika', imageURL: '/img/waste/Ecrans.svg', isAvailable: true, isPending: false, isEditing: false },
-            { position: 4, type: 'David', imageURL: '/img/waste/Metaux.svg', isAvailable: true, isPending: false, isEditing: false }
-        ]);
+        var bins = Map<string, BinData>({
+            AMEUBLEMENT_1: { id: 'AMEUBLEMENT_1', position: 1, type: 'Ameublement', isAvailable: true },
+            BATTERIES_1: { id: 'BATTERIES_1', position: 2, type: 'Batteries', isAvailable: true },
+            BOIS_1: { id: 'BOIS_1', position: 3, type: 'Bois', isAvailable: true },
+            ECRANS_1: { id: 'ECRANS_1', position: 4, type: 'Ecrans', isAvailable: true },
+            METAUX_1: { id: 'METAUX_1', position: 5, type: 'Metaux', isAvailable: true }
+        });
 
         store.dispatch(actions.setBins(bins));
 
@@ -48,9 +48,7 @@ describe('Synchronous Actions', () => {
     });   
 
     it('ADD_BIN', () => {
-        var bin = { position: 5, type: 'Camille', imageURL: '/img/waste/Metaux.svg', isAvailable: true, isPending: false, isEditing: false };
-
-        store.dispatch(actions.addBin(bin));
+        store.dispatch(actions.addBin(2, 'METAUX'));
 
         return new Promise((resolve, reject) => {
             var binsInStore = store.getState().bins;
@@ -61,10 +59,10 @@ describe('Synchronous Actions', () => {
 
     it('SET_BIN_AVAILABILITY', () => {
 
-        store.dispatch(actions.setBinAvailability(2, false));
+        store.dispatch(actions.setBinAvailability('AMEUBLEMENT_1', false));
 
         return new Promise((resolve, reject) => {
-            var unavailableBin = store.getState().bins.get(2);
+            var unavailableBin = store.getState().bins.get('AMEUBLEMENT_1');
             expect(unavailableBin.isAvailable).to.be.false;
             resolve();
         });

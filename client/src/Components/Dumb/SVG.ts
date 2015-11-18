@@ -1,6 +1,7 @@
 'use strict';
 
 import * as React from 'react';
+import { findDOMNode, unmountComponentAtNode } from 'react-dom';
 import * as SVGInjector from 'svg-injector';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -16,15 +17,40 @@ interface SVGProps{
     path: string;
     fallbackPath: string;
 }
-interface SVGState{}
+interface SVGState{
+}
+
+var svgDOM: any;
 
 export default class SVGComponent extends React.Component<SVGProps, SVGState> {
     mixins = [PureRenderMixin]
+
+    // componentWillUpdate (prevProps: any) {
+    //     // console.log('SVG update', this.refs.svg);
+    //     var DOMNode = findDOMNode(this.refs.svg);
+    //     var isUnmounted = unmountComponentAtNode(DOMNode);
+        
+    //     // console.log('DOM Node', DOMNode);
+    //     // console.log('Unmounted ?', isUnmounted);
+    //     // return SVGInjector([this.myImg], svgConfig(prevProps));
+    // }
+
+
+    // componentDidUpdate (prevProps: any) {
+    //     console.log('SVG update', this.refs.svg);
+    //     // return SVGInjector([this.myImg], svgConfig(prevProps));
+    // }
+
     componentDidMount (){
-        return SVGInjector([this.refs.svg], svgConfig(this.props));
+        // console.log('SVG', this.refs.svg);
+        SVGInjector([this.refs.svg], svgConfig(this.props));
+
     }
 
     render () {
+
+
+        
         return React.createElement(
             'img',
             {
@@ -33,6 +59,6 @@ export default class SVGComponent extends React.Component<SVGProps, SVGState> {
                 'data-src': this.props.path,
                 'data-fallback': this.props.fallbackPath
             }
-        )
+        );
     }
 };
