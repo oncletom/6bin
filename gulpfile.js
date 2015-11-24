@@ -177,6 +177,8 @@ gulp.task('watch', ['watch-client', 'watch-server', 'watch-tools', 'watch-tests'
 gulp.task('build-dev', ['build-client-dev', 'tsc-server-dev', 'tsc-tools-dev', 'tsc-tests-dev']);
 gulp.task('build-prod', ['build-client-prod', 'tsc-server-prod', 'tsc-tools-prod']);
 
+
+// These are to spawn docker instances, but maybe deprecated expect for tests
 gulp.task('start-containers-dev', ['build-dev'], function(){
     spawn('docker-compose', ['-f', 'compose-dev.yml', 'up', '--force-recreate'], {stdio: 'inherit'});
 });

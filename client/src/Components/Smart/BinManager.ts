@@ -11,11 +11,10 @@ import BinList from '../Dumb/BinList';
 import WastePicker from '../Dumb/WastePicker';
 import { BinData, BinPartialData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
-import { sendData } from '../../actions'; // async Actions
+import { sendData } from '../../asyncActions'; // async Actions
 import { setBins, setBinAvailability, saveBins } from '../../actions'; // Bin actions
 import { storeTempBins, clearTempBins } from '../../actions'; // TempBin actions
 import { setBinEditMode, openBinPanel, setBinAddMode, selectBin } from '../../actions'; // Display actions
-import { addPendingAction, deletePendingAction } from '../../actions'; // Pending actions
 
 interface ReduxPropsMixin{
     dispatch: Dispatch
@@ -60,15 +59,12 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 if (!isEditingBins){
                     // after actions will be dispatched after async action
                     var action = setBinAvailability(id, isAvailable);
-                    dispatch(
-                        addPendingAction(nextPending, action)); // this could be used in a middleware
-                    var after = [deletePendingAction(nextPending)];
-
-                    nextPending ++;
+                    
                     console.log('Pending action Number', pending.size);
 
                     dispatch(
-                        sendData(action, after));
+                        sendData(action, nextPending));
+                    nextPending ++;
                 }        
             },
             onBinSelection: (id: string) => {
@@ -112,16 +108,11 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                         dispatch(
                             selectBin(undefined));
                         dispatch(
-                            addPendingAction(nextPending, action)); // this could be used in a middleware
-
-                        dispatch(
                             clearTempBins());
 
-                        var after = [deletePendingAction(nextPending)];
-                        nextPending ++;
-
                         dispatch(
-                            sendData(action, after));
+                            sendData(action, nextPending));
+                        nextPending ++;
                     }
                         
                     if (isBinPanelOpen)
