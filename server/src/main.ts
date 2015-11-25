@@ -16,10 +16,9 @@ import * as socketIO from 'socket.io';
 
 import { Action, actionsToBeSent as authorizedActions } from '../../client/src/actions';
 
-var app = express();
+import { PORT } from '../PORT';
 
-var PORT = process.env.VIRTUAL_PORT || 3000;
-// var PORT = process.env.VIRTUAL_PORT;
+var app = express();
 
 app.use(compression());
 app.use(bodyParser.urlencoded());
@@ -63,11 +62,11 @@ export function BinServer(): void {
 		this.on('response', respondToClient);
 	});
 
-	this.start = function(port: number){
-		server.listen(port, function () {
+	this.start = function(){
+		server.listen(PORT, function () {
 		    console.log('Server running on', [
 		        'http://localhost:',
-		        port
+		        PORT
 		    ].join(''));
 		});
 	};

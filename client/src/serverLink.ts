@@ -5,13 +5,14 @@ import * as io from 'socket.io-client';
 import { Map } from 'immutable';
 import { Action } from './actions'; // Pending actions
 
+import { PORT } from '../../server/PORT';
+
 export interface Request {
     index: number;
     action: Action;
 }
 
-// var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
-var socket = io('http://localhost:3000');
+var socket = io('http://localhost:' + PORT);
 
 var counter: number = 0;
 var promiseMap: any = Map();
