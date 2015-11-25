@@ -6,7 +6,7 @@ In [6element](https://github.com/anthill/6element), we inform citizens of whethe
 
 This screen can be used to indicate other informations that is normally hard to get in real time like unexpected recycling center closing (due to too many bind being full, an accident, etc.).
 
-Install
+## Install
 ```
 npm install
 npm i tsd -g
@@ -14,12 +14,28 @@ tsd init
 tsd install
 ```
 
-Run the project in dev 
+## Build
 ```
-npm run dev
+npm run build-dev
+```
+or
+```
+npm run build-prod
 ```
 
-Run the project in prod
+You can also do
 ```
-npm run prod
+npm run watch
+```
+
+## Run the project
+```
+npm run start
+```
+
+## Tests
+You need [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/)
+
+```
+npm run test
 ```
