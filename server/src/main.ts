@@ -15,6 +15,7 @@ import * as bodyParser from 'body-parser';
 import * as socketIO from 'socket.io';
 
 import { Action, actionsToBeSent as authorizedActions } from '../../client/src/actions';
+import { Request } from '../../client/src/serverLink';
 
 import { PORT } from '../PORT';
 
@@ -27,11 +28,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..', '..', 'client')));
 app.use('/img', express.static(path.join(__dirname, '..', '..', 'img')));
 
-export interface Request {
-    index: number;
-    action: Action;
-}
-
 export function BinServer(): void {
 	EventEmitter.call(this);
 
@@ -41,25 +37,45 @@ export function BinServer(): void {
 	io.on('connection', (socket: any) => {
 		// This is just a bridge to make the data go from 6bin client to 6brain
 		socket.on('request', (data: Request) => {
-			if (authorizedActions.has(data.action.type)) {
-				console.log(data.action.type, 'is valid, => 6brain');
-				this.emit('msg', data);
+
+			switch(data.action.type){
+				case 'UPDATE_BIN': // only when availability changes
+					console.log(data.action.type, 'is valid, => 6brain');
+					var measurement = {
+						date: Date.now(),
+						value: data.action.bin
+					};
+					this.emit('measurementRequest', {
+						index: data.index,	
+						measurement
+					});
+					break;
+
+				case 'SAVE_BINS':
+					console.log(data.action.type, 'is valid, => 6brain');
+					this.emit('binsRequest', {
+						index: data.index,
+						bins: data.action.bins
+					});
+					break;
+
+				default:
+					console.log(data.action.type, 'is not valid');
+
 			}
-			else
-				console.log(data.action.type, 'is not valid');
 
 		});
 
-		function respondToClient(response: any) {
-			console.log('responding from main.ts');
+		function transferToClient(response: any) {
+			console.log('transfering from main.ts');
 			socket.emit('response', Object.assign({}, {index: response.index}, {isSuccessful: true}));
 		}
 
 		socket.on('disconnect', () => {
-			this.removeListener('response', respondToClient);
+			this.removeListener('response', transferToClient);
 		});
 
-		this.on('response', respondToClient);
+		this.on('response', transferToClient);
 	});
 
 	this.start = function(){

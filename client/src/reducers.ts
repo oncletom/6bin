@@ -5,7 +5,7 @@ import { List, Map } from 'immutable';
 
 import { BinData } from './Components/Dumb/Bin';
 import { Action } from './actions';
-import { SET_BINS, SAVE_BINS, ADD_BIN, UPDATE_BIN, DELETE_BIN, SET_BIN_AVAILABILITY } from './actions';
+import { SET_BINS, SAVE_BINS, ADD_BIN, UPDATE_BIN, DELETE_BIN } from './actions';
 import { STORE_TEMP_BINS, CLEAR_TEMP_BINS } from './actions';
 import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
 import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN } from './actions';
@@ -25,26 +25,27 @@ function bins (state = initialBinState, action: Action) {
             console.log('action', action);
 
             var newBin: BinData = {
-                id: action.waste + '_' + action.id,
+                id: action.waste + '_' + action.index,
                 isAvailable: true,
                 type: action.waste,
+                instance: action.index,
                 position: undefined
             };
 
             return state.set(newBin.id, newBin);
 
         case UPDATE_BIN:
-            var updatedBin = Object.assign({}, state.get(action.id), action.delta);
-            return state.set(action.id, updatedBin);
+            // var updatedBin = Object.assign({}, state.get(action.id), action.delta);
+            return state.set(action.id, action.bin);
 
         case DELETE_BIN:
             return state.delete(action.id);
 
-        case SET_BIN_AVAILABILITY:
+        /*case SET_BIN_AVAILABILITY:
             var bin = state.get(action.id);
             var updatedBin = (<any>Object.assign)({}, bin, { isAvailable: action.isAvailable });
 
-            return state.set(action.id, updatedBin);
+            return state.set(action.id, updatedBin);*/
 
         default:
             return state;

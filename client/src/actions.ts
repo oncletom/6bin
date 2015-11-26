@@ -8,6 +8,7 @@ import { sendToServer } from './serverLink';
 export interface Action {
     type: string;
     waste?: string;
+    bin?: BinData;
     bins?: Map<string, BinData>;
     // bin?: BinData;
     delta?: BinPartialData;
@@ -35,31 +36,31 @@ export function setBins(bins: Map<string, BinData>) {
 };
 
 export const ADD_BIN = 'ADD_BIN';
-export function addBin(id: number, waste: string) {
-    return { type: ADD_BIN, id, waste };
+export function addBin(index: number, waste: string) {
+    return { type: ADD_BIN, index, waste };
 };
 
 export const UPDATE_BIN = 'UPDATE_BIN';
-export function updateBin(id: string, delta: BinPartialData) {
-    return { type: UPDATE_BIN, id, delta };
+export function updateBin(id: string, bin: BinData) {
+    return { type: UPDATE_BIN, id, bin };
 };
 
 export const DELETE_BIN = 'DELETE_BIN';
 export function deleteBin(id: string) {
     return { type: DELETE_BIN, id };
 };
-
+/*
 export const SET_BIN_AVAILABILITY = 'SET_BIN_AVAILABILITY'; // needs to be sent
 export function setBinAvailability(id: string, isAvailable: boolean) {
     return { type: SET_BIN_AVAILABILITY, id, isAvailable };
 };
-
+*/
 export const SAVE_BINS = 'SAVE_BINS'; // needs to be sent
 export function saveBins(bins: Map<string, BinData>) {
     return { type: SAVE_BINS, bins };
 };
 
-export const actionsToBeSent = Set([SET_BIN_AVAILABILITY, SAVE_BINS]);
+export const actionsToBeSent = Set([UPDATE_BIN, SAVE_BINS]);
 
 // Temp Bins
 export const STORE_TEMP_BINS = 'STORE_TEMP_BINS';

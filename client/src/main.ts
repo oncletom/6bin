@@ -30,16 +30,16 @@ render(React.createElement(Provider, {store},
 );
 
 var myNewBins = Map<string, BinData>({
-    CARTONS_1: { id: 'CARTONS_1', position: 1, type: 'CARTONS', isAvailable: true },
-    BATTERIES_1: { id: 'BATTERIES_1', position: 2, type: 'BATTERIES', isAvailable: true },
-    BOIS_1: { id: 'BOIS_1', position: 3, type: 'BOIS', isAvailable: true },
-    ECRANS_1: { id: 'ECRANS_1', position: 4, type: 'ECRANS', isAvailable: true },
-    EXTINCTEURS_1: { id: 'EXTINCTEURS_1', position: 5, type: 'EXTINCTEURS', isAvailable: true },
-    CARTONS_2: { id: 'CARTONS_2', position: 6, type: 'CARTONS', isAvailable: true },
-    BATTERIES_2: { id: 'BATTERIES_2', position: 7, type: 'BATTERIES', isAvailable: true },
-    BOIS_2: { id: 'BOIS_2', position: 8, type: 'BOIS', isAvailable: true },
-    ECRANS_2: { id: 'ECRANS_2', position: 9, type: 'ECRANS', isAvailable: true },
-    EXTINCTEURS_2: { id: 'EXTINCTEURS_2', position: 10, type: 'EXTINCTEURS', isAvailable: true }
+    CARTONS_1: { id: 'CARTONS_1', position: 1, type: 'CARTONS', isAvailable: true, sixelement_id: 1 },
+    BATTERIES_1: { id: 'BATTERIES_1', position: 2, type: 'BATTERIES', isAvailable: true, sixelement_id: 2 },
+    BOIS_1: { id: 'BOIS_1', position: 3, type: 'BOIS', isAvailable: true, sixelement_id: 3 },
+    ECRANS_1: { id: 'ECRANS_1', position: 4, type: 'ECRANS', isAvailable: true, sixelement_id: 4 },
+    EXTINCTEURS_1: { id: 'EXTINCTEURS_1', position: 5, type: 'EXTINCTEURS', isAvailable: true, sixelement_id: 5 },
+    CARTONS_2: { id: 'CARTONS_2', position: 6, type: 'CARTONS', isAvailable: true, sixelement_id: 6 },
+    BATTERIES_2: { id: 'BATTERIES_2', position: 7, type: 'BATTERIES', isAvailable: true, sixelement_id: 7 },
+    BOIS_2: { id: 'BOIS_2', position: 8, type: 'BOIS', isAvailable: true, sixelement_id: 8 },
+    ECRANS_2: { id: 'ECRANS_2', position: 9, type: 'ECRANS', isAvailable: true, sixelement_id: 9 },
+    EXTINCTEURS_2: { id: 'EXTINCTEURS_2', position: 10, type: 'EXTINCTEURS', isAvailable: true, sixelement_id: 10 }
 });
 
 
