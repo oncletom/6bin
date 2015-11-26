@@ -51,7 +51,7 @@ export function BinServer(): void {
 					});
 					break;
 
-				case 'SAVE_BINS':
+				case 'SET_BINS':
 					console.log(data.action.type, 'is valid, => 6brain');
 					this.emit('binsRequest', {
 						index: data.index,

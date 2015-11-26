@@ -12,7 +12,7 @@ import WastePicker from '../Dumb/WastePicker';
 import { BinData, BinPartialData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { sendData } from '../../asyncActions'; // async Actions
-import { setBins, updateBin, saveBins } from '../../actions'; // Bin actions
+import { setBins, updateBin } from '../../actions'; // Bin actions
 import { storeTempBins, clearTempBins } from '../../actions'; // TempBin actions
 import { setBinEditMode, openBinPanel, setBinAddMode, selectBin } from '../../actions'; // Display actions
 
@@ -101,7 +101,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                     }
                     else {
                         // after actions will be dispatched after async action
-                        var action = saveBins(bins);
+                        var action = setBins(bins);
 
                         dispatch(
                             setBinEditMode(false));
