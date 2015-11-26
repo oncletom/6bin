@@ -64,7 +64,6 @@
 
 .positions li {
 	display: inline-block; margin: .2rem; padding: .2rem;
-	cursor: pointer;
 }
 
 .positions li.assigned {
