@@ -6,7 +6,9 @@ In [6element](https://github.com/anthill/6element), we inform citizens of whethe
 
 This screen can be used to indicate other informations that is normally hard to get in real time like unexpected recycling center closing (due to too many bind being full, an accident, etc.).
 
-## Install
+## Instructions
+
+### Install
 ```
 npm install
 npm i tsd -g
@@ -14,7 +16,7 @@ tsd init
 tsd install
 ```
 
-## Build
+### Build
 ```
 npm run build-dev
 ```
@@ -28,14 +30,28 @@ You can also do
 npm run watch
 ```
 
-## Run the project
+### Run the project
 ```
 npm run start
 ```
 
-## Tests
-You need [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/)
-
+### Tests
 ```
 npm run test
 ```
+
+## Communication
+
+6bin client and 6bin server are linked via socketIO.
+- Client => 'request' events => Server
+- Server => 'response' events => Client
+
+Two actions can trigger 'request' events from client:
+- UPDATE_BIN in the case of bin availability change
+- SET_BINS in the case of Bin list save after modifications
+
+6bin server and 6brain are linked via EventEmitter.
+- Server => 'measurementRequest' and 'binsRequest' events => 6brain
+- 6brain => 'data' and 'error' event => Server 
+
+
