@@ -68,15 +68,14 @@ export function BinServer(): void {
 
 		function transferToClient(response: any) {
 			console.log('transfering from main.ts');
-			socket.emit('response', Object.assign({}, {index: response.index}, {isSuccessful: true}));
+			socket.emit('response', response);
 		}
 
 		socket.on('disconnect', () => {
-			this.removeListener('response', transferToClient);
+			this.removeListener('6bin', transferToClient);
 		});
 
-		this.on('data', transferToClient);
-		this.on('error', transferToClient);
+		this.on('6bin', transferToClient);
 	});
 
 	this.start = function(){

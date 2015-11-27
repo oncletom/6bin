@@ -11,14 +11,17 @@ export function sendData(action: Action, id: number, after?: Action[]) {
         dispatch(action);
 
         sendToServer(action)
-        .then(() => {
+        .then((data) => {
             console.log('YOUHOU !!!! Now you should dispatch the correct action');
             
             dispatch(
                 deletePendingAction(id));
+
+            // NEED TO UPDATE BINS WHEN NECESSARY
         })
-        .catch(() => {
+        .catch((error) => {
             console.log('Its a SHAME !!!! You should still dispatch the correct action');
+            // DO SOMETHING IF REJECTED
         });
     };
 }
