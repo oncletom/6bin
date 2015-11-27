@@ -41,21 +41,22 @@ export function BinServer(): void {
 			switch(data.action.type){
 				case 'UPDATE_BIN': // only when availability changes
 					console.log(data.action.type, 'is valid, => 6brain');
-					var measurement = {
+
+					this.emit('measurementRequest', {	
 						date: new Date(Date.now()).toISOString(),
-						value: data.action.bin
-					};
-					this.emit('measurementRequest', {
-						index: data.index,	
-						measurement
+						value: data.action.bin,
+						index: data.index,
+						origin: '6bin'
 					});
 					break;
 
 				case 'SET_BINS':
 					console.log(data.action.type, 'is valid, => 6brain');
+
 					this.emit('binsRequest', {
+						bins: data.action.bins,
 						index: data.index,
-						bins: data.action.bins
+						origin: '6bin'
 					});
 					break;
 
