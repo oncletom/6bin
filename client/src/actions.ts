@@ -49,16 +49,6 @@ export const DELETE_BIN = 'DELETE_BIN';
 export function deleteBin(id: string) {
     return { type: DELETE_BIN, id };
 };
-/*
-export const SET_BIN_AVAILABILITY = 'SET_BIN_AVAILABILITY'; // needs to be sent
-export function setBinAvailability(id: string, isAvailable: boolean) {
-    return { type: SET_BIN_AVAILABILITY, id, isAvailable };
-};
-*/
-// export const SAVE_BINS = 'SAVE_BINS'; // needs to be sent
-// export function saveBins(bins: Map<string, BinData>) {
-//     return { type: SAVE_BINS, bins };
-// };
 
 export const actionsToBeSent = Set([UPDATE_BIN, SET_BINS]);
 

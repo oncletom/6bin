@@ -31,17 +31,10 @@ function bins (state = initialBinState, action: Action) {
             return state.set(newBin.id, newBin);
 
         case UPDATE_BIN:
-            // var updatedBin = Object.assign({}, state.get(action.id), action.delta);
             return state.set(action.id, action.bin);
 
         case DELETE_BIN:
             return state.delete(action.id);
-
-        /*case SET_BIN_AVAILABILITY:
-            var bin = state.get(action.id);
-            var updatedBin = (<any>Object.assign)({}, bin, { isAvailable: action.isAvailable });
-
-            return state.set(action.id, updatedBin);*/
 
         default:
             return state;

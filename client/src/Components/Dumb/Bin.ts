@@ -15,6 +15,7 @@ export interface BinData {
     type: string;
     instance: number;
     isAvailable: boolean;
+    sixelement_id?: number;
 }
 
 export interface BinPartialData {
@@ -23,6 +24,7 @@ export interface BinPartialData {
     type?: string;
     instance?: number;
     isAvailable?: boolean;
+    sixelement_id?: number;
 }
 
 export interface BinProps extends BinData{
