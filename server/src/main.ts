@@ -75,7 +75,8 @@ export function BinServer(): void {
 			this.removeListener('response', transferToClient);
 		});
 
-		this.on('response', transferToClient);
+		this.on('data', transferToClient);
+		this.on('error', transferToClient);
 	});
 
 	this.start = function(){
