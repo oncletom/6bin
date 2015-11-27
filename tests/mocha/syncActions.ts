@@ -57,27 +57,5 @@ describe('Synchronous Actions', () => {
         });
     });
 
-    it('SET_BIN_AVAILABILITY', () => {
-
-        store.dispatch(actions.setBinAvailability('AMEUBLEMENT_1', false));
-
-        return new Promise((resolve, reject) => {
-            var unavailableBin = store.getState().bins.get('AMEUBLEMENT_1');
-            expect(unavailableBin.isAvailable).to.be.false;
-            resolve();
-        });
-    });
-
-    // NEED TO REWRITE THIS
-    // it('SET_BIN_PENDING', () => {
-
-    //     store.dispatch(actions.setBinPending(4, true));
-
-    //     return new Promise((resolve, reject) => {
-    //         var pendingBin = store.getState().bins.get(4);
-    //         expect(pendingBin.isPending).to.be.true;
-    //         resolve();
-    //     });
-    // }); 
 
 });
