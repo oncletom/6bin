@@ -42,6 +42,8 @@ npm run test
 
 ## Communication
 
+![6bin communication protocol](https://docs.google.com/drawings/d/1aTYHgLMnzJ5Vr5dZoLn4aSifguRt-rzbuOTvyQf1vO8/pub?w=960&h=540)
+
 6bin client and 6bin server are linked via socketIO.
 - Client => 'request' events => Server
 - Server => 'response' events => Client
@@ -52,6 +54,6 @@ Two actions can trigger 'request' events from client:
 
 6bin server and 6brain are linked via EventEmitter.
 - Server => 'measurementRequest' and 'binsRequest' events => 6brain
-- 6brain => 'data' and 'error' event => Server 
+- 6brain => 'data' and 'error' event => Server
 
 
