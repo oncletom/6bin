@@ -5,7 +5,7 @@ import * as io from 'socket.io-client';
 import { Map } from 'immutable';
 import { Action } from './actions'; // Pending actions
 
-import { PORT } from '../../server/PORT';
+import { PORT } from '../server/PORT';
 
 export interface Request {
     index: number;

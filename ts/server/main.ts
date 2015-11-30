@@ -14,10 +14,10 @@ import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as socketIO from 'socket.io';
 
-import { Action, actionsToBeSent as authorizedActions } from '../../client/src/actions';
-import { Request } from '../../client/src/serverLink';
+import { Action, actionsToBeSent as authorizedActions } from '../client/actions';
+import { Request } from '../client/serverLink';
 
-import { PORT } from '../PORT';
+import { PORT } from './PORT';
 
 var app = express();
 
@@ -25,7 +25,7 @@ app.use(compression());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, '..', '..', 'client')));
+app.use(express.static(path.join(__dirname, '..', '..')));
 app.use('/img', express.static(path.join(__dirname, '..', '..', 'img')));
 
 export function BinServer(): void {

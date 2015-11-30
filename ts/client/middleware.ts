@@ -1,6 +1,6 @@
 'use strict';
 
-// import debug from '../../tools/debug'
+// import debug from '../tools/debug'
 
 export const logger = (store: any) => (next: any) => (action: any) => {
     let result = next(action);

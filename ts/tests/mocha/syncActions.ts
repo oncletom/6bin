@@ -1,4 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 
 'use strict';
 require('es6-shim');
@@ -6,11 +6,11 @@ require('es6-shim');
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Map } from 'immutable';
 
-import * as actions from '../../client/src/actions';
-import reducers from '../../client/src/reducers';
-import { logger } from '../../client/src/middleware';
-import BinManager from '../../client/src/Components/Smart/BinManager';
-import { BinData } from '../../client/src/Components/Dumb/Bin';
+import * as actions from '../../client/actions';
+import reducers from '../../client/reducers';
+import { logger } from '../../client/middleware';
+import BinManager from '../../client/Components/Smart/BinManager';
+import { BinData } from '../../client/Components/Dumb/Bin';
 
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
