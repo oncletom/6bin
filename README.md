@@ -54,6 +54,6 @@ Two actions can trigger 'request' events from client:
 
 6bin server and 6brain are linked via EventEmitter.
 - Server => 'measurementRequest' and 'binsRequest' events => 6brain
-- 6brain => 'data' and 'error' event => Server
+- 6brain => 'data' event => Server
 
 
