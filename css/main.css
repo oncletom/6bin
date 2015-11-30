@@ -1,11 +1,12 @@
 body {
 	overflow: hidden;
+	cursor: none;
 }
 
 #app {
 	display: flex; width: 100vw; height: 100vh;
 	flex-direction: column;
-	background-color:  #929292;
+	background-color:  #353535;
 }
 
 #app.edit, #footer.edit, #bin-manager.edit {
@@ -42,7 +43,7 @@ body {
 
 #footer {
 	position: absolute; height: 6vh; bottom: 0; right: 0; left: 0;
-	background-color: #929292;
+	background-color: #353535;
 	z-index: 1;
 }
 
