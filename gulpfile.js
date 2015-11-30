@@ -40,7 +40,7 @@ function bundleShare(b, name) {
     });
 }
 
-function browserifyShare(name){
+function browserifyShare(path){
     var b = browserify({
         cache: {},
         packageCache: {},
@@ -48,27 +48,30 @@ function browserifyShare(name){
         debug: true
     });
     
-    b.add( join('.', 'js', name, 'main.js') );
+    b.add( path );
 
     return bundleShare(b, 'browserify-bundle.js');
 }
 
-function tscDev(){
+function tscDev(glob){
 
-    return gulp.src(join('ts', '**/*.ts'))
+    console.log('tscDev', glob);
+
+    return gulp.src(glob)
         .pipe(sourcemaps.init())
         .pipe(ts({
             noImplicitAny: true,
             target: 'ES5',
             module: 'commonjs',
+            outDir: glob
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(join('.', 'js')));
 }
 
-function tscProd(){ // doesn't generate sourcemaps
+function tscProd(glob){ // doesn't generate sourcemaps
 
-    return gulp.src(join('ts', '**/*.ts'))
+    return gulp.src(join(glob))
         .pipe(ts({
             noImplicitAny: true,
             target: 'ES5',
@@ -79,20 +82,20 @@ function tscProd(){ // doesn't generate sourcemaps
 
 // Typescript compile and then browserify bundle the client
 gulp.task('build-dev', ['tsc-dev'], function(){
-    return browserifyShare('client');
+    return browserifyShare('js/client/main.js');
 });
 
 gulp.task('build-prod', ['tsc-prod'], function(){
-    return browserifyShare('client');
+    return browserifyShare('js/client/main.js');
 });
 
 // Typescript compile
 gulp.task('tsc-dev', function(){
-    return tscDev();
+    return tscDev('ts/**/*.ts');
 });
 
 gulp.task('tsc-prod', function(){
-    return tscProd();
+    return tscProd('ts/**/*.ts');
 });
 
 // Watch client
@@ -100,15 +103,19 @@ gulp.task('watch', ['build-dev'], function() {
     console.log('Watching client');
     
     // When a .js updates, Browserify bundle the client
-    var jsClientWatcher = gulp.watch('./js/client/**/*.js', ['browserify-client']);
+    var jsClientWatcher = gulp.watch('./js/client/**/*.js');
     jsClientWatcher.on('change', function(event) {
-        console.log('** JS Client ** File ' + path.relative(__dirname, event.path) + ' was ' + event.type);
+        var file = path.relative(__dirname, event.path);
+        console.log('** JS Client ** File ' + file + ' was ' + event.type);
+        browserifyShare(file);
     });
 
     // When a .ts updates, Typescript compile the client
-    var tsClientWatcher = gulp.watch('./ts/**/*.ts', ['tsc-client-dev']);
+    var tsClientWatcher = gulp.watch('./ts/**/*.ts');
     tsClientWatcher.on('change', function(event) {
-        console.log('** TS Client ** File ' + path.relative(__dirname, event.path) + ' was ' + event.type);
+        var file = path.relative(__dirname, event.path);
+        console.log('** TS Client ** File ' + file + ' was ' + event.type);
+        tscDev(file);
     });
 });
 
