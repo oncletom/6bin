@@ -27,7 +27,7 @@ var source = require('vinyl-source-stream');
 function bundleShare(b, name) {
     return new Promise(function(resolve, reject){
         b.bundle()
-        .pipe(source( join('.', name)))
+        .pipe(source( join('.', 'client', name) ) )
         .pipe(gulp.dest('.'))
         .on('error', function (err) {
             console.error('bundleShare error', err.message);
@@ -40,7 +40,7 @@ function bundleShare(b, name) {
     });
 }
 
-function browserifyShare(path){
+function browserifyShare(){
     var b = browserify({
         cache: {},
         packageCache: {},
@@ -48,30 +48,27 @@ function browserifyShare(path){
         debug: true
     });
     
-    b.add( path );
+    b.add( join('.', 'js', 'client', 'main.js') );
 
     return bundleShare(b, 'browserify-bundle.js');
 }
 
-function tscDev(glob){
+function tscDev(){
 
-    console.log('tscDev', glob);
-
-    return gulp.src(glob)
+    return gulp.src(join('.', 'ts', '**/*.ts'))
         .pipe(sourcemaps.init())
         .pipe(ts({
             noImplicitAny: true,
             target: 'ES5',
-            module: 'commonjs',
-            outDir: glob
+            module: 'commonjs'
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(join('.', 'js')));
 }
 
-function tscProd(glob){ // doesn't generate sourcemaps
+function tscProd(){ // doesn't generate sourcemaps
 
-    return gulp.src(join(glob))
+    return gulp.src(join('.', 'ts', '**/*.ts'))
         .pipe(ts({
             noImplicitAny: true,
             target: 'ES5',
@@ -80,55 +77,46 @@ function tscProd(glob){ // doesn't generate sourcemaps
         .pipe(gulp.dest(join('.', 'js')));
 }
 
-// Typescript compile and then browserify bundle the client
-gulp.task('build-dev', ['tsc-dev'], function(){
-    return browserifyShare('js/client/main.js');
+// Browserify bundle the client
+gulp.task('browserify-client', function(){
+    return browserifyShare();
 });
 
-gulp.task('build-prod', ['tsc-prod'], function(){
-    return browserifyShare('js/client/main.js');
-});
-
-// Typescript compile
+// Typescript compile the client
 gulp.task('tsc-dev', function(){
-    return tscDev('ts/**/*.ts');
+    return tscDev();
 });
 
 gulp.task('tsc-prod', function(){
-    return tscProd('ts/**/*.ts');
+    return tscProd();
 });
+
 
 // Watch client
 gulp.task('watch', ['build-dev'], function() {
     console.log('Watching client');
     
     // When a .js updates, Browserify bundle the client
-    var jsClientWatcher = gulp.watch('./js/client/**/*.js');
+    var jsClientWatcher = gulp.watch('./js/client/**/*.js', ['browserify-client']);
     jsClientWatcher.on('change', function(event) {
-        var file = path.relative(__dirname, event.path);
-        console.log('** JS Client ** File ' + file + ' was ' + event.type);
-        browserifyShare(file);
+        console.log('** JS Client ** File ' + path.relative(__dirname, event.path) + ' was ' + event.type);
     });
 
     // When a .ts updates, Typescript compile the client
-    var tsClientWatcher = gulp.watch('./ts/**/*.ts');
-    tsClientWatcher.on('change', function(event) {
-        var file = path.relative(__dirname, event.path);
-        console.log('** TS Client ** File ' + file + ' was ' + event.type);
-        tscDev(file);
+    var tsWatcher = gulp.watch('./ts/**/*.ts', ['tsc-dev']);
+    tsWatcher.on('change', function(event) {
+        console.log('** TS ** File ' + path.relative(__dirname, event.path) + ' was ' + event.type);
     });
 });
 
-// These are to spawn docker test instances, needed mainly for async tests that require the server being up
 
-gulp.task('start-containers-test', function(){
-    spawn('docker-compose', ['-f', 'compose-test.yml', 'up', '--force-recreate'], {stdio: 'inherit'});
+// Typescript compile and then browserify bundle the client
+gulp.task('build-dev', ['tsc-dev'], function(){
+    return browserifyShare();
 });
 
-/*
-    Top-level tasks
-*/
-
-gulp.task('test', ['start-containers-test']);
+gulp.task('build-prod', ['tsc-prod'], function(){
+    return browserifyShare();
+});
 
 
