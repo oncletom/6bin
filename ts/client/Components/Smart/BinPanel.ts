@@ -26,8 +26,6 @@ interface BinEditorProps extends ReduxPropsMixin{
 
 interface BinEditorState{}
 
-var nextPending = 0;
-
 class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
     mixins = [PureRenderMixin]
 
@@ -48,7 +46,7 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
                     dispatch(
                         deleteBin(selectedId));
                     dispatch(
-                            openBinPanel(false));
+                        openBinPanel(false));
                 }
             }, 'Supprimer la benne')
             : undefined ;

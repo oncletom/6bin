@@ -1,12 +1,14 @@
 'use strict';
 
-import { List, Map } from 'immutable';
-import { BinData, BinPartialData } from './Components/Dumb/Bin';
 import * as io from 'socket.io-client';
+import { List, Map, Set } from 'immutable';
+import { BinData, BinPartialData } from './Components/Dumb/Bin';
+import { sendToServer } from './serverLink';
 
 export interface Action {
     type: string;
     waste?: string;
+    bin?: BinPartialData;
     bins?: Map<string, BinData>;
     // bin?: BinData;
     delta?: BinPartialData;
@@ -27,28 +29,20 @@ export interface State {
     tempBins: Map<string, BinData>;
 }
 
-export interface Request {
-    index: number;
-    action: Action;
-}
-
-// var socket = process.env.NODE_ENV !== 'test' ? io() : io('http://server:3100');
-var socket = io('http://localhost:3000');
-
 // Bin Actions
-export const SET_BINS = 'SET_BINS';
+export const SET_BINS = 'SET_BINS'; // can be sent
 export function setBins(bins: Map<string, BinData>) {
     return { type: SET_BINS, bins };
 };
 
 export const ADD_BIN = 'ADD_BIN';
-export function addBin(id: number, waste: string) {
-    return { type: ADD_BIN, id, waste };
+export function addBin(index: number, waste: string) {
+    return { type: ADD_BIN, index, waste };
 };
 
-export const UPDATE_BIN = 'UPDATE_BIN';
-export function updateBin(id: string, delta: BinPartialData) {
-    return { type: UPDATE_BIN, id, delta };
+export const UPDATE_BIN = 'UPDATE_BIN'; // can be sent
+export function updateBin(id: string, bin: BinPartialData) {
+    return { type: UPDATE_BIN, id, bin };
 };
 
 export const DELETE_BIN = 'DELETE_BIN';
@@ -56,15 +50,7 @@ export function deleteBin(id: string) {
     return { type: DELETE_BIN, id };
 };
 
-export const SET_BIN_AVAILABILITY = 'SET_BIN_AVAILABILITY'; // needs to be sent
-export function setBinAvailability(id: string, isAvailable: boolean) {
-    return { type: SET_BIN_AVAILABILITY, id, isAvailable };
-};
-
-export const SAVE_BINS = 'SAVE_BINS'; // needs to be sent
-export function saveBins(bins: Map<string, BinData>) {
-    return { type: SAVE_BINS, bins };
-};
+export const actionsToBeSent = Set([UPDATE_BIN, SET_BINS]);
 
 // Temp Bins
 export const STORE_TEMP_BINS = 'STORE_TEMP_BINS';
@@ -109,53 +95,3 @@ export function deletePendingAction(index: number) {
     return { type: DELETE_PENDING_ACTION, index };
 };
 
-var counter: number = 0;
-var promiseMap: any = Map();
-
-socket.on('response', (response: any) => {
-    var myPromise = promiseMap.get(response.index);
-
-    console.log('index', response.index);
-
-    if (response.isSuccessful)
-        myPromise.resolve();
-    else
-        myPromise.reject();
-});
-
-export function sendData(action: Action, after?: Action[]) {
-
-    return function (dispatch: any) {
-        dispatch(action);
-
-        counter ++;
-        var resolve: any, reject: any;
-
-        var p = new Promise((_resolve, _reject) => {
-            resolve = _resolve;
-            reject = _reject;
-
-            socket.emit('request', {
-                index: counter,
-                action
-            });
-        });
-
-        promiseMap = promiseMap.set(counter, {
-            p,
-            resolve,
-            reject
-        });
-
-        p.then(() => {
-            console.log('YOUHOU !!!! Now you should dispatch the correct action');
-            
-            after.forEach((action: Action) => {
-                dispatch(action);
-            });
-        })
-        .catch(() => {
-            console.log('Its a SHAME !!!! You should still dispatch the correct action');
-        });
-    };
-}

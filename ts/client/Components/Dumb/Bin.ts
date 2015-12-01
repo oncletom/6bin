@@ -13,14 +13,18 @@ export interface BinData {
     id: string; // separating id from position is relevant because you might have bin without associated position
     position: number;
     type: string;
+    instance: number;
     isAvailable: boolean;
+    sixelement_id?: number;
 }
 
 export interface BinPartialData {
     id?: string;
     position?: number;
     type?: string;
+    instance?: number;
     isAvailable?: boolean;
+    sixelement_id?: number;
 }
 
 export interface BinProps extends BinData{

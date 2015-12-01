@@ -1,15 +1,15 @@
 {
   "name": "6bin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "User interface for 6element sensors",
-  "main": "index.js",
+  "main": "./js/server/main.js",
   "scripts": {
+    "prepublish": "node_modules/gulp/bin/gulp.js build-prod",
     "build-dev": "node_modules/gulp/bin/gulp.js build-dev",
     "build-prod": "node_modules/gulp/bin/gulp.js build-prod",
-    "dev": "node_modules/gulp/bin/gulp.js dev",
-    "prod": "node_modules/gulp/bin/gulp.js prod",
-    "start": "node server/src/main.js",
-    "test": "node_modules/gulp/bin/gulp.js test"
+    "watch": "node_modules/gulp/bin/gulp.js watch",
+    "start": "nodemon example.js",
+    "test": "mocha --recursive tests/js/mocha/"
   },
   "repository": {
     "type": "git",

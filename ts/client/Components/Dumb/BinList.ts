@@ -62,7 +62,14 @@ export default class BinList extends React.Component<BinListProps, BinListState>
             binList.push(addButton);
         // }
 
-        return React.createElement('ul', {className: 'bins'},
+        console.log('WEIRD', binList.length, (binList.length - 1) % 7);
+
+        return React.createElement('ul', {
+                className: [
+                    'bins',
+                    (binList.length - 1) % 7 === 0 ? 'weird' : ''
+                ].join(' ')
+            },
             binList
         );
     }

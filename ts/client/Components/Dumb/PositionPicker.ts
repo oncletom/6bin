@@ -8,7 +8,7 @@ import { OrderedSet } from 'immutable';
 import { binDico } from '../../binTypes';
 import { BinPartialData } from './Bin';
 
-import range from '../../../../tools/range';
+import range from '../../../tools/range';
 
 interface PositionPickerProps{
     visible: boolean;

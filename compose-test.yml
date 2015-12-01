@@ -3,10 +3,10 @@ server:
     dockerfile: Server
     command: node server/src/main.js
     ports:
-        - 3100:3100
+        - 3000:3000
     environment:
         - NODE_ENV=test
-        - VIRTUAL_PORT=3100
+        - VIRTUAL_PORT=3000
     volumes:
         - .:/usr/6bin
     tty: true
