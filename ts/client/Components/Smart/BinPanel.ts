@@ -10,6 +10,7 @@ import { Set, Map } from 'immutable';
 import BinList from '../Dumb/BinList';
 import WastePicker from '../Dumb/WastePicker';
 import PositionPicker from '../Dumb/PositionPicker';
+import Bin from '../Dumb/Bin';
 import { BinData, BinPartialData } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { addBin, deleteBin, updateBin, selectBin } from '../../actions'; // Bin actions
@@ -19,23 +20,101 @@ interface ReduxPropsMixin{
     dispatch: Dispatch
 }
 
-interface BinEditorProps extends ReduxPropsMixin{
+interface BinPanelProps extends ReduxPropsMixin{
     bins: Map<string, BinData>;
     display: Map<string, any>;
 }
 
-interface BinEditorState{}
+interface BinPanelState{
+    newBin: BinData;
+}
 
-class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
+class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
     mixins = [PureRenderMixin]
+
+    constructor(props : BinPanelProps){ // equivalent to getInitialState()
+        this.state = { newBin: undefined };
+    }
+
+    componentWillReceiveProps(nextProps: BinPanelProps){
+
+        var selectedId: string = nextProps.display.get('selectedBin');
+        var selectedBin: BinData = nextProps.bins.get(selectedId);
+
+        this.setState({
+            newBin: selectedBin
+        });
+    }
 
     render() {
         
         const { dispatch, bins, display } = this.props;
+        const state = this.state;
 
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBins: boolean = display.get('isAddingBins');
+        var isEditingBins: boolean = display.get('isEditingBins');
         var selectedId: string = display.get('selectedBin');
+        var selectedBin: BinData = bins.get(selectedId);
+
+        // The current Bin the user is modifying / creating
+        var currentBin = selectedId ? 
+            React.createElement(Bin, Object.assign({}, selectedBin, {
+                isSelected: selectedId === selectedBin.id,
+                // isPending: bin.isPending,
+                isEditing: isEditingBins,
+                onAvailabilityChange: undefined,
+                onDeletion: undefined,
+                onSelection: (id) => {
+                    dispatch(
+                        selectBin(id));
+                    dispatch(
+                        openBinPanel(false));
+                    if (isAddingBins) 
+                        dispatch(
+                            setBinAddMode(false));
+                }
+            }))
+            : React.createElement('li', {
+                className: [
+                    'bin'
+                ].join(' '),
+                onClick: () => {
+                    if (isBinPanelOpen)
+                        dispatch(
+                            selectBin(undefined));
+                    dispatch(
+                        openBinPanel(!isAddingBins));
+                    dispatch(
+                        setBinAddMode(!isAddingBins));
+                }
+            },
+            'Choisir Benne'
+        );
+
+        // A preview of what the bin will be once modified / created
+        var isNew = state.newBin ? state.newBin.type !== selectedBin.type 
+            || state.newBin.position !== selectedBin.position
+            : false;
+
+        var newBin = isNew ?
+            React.createElement(Bin, Object.assign({}, state.newBin, {
+                isSelected: selectedId === selectedBin.id,
+                // isPending: bin.isPending,
+                isEditing: isEditingBins,
+                onAvailabilityChange: undefined,
+                onDeletion: undefined,
+                onSelection: (id) => {
+                    dispatch(
+                        selectBin(id));
+                    dispatch(
+                        openBinPanel(false));
+                    if (isAddingBins) 
+                        dispatch(
+                            setBinAddMode(false));
+                }
+            }))
+            : React.createElement('li', { className: 'bin' }); // this is a dummy component
 
         var deleteButton = selectedId ? 
             React.createElement('div', {
@@ -53,8 +132,14 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
 
         // Create the list with all bin types
         var wastePicker = React.createElement(WastePicker, {
-            type: selectedId !== undefined ? bins.get(selectedId).type : undefined, // bins is a list, from 0 to n-1
+            type: state.newBin ? state.newBin.type : undefined,
             onWasteSelection: (type: string) => {
+                console.log('Setting state');
+                this.setState({
+                    newBin: Object.assign({}, state.newBin, { type })
+                });
+                /*
+                var updatedBin = Object.assign({}, selectedBin, { type });
 
                 // check how many bin of same type are present in bins (say n), and create the new bin with the id type + n+1
                 var nextId: number = 1;
@@ -63,6 +148,8 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
                     if (bin.type === type)
                         nextId ++;
                 });
+
+                
 
                 // when waste selected, add Bin, select it and disable Add mode
                 if (isAddingBins){
@@ -75,7 +162,7 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
                 }
                 else
                     dispatch(
-                        updateBin(selectedId, { type }));
+                        updateBin(selectedId, updatedBin));*/
             }
         });
 
@@ -90,10 +177,14 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
             visible: isBinPanelOpen && !isAddingBins,
             assigned: assigned,
             max: 20,
-            selected: selectedId !== undefined ? bins.get(selectedId).position : undefined,
+            selected: state.newBin ? state.newBin.position : undefined,
             onPositionSelection: (position: number) => {
-                var delta = { position };
-
+                console.log('Setting state');
+                this.setState({
+                    newBin: Object.assign({}, state.newBin, { position })
+                });
+                /*var updatedBin = Object.assign({}, selectedBin, { position });
+                
                 var nonPositionedBin: BinData;
 
                 bins.forEach((bin: BinData) => { // check if the clicked position is already assigned
@@ -101,16 +192,28 @@ class BinEditor extends React.Component<BinEditorProps, BinEditorState> {
                         nonPositionedBin = bin;
                 });
 
-                if (nonPositionedBin) // is position is already assigned to a bin, unposition this bin 
+                if (nonPositionedBin){ // is position is already assigned to a bin, unposition this bin 
+                    var temp = Object.assign({}, nonPositionedBin, { position: undefined });
                     dispatch(
-                        updateBin(nonPositionedBin.id, { position: undefined }));
-                dispatch(
-                    updateBin(selectedId, delta));
+                        updateBin(nonPositionedBin.id, temp));
                 }
+
+                dispatch(
+                    updateBin(selectedId, updatedBin));
+                }*/
         });
 
         return React.createElement('div', {id: 'editor'}, 
-            'Type de déchets',
+            isAddingBins ? 'Ajouter une benne' : 'Modifier une benne',
+            React.createElement('ul', {},
+                React.createElement('div', {}, currentBin, 'Annuler'),
+                React.createElement('div', {
+                        className: isNew ? 'new' : ''
+                    },
+                    newBin,
+                    isNew ? 'Confirmer' : ''
+                )
+            ),
             wastePicker,
             positionPicker,
             deleteButton
@@ -127,4 +230,4 @@ function select(state: State) {
 }
 
 // Connect the component to Redux => making it Smart
-export default connect(select)(BinEditor);
+export default connect(select)(BinPanel);

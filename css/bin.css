@@ -1,26 +1,21 @@
-.bins {
-	display: flex; padding: 0 5vw;
-	flex-direction: row; justify-content: flex-start; flex-wrap: wrap; align-content: space-around;
-}
-
-.bins li {
+.bin {
 	display: flex; flex-direction: column; justify-content: flex-start;
 	margin: 1rem; height: 5rem; width: 4rem; padding: .2rem; position: relative;
 	border-radius: 10px; box-shadow: 3px 5px 5px #444;
-	font-size: .8rem;
 	background-color: #EEE;
-	list-style-type: none;
-	text-align: center; text-transform: capitalize;
+	text-align: center; text-transform: capitalize; font-size: .8rem; text-transform: capitalize;
 	transition: margin .5s ease-out;
-	z-index: 1;
+	z-index: 1; list-style-type: none;
+}
+
+.bins {
+	display: flex; padding: 0 1vw;
+	flex-direction: row; justify-content: flex-start; flex-wrap: wrap; align-content: space-around;
 }
 
 .edit .bins li {
+	font-size: .8rem;
 	box-shadow: none;
-}
-
-.panel-open .bins li {
-	margin: .3rem 1rem;
 }
 
 #add-bin {
@@ -35,7 +30,7 @@
 	box-shadow: 3px 5px 5px #444;
 }
 
-.weird #add-bin {
+.completeLine #add-bin {
 	right: 0; bottom: 7.3rem;
 }
 

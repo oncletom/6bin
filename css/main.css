@@ -6,16 +6,21 @@ body {
 #app {
 	display: flex; width: 100vw; height: 100vh;
 	flex-direction: column;
+}
+
+#manager {
+	height: 100vh; left: 0;
 	background-color:  #353535;
+	transition: left .7s ease;
+	/*z-index: 2;*/
 }
 
-#app.edit, #footer.edit, #bin-manager.edit {
+.panel-open #manager {
+	/*left: -100vw;*/
+}
+
+#footer.edit, #manager.edit {
 	background-color: #77aaff;
-}
-
-#bin-manager {
-	height: 60vh;
-	z-index: 2;
 }
 
 #bin-manager > div:last-child {
@@ -27,7 +32,7 @@ body {
 	border: 1px solid black; border-radius: 5px;
 	background-color: #EEE;
 	font-size: .8rem; text-align: center;
-	z-index: 2;
+	/*z-index: 2;*/
 }
 
 #cancel-bins-button {
@@ -38,13 +43,14 @@ body {
 	width: 50vw;
 	font-size: .7rem; font-style: italic;
 	background-color: rgba(180, 180, 180, 0.3);
-	z-index: 4;
+	/*z-index: 4;*/
 }
 
 #footer {
-	position: absolute; height: 6vh; bottom: 0; right: 0; left: 0;
+	position: absolute; height: 10vh; bottom: 0; right: 0; left: 0;
 	background-color: #353535;
-	z-index: 1;
+	display: none;
+	/*z-index: 1;*/
 }
 
 .edit #footer {

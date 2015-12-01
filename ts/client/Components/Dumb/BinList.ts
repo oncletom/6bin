@@ -28,12 +28,9 @@ export default class BinList extends React.Component<BinListProps, BinListState>
         var props = this.props;
 
         var binList = props.bins.toList().map((bin: BinData, index: number) => {
-            return React.createElement(Bin, {
+
+            var binProps = Object.assign({}, bin, {
                 key: index,
-                id: bin.id,
-                position: bin.position,
-                type: bin.type,
-                isAvailable: bin.isAvailable,
                 isSelected: props.selectedId === bin.id,
                 // isPending: bin.isPending,
                 isEditing: props.isEditing,
@@ -41,6 +38,8 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 onSelection: props.onBinSelection,
                 onDeletion: props.onBinDeletion
             });
+
+            return React.createElement(Bin, binProps);
         }).toJS();
 
         // if (props.isEditing){
@@ -57,17 +56,15 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                     }
                 },
                 'Ajouter Benne'
-            );;
+            );
 
             binList.push(addButton);
         // }
 
-        console.log('WEIRD', binList.length, (binList.length - 1) % 7);
-
         return React.createElement('ul', {
                 className: [
                     'bins',
-                    (binList.length - 1) % 7 === 0 ? 'weird' : ''
+                    (binList.length - 1) % 7 === 0 ? 'completeLine' : '' // for when the last bin completes the line
                 ].join(' ')
             },
             binList

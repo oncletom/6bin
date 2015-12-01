@@ -66,7 +66,10 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
         var bins = binDico.map((url: string, type: string) => {
             return React.createElement('li', {
                     key: type,
-                    className: props.type === undefined || props.type === type ? '' : 'current',
+                    className: [
+                        'bin',
+                        props.type === undefined || props.type === type ? '' : 'current',
+                    ].join(' '),
                     onClick: (event: any) => {
                         console.log('CLICK');
                         props.onWasteSelection(type);
@@ -77,13 +80,14 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
             )
         });
         
-        return React.createElement('ul', {
+        return React.createElement('div', {
                 ref: 'wastelist',
                 id: 'wastelist',
-                className: 'bins',
-                
             },
-            bins.toList()
+            'Type de déchets',
+            React.createElement('ul', {className: 'bins'},
+                bins.toList()
+            )
         );
     }
 };

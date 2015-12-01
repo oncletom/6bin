@@ -72,7 +72,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 dispatch(
                     selectBin(id));
                 dispatch(
-                    openBinPanel(id !== undefined)); // close panel when id === undefined
+                    openBinPanel(true));
                 if (isAddingBins) 
                     dispatch(
                         setBinAddMode(false));
@@ -142,8 +142,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             : undefined;
 
         return React.createElement('div', {
-                id: 'bin-manager',
-                className: isEditingBins ? 'edit' : ''
+                id: 'bin-manager'
             }, 
             binList,
             React.createElement('div', {}, // maybe this could be in App component

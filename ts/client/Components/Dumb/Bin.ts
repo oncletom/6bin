@@ -43,6 +43,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
     mixins = [PureRenderMixin]
 
     render() {
+
         var props = this.props;
 
         var imageURL = binDico.get(props.type);
@@ -71,8 +72,8 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     // set Bin Availability
                     : () => { props.onAvailabilityChange(props.id, !props.isAvailable) }
             },
-            React.createElement('div', {className: 'position'}, props.position),
             mySVG,
+            React.createElement('div', {className: 'position'}, props.position),
             React.createElement('div', {}, props.type.toLowerCase())
         );
     }
