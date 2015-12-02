@@ -36,8 +36,8 @@ export function setBins(bins: Map<string, BinData>) {
 };
 
 export const ADD_BIN = 'ADD_BIN';
-export function addBin(index: number, waste: string) {
-    return { type: ADD_BIN, index, waste };
+export function addBin(index: number, waste: string, position?: number) {
+    return { type: ADD_BIN, index, waste, position};
 };
 
 export const UPDATE_BIN = 'UPDATE_BIN'; // can be sent

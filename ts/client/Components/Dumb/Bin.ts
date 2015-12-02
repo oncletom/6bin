@@ -31,6 +31,7 @@ export interface BinProps extends BinData{
     isPending: boolean;
     isEditing: boolean;
     isSelected: boolean;
+    isBinPanelOpen: boolean;
     onAvailabilityChange: (id: string, isAvailable: boolean) => void;
     onSelection: (id: string) => void;
     onDeletion: (id: string) => void;
@@ -65,9 +66,12 @@ export default class Bin extends React.Component<BinProps, BinState> {
                 ].join(' '),
                 onClick: props.isEditing ?
                     // select/deselect Bin
-                    () => { 
-                        var toSelect: string = props.isSelected ? undefined : props.id;
-                        props.onSelection(toSelect);
+                    () => {
+                        console.log('Bin', props.isBinPanelOpen);
+                        if (!props.isBinPanelOpen) {
+                            var toSelect: string = props.isSelected ? undefined : props.id;
+                            props.onSelection(toSelect);
+                        }
                     }
                     // set Bin Availability
                     : () => { props.onAvailabilityChange(props.id, !props.isAvailable) }

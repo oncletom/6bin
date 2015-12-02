@@ -11,6 +11,7 @@ import BinList from '../Dumb/BinList';
 import WastePicker from '../Dumb/WastePicker';
 import PositionPicker from '../Dumb/PositionPicker';
 import Bin from '../Dumb/Bin';
+import BinValidator from '../Dumb/BinValidator';
 import { BinData, BinPartialData } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { addBin, deleteBin, updateBin, selectBin } from '../../actions'; // Bin actions
@@ -26,14 +27,15 @@ interface BinPanelProps extends ReduxPropsMixin{
 }
 
 interface BinPanelState{
-    newBin: BinData;
+    modifiedBin: BinData;
 }
 
 class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
     mixins = [PureRenderMixin]
 
     constructor(props : BinPanelProps){ // equivalent to getInitialState()
-        this.state = { newBin: undefined };
+        super(props);
+        this.state = { modifiedBin: undefined };
     }
 
     componentWillReceiveProps(nextProps: BinPanelProps){
@@ -42,7 +44,7 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
         var selectedBin: BinData = nextProps.bins.get(selectedId);
 
         this.setState({
-            newBin: selectedBin
+            modifiedBin: selectedBin
         });
     }
 
@@ -57,64 +59,63 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
         var selectedId: string = display.get('selectedBin');
         var selectedBin: BinData = bins.get(selectedId);
 
-        // The current Bin the user is modifying / creating
-        var currentBin = selectedId ? 
-            React.createElement(Bin, Object.assign({}, selectedBin, {
-                isSelected: selectedId === selectedBin.id,
-                // isPending: bin.isPending,
-                isEditing: isEditingBins,
-                onAvailabilityChange: undefined,
-                onDeletion: undefined,
-                onSelection: (id) => {
+        var binValidator = React.createElement(BinValidator, {
+            selectedBin: selectedBin,
+            modifiedBin: state.modifiedBin,
+            onCancelation: () => { // unselect bin, close BinPanel and disable AddMode
+                dispatch(
+                    selectBin(undefined));
+                dispatch(
+                    openBinPanel(false));
+                if (isAddingBins) 
                     dispatch(
-                        selectBin(id));
-                    dispatch(
-                        openBinPanel(false));
-                    if (isAddingBins) 
-                        dispatch(
-                            setBinAddMode(false));
-                }
-            }))
-            : React.createElement('li', {
-                className: [
-                    'bin'
-                ].join(' '),
-                onClick: () => {
-                    if (isBinPanelOpen)
-                        dispatch(
-                            selectBin(undefined));
-                    dispatch(
-                        openBinPanel(!isAddingBins));
-                    dispatch(
-                        setBinAddMode(!isAddingBins));
-                }
+                        setBinAddMode(false));
             },
-            'Choisir Benne'
-        );
+            onValidation: () => { // unselect bin, close BinPanel + ...
+                var nextId: number = 1;
+                var nonPositionedBin: BinData;
+                var position = state.modifiedBin.position;
+                var type = state.modifiedBin.type;
 
-        // A preview of what the bin will be once modified / created
-        var isNew = state.newBin ? state.newBin.type !== selectedBin.type 
-            || state.newBin.position !== selectedBin.position
-            : false;
+                console.log('VALIDATION', position, type);
 
-        var newBin = isNew ?
-            React.createElement(Bin, Object.assign({}, state.newBin, {
-                isSelected: selectedId === selectedBin.id,
-                // isPending: bin.isPending,
-                isEditing: isEditingBins,
-                onAvailabilityChange: undefined,
-                onDeletion: undefined,
-                onSelection: (id) => {
+                bins.forEach((bin: BinData) => { 
+                    if (bin.position === position) // check if the clicked position is already assigned
+                        nonPositionedBin = bin;
+                    if (bin.type === type) // check how many bin of same type are present in bins (say n), and create the new bin with the id type + n+1
+                        nextId ++;
+                });
+
+                if (nonPositionedBin){ // is position is already assigned to a bin, unposition this bin 
+                    var temp = Object.assign({}, nonPositionedBin, { position: undefined });
                     dispatch(
-                        selectBin(id));
-                    dispatch(
-                        openBinPanel(false));
-                    if (isAddingBins) 
-                        dispatch(
-                            setBinAddMode(false));
+                        updateBin(nonPositionedBin.id, temp));
                 }
-            }))
-            : React.createElement('li', { className: 'bin' }); // this is a dummy component
+
+                if (isAddingBins) { // ... disable AddMode and add bin
+                    dispatch(
+                        setBinAddMode(false));
+                    dispatch(
+                        addBin(nextId, type, position));
+                }
+                else { // ... update bin
+                    var updatedBin = Object.assign({}, selectedBin, {
+                        type,
+                        position
+                    });
+
+                    console.log('VALIDATION', position, type);
+
+                    dispatch(
+                        updateBin(selectedId, updatedBin));
+                }
+
+                dispatch(
+                    selectBin(undefined));
+                dispatch(
+                    openBinPanel(false));
+            }
+        });
 
         var deleteButton = selectedId ? 
             React.createElement('div', {
@@ -132,37 +133,11 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
 
         // Create the list with all bin types
         var wastePicker = React.createElement(WastePicker, {
-            type: state.newBin ? state.newBin.type : undefined,
+            type: state.modifiedBin ? state.modifiedBin.type : undefined,
             onWasteSelection: (type: string) => {
-                console.log('Setting state');
                 this.setState({
-                    newBin: Object.assign({}, state.newBin, { type })
+                    modifiedBin: Object.assign({}, state.modifiedBin, { type })
                 });
-                /*
-                var updatedBin = Object.assign({}, selectedBin, { type });
-
-                // check how many bin of same type are present in bins (say n), and create the new bin with the id type + n+1
-                var nextId: number = 1;
-
-                bins.forEach((bin: BinData) => {
-                    if (bin.type === type)
-                        nextId ++;
-                });
-
-                
-
-                // when waste selected, add Bin, select it and disable Add mode
-                if (isAddingBins){
-                    dispatch(
-                        addBin(nextId, type));
-                    dispatch(
-                        selectBin(type + '_' + nextId)); // the newly created bin has an id such as TYPE_1
-                    dispatch(
-                        setBinAddMode(false));
-                }
-                else
-                    dispatch(
-                        updateBin(selectedId, updatedBin));*/
             }
         });
 
@@ -171,49 +146,21 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
             return bin.position;
         }));
 
-        console.log('isAddingBins', isAddingBins);
-
         var positionPicker = React.createElement(PositionPicker, {
             visible: isBinPanelOpen && !isAddingBins,
             assigned: assigned,
             max: 20,
-            selected: state.newBin ? state.newBin.position : undefined,
+            selected: state.modifiedBin ? state.modifiedBin.position : undefined,
             onPositionSelection: (position: number) => {
-                console.log('Setting state');
                 this.setState({
-                    newBin: Object.assign({}, state.newBin, { position })
+                    modifiedBin: Object.assign({}, state.modifiedBin, { position })
                 });
-                /*var updatedBin = Object.assign({}, selectedBin, { position });
-                
-                var nonPositionedBin: BinData;
-
-                bins.forEach((bin: BinData) => { // check if the clicked position is already assigned
-                    if (bin.position === position)
-                        nonPositionedBin = bin;
-                });
-
-                if (nonPositionedBin){ // is position is already assigned to a bin, unposition this bin 
-                    var temp = Object.assign({}, nonPositionedBin, { position: undefined });
-                    dispatch(
-                        updateBin(nonPositionedBin.id, temp));
-                }
-
-                dispatch(
-                    updateBin(selectedId, updatedBin));
-                }*/
+            }
         });
 
         return React.createElement('div', {id: 'editor'}, 
             isAddingBins ? 'Ajouter une benne' : 'Modifier une benne',
-            React.createElement('ul', {},
-                React.createElement('div', {}, currentBin, 'Annuler'),
-                React.createElement('div', {
-                        className: isNew ? 'new' : ''
-                    },
-                    newBin,
-                    isNew ? 'Confirmer' : ''
-                )
-            ),
+            binValidator,
             wastePicker,
             positionPicker,
             deleteButton

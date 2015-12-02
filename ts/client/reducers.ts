@@ -18,14 +18,12 @@ function bins (state = initialBinState, action: Action) {
             return action.bins;
 
         case ADD_BIN:
-            console.log('action', action);
-
             var newBin: BinData = {
                 id: action.waste + '_' + action.index,
                 isAvailable: true,
                 type: action.waste,
                 instance: action.index,
-                position: undefined
+                position: action.position
             };
 
             return state.set(newBin.id, newBin);

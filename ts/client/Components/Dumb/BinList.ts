@@ -13,6 +13,7 @@ interface BinListProps{
     isEditing: boolean;
     isAdding: boolean;
     isSelecting: boolean;
+    isBinPanelOpen: boolean;
     onBinAvailabilityChange: (index: string, isAvailable: boolean) => void;
     onBinSelection: (index: string) => void;
     onBinDeletion: (index: string) => void;
@@ -34,6 +35,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
                 isSelected: props.selectedId === bin.id,
                 // isPending: bin.isPending,
                 isEditing: props.isEditing,
+                // isBinPanelOpen: props.isBinPanelOpen,
                 onAvailabilityChange: props.onBinAvailabilityChange,
                 onSelection: props.onBinSelection,
                 onDeletion: props.onBinDeletion
