@@ -7,6 +7,7 @@ import { sendToServer } from './serverLink';
 
 export interface Action {
     type: string;
+    position?: number;
     waste?: string;
     bin?: BinPartialData;
     bins?: Map<string, BinData>;
