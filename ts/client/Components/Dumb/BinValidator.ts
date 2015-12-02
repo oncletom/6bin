@@ -33,9 +33,7 @@ export default class BinValidator extends React.Component<BinValidatorProps, Bin
                 onDeletion: undefined,
                 onSelection: undefined
             }))
-            : React.createElement('li', { className: 'bin' },
-                'Nouvelle benne'
-            );
+            : React.createElement('li', { className: 'bin' });
 
         // A preview of what the bin will be once modified / created
         var isNew = props.modifiedBin && props.selectedBin ? props.modifiedBin.type !== props.selectedBin.type 
