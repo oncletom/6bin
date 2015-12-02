@@ -2,7 +2,7 @@
 	width: 100vw; height: 100vh;
 	position: absolute; top: 0; left: 100vw;
 	font-size: .8rem;
-	background-color: #EEE;
+	background-color: #77aaff;
 	transition: left .7s ease;
 	z-index: 2;
 }
@@ -26,10 +26,6 @@
 	/*background-color: #EEE;*/
 }
 
-#editor > div:first-child {
-	/*height: auto;*/
-}
-
 #editor > span:first-child{
 	display: block;
 	font-size: 1.5rem; font-weight: bold; text-align: center;
@@ -44,8 +40,12 @@
 
 #editor > ul > div{
 	position: relative;
-	background-color: #EEE;
+	background-color: #77aaff;
 	z-index: 1;
+}
+
+#editor > ul > div li{
+	justify-content: center;
 }
 
 #editor > ul > div:last-child{
@@ -58,12 +58,20 @@
 	right: 0;
 }
 
+#editor > ul > div:first-child li{
+	background-color: #FF2727;
+}
+
+#editor > ul > div.new li{
+	background-color: #28D628;
+}
+
 #wastelist{
 	margin: .3rem 0;
 }
 
 #editor .bins {
-	position: relative; /*height: 75vh;*/
+	position: relative;
 	z-index: 1; overflow-y: scroll; overflow-x: hidden;
 }
 

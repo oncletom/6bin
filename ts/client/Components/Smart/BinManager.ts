@@ -141,9 +141,14 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             }, 'Annuler')
             : undefined;
 
+        var text = isEditingBins ?
+            React.createElement('h2', {}, 'Edition')
+            : undefined;
+
         return React.createElement('div', {
                 id: 'bin-manager'
-            }, 
+            },
+            text,
             binList,
             React.createElement('div', {}, // maybe this could be in App component
                 editBinsButton,

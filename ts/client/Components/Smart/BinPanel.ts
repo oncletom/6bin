@@ -77,8 +77,6 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
                 var position = state.modifiedBin.position;
                 var type = state.modifiedBin.type;
 
-                console.log('VALIDATION', position, type);
-
                 bins.forEach((bin: BinData) => { 
                     if (bin.position === position) // check if the clicked position is already assigned
                         nonPositionedBin = bin;

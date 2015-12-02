@@ -10,12 +10,17 @@
 
 .bins {
 	display: flex; padding: 0 1vw;
-	flex-direction: row; justify-content: flex-start; flex-wrap: wrap; align-content: space-around;
+	flex-direction: row; justify-content: center; flex-wrap: wrap; align-content: center;
 }
 
 .edit .bins li {
 	font-size: .8rem;
 	box-shadow: none;
+}
+
+.edit h2 {
+	position: absolute; left: 0; right: 0; margin: .2rem;
+    text-align: center;
 }
 
 #add-bin {
@@ -56,6 +61,10 @@ svg {
 
 .bin.available svg{
 	background-color: #28D628;
+}
+
+.edit .bin svg {
+	background-color: #EEE;
 }
 
 .bin.selected, #add-bin.selected {
