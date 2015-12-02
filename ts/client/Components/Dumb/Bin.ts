@@ -55,6 +55,8 @@ export default class Bin extends React.Component<BinProps, BinState> {
             }
         );
         
+        console.log('isPending', props.isPending);
+
         return React.createElement('li', 
             {
                 className: [

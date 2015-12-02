@@ -52,14 +52,13 @@ export default class BinValidator extends React.Component<BinValidatorProps, Bin
             }))
             : React.createElement('li', { className: 'bin' }); // this is a dummy component
 
-        return React.createElement('ul', {},
+        return React.createElement('ul', { className: isNew ? 'new' : ''},
             React.createElement('div', {
                     onClick: props.onCancelation
                 },
                 currentBin,
                 'Annuler'),
             React.createElement('div', {
-                    className: isNew ? 'new' : '',
                     onClick: props.onValidation
                 },
                 modifiedBin,

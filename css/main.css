@@ -11,7 +11,7 @@ body {
 #manager {
 	height: 100vh; left: 0;
 	background-color:  #353535;
-	transition: left .7s ease;
+	transition: left .5s ease;
 	/*z-index: 2;*/
 }
 
@@ -36,7 +36,7 @@ body {
 	border: 1px solid black; border-radius: 5px;
 	background-color: #EEE;
 	font-size: .8rem; text-align: center;
-	/*z-index: 2;*/
+	z-index: 1;
 }
 
 .edit #edit-bins-button {
@@ -48,20 +48,17 @@ body {
 	color: #FF2727; font-weight: bold;
 }
 
+.edit h2 {
+	position: absolute; left: 0; right: 0; margin: .2rem;
+    text-align: center;
+}
+
 #infos {
 	width: 50vw;
 	font-size: .7rem; font-style: italic;
 	background-color: rgba(180, 180, 180, 0.3);
-	/*z-index: 4;*/
 }
 
 #footer {
 	position: absolute; height: 10vh; bottom: 0; right: 0; left: 0;
-	background-color: #353535;
-	display: none;
-	/*z-index: 1;*/
-}
-
-.edit #footer {
-	background-color: #77aaff;
 }

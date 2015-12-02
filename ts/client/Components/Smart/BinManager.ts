@@ -48,7 +48,12 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
 
         var orderedBins = bins.sort((a: BinData, b: BinData) => {
             // console.log('Test', a.position, b.position, a.position > b.position);
-            return a.position - b.position;
+            if (a.position === undefined)
+                return 1;
+            else if (b.position === undefined)
+                return -1;
+            else 
+                return a.position - b.position;
         });
 
         // Create the bin list

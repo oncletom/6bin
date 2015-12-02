@@ -41,8 +41,8 @@ var myNewBins = Map<string, BinData>({
     ECRANS_2: { id: 'ECRANS_2', position: 9, type: 'ECRANS', isAvailable: true, sixelement_id: 9 },
     EXTINCTEURS_2: { id: 'EXTINCTEURS_2', position: 10, type: 'EXTINCTEURS', isAvailable: true, sixelement_id: 10 },
     BATTERIES_3: { id: 'BATTERIES_3', position: 11, type: 'BATTERIES', isAvailable: true, sixelement_id: 11 },
-    BOIS_3: { id: 'BOIS_3', position: 12, type: 'BOIS', isAvailable: true, sixelement_id: 12 },
-    ECRANS_3: { id: 'ECRANS_3', position: 13, type: 'ECRANS', isAvailable: true, sixelement_id: 13 },
+    // BOIS_3: { id: 'BOIS_3', position: 12, type: 'BOIS', isAvailable: true, sixelement_id: 12 },
+    // ECRANS_3: { id: 'ECRANS_3', position: 13, type: 'ECRANS', isAvailable: true, sixelement_id: 13 },
     EXTINCTEURS_3: { id: 'EXTINCTEURS_3', position: 14, type: 'EXTINCTEURS', isAvailable: true, sixelement_id: 14 },
     BATTERIES_4: { id: 'BATTERIES_4', position: 15, type: 'BATTERIES', isAvailable: true, sixelement_id: 15 }
 });

@@ -3,7 +3,7 @@
 	position: absolute; top: 0; left: 100vw;
 	font-size: .8rem;
 	background-color: #77aaff;
-	transition: left .7s ease;
+	transition: left .5s ease;
 	z-index: 2;
 }
 
@@ -12,11 +12,10 @@
 }
 
 #delete-button {
-	display: inline-block; position: relative; margin: -9vh auto; margin-bottom: .4rem; padding: .1rem 1.1rem; /*width: 200px;*/
+	display: block; padding: .5rem 1.1rem; margin: 0 auto; margin-top: 2rem; width: 8rem;
 	border: 1px solid black; border-radius: 5px;
 	background-color: #EEE;
 	font-size: .8rem; color: #E00; text-align: center;
-	transition: margin-top .5s;
 }
 
 #editor ul {
@@ -39,30 +38,34 @@
 }
 
 #editor > ul > div{
-	position: relative;
-	background-color: #77aaff;
+	position: relative; left: 3.7rem; margin: 0 1rem;
 	z-index: 1;
+	transition: left .5s ease-in-out;
+}
+
+#editor > ul > div span {
+	width: 100%;
+	/*background-color: #77aaff;*/
+}
+
+#editor > ul > div:last-child{
+	left: -3.7rem;
+	z-index: 0;
+}
+
+#editor > ul.new > div{
+	left: 0;
 }
 
 #editor > ul > div li{
 	justify-content: center;
 }
 
-#editor > ul > div:last-child{
-	right: 6.4rem;
-	z-index: 0;
-	transition: right .7s ease-in-out;
-}
-
-#editor > ul > div.new {
-	right: 0;
-}
-
 #editor > ul > div:first-child li{
 	background-color: #FF2727;
 }
 
-#editor > ul > div.new li{
+#editor > ul.new > div:last-child li{
 	background-color: #28D628;
 }
 
@@ -92,10 +95,6 @@
 	position: relative; /*margin-top: -9vh;*/
 	list-style-type: none; z-index: 0;
 	transition: margin-top .5s;
-}
-
-.positions.visible, #delete-button {
-	margin-top: 0;
 }
 
 .positions li {
