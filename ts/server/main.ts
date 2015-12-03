@@ -19,6 +19,8 @@ import { Request } from '../client/serverLink';
 
 import { PORT } from './PORT';
 
+import { List, Map } from 'immutable';
+
 var app = express();
 
 app.use(compression());
@@ -42,9 +44,18 @@ export function BinServer(): void {
 				case 'UPDATE_BIN': // only when availability changes
 					console.log(data.action.type, 'is valid, => 6brain');
 
+					var bin = data.action.bin;
+
+					var shortBin: any = {
+						id: bin.id,
+						p: bin.position,
+						a: bin.isAvailable,
+						t: bin.type
+					};
+
 					this.emit('measurementRequest', {	
 						date: new Date(Date.now()).toISOString(),
-						value: data.action.bin,
+						value: shortBin,
 						index: data.index,
 						origin: '6bin'
 					});
@@ -53,8 +64,19 @@ export function BinServer(): void {
 				case 'SET_BINS':
 					console.log(data.action.type, 'is valid, => 6brain');
 
+					// shortening bin info
+					var shortBins: any[] = [];
+					Map(data.action.bins).forEach((bin) => { // for some reason, action.bins is not a Immutable.Map anymore ...
+						shortBins.push({
+							id: bin.id,
+							p: bin.position,
+							a: bin.isAvailable,
+							t: bin.type
+						});
+					});
+
 					this.emit('binsRequest', {
-						bins: data.action.bins,
+						bins: shortBins,
 						index: data.index,
 						origin: '6bin'
 					});

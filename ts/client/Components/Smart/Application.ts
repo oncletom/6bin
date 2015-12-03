@@ -55,8 +55,9 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                     isBinPanelOpen ? 'panel-open' : ''
                 ].join(' ')
             },
-            React.createElement(BinManager),
-            // isBinPanelOpen || isAddingBin ? React.createElement(BinPanel) : undefined,
+            React.createElement('div', {id: 'manager', className: isEditingBins ? 'edit' : ''},
+                React.createElement(BinManager)
+            ),
             React.createElement(BinPanel),
             React.createElement('div', {id: 'footer'},
                 infos

@@ -5,7 +5,7 @@ import { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import WastePicker from '../Dumb/WastePicker';
@@ -46,11 +46,19 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         var isAddingBins: boolean = display.get('isAddingBins');
         var selectedId: string = display.get('selectedBin');
 
-        console.log('BINS SIZE', bins.size);
+        var orderedBins = bins.sort((a: BinData, b: BinData) => {
+            // console.log('Test', a.position, b.position, a.position > b.position);
+            if (a.position === undefined)
+                return 1;
+            else if (b.position === undefined)
+                return -1;
+            else 
+                return a.position - b.position;
+        });
 
         // Create the bin list
         var binList = React.createElement(BinList, {
-            bins,
+            bins: orderedBins,
             selectedId,
             isEditing: isEditingBins,
             isAdding: isAddingBins,
@@ -72,7 +80,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
                 dispatch(
                     selectBin(id));
                 dispatch(
-                    openBinPanel(id !== undefined)); // close panel when id === undefined
+                    openBinPanel(true));
                 if (isAddingBins) 
                     dispatch(
                         setBinAddMode(false));
@@ -141,10 +149,14 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
             }, 'Annuler')
             : undefined;
 
+        var text = isEditingBins ?
+            React.createElement('h2', {}, 'Edition')
+            : undefined;
+
         return React.createElement('div', {
-                id: 'bin-manager',
-                className: isEditingBins ? 'edit' : ''
-            }, 
+                id: 'bin-manager'
+            },
+            text,
             binList,
             React.createElement('div', {}, // maybe this could be in App component
                 editBinsButton,

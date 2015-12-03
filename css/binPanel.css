@@ -1,46 +1,86 @@
 #editor {
-	width: 100vw; /*height: 23vh;*/
-	position: absolute; top: 94vh;
+	width: 100vw; height: 100vh;
+	position: absolute; top: 0; left: 100vw;
 	font-size: .8rem;
-	background-color: #EEE;
-	transition: top .7s ease;
-	z-index: 0;
-}
-
-.panel-open #editor {
-	top: 60vh;
-}
-
-#delete-button {
-	display: inline-block; position: relative; margin: -9vh auto; margin-bottom: .4rem; padding: .1rem 1.1rem; /*width: 200px;*/
-	border: 1px solid black; border-radius: 5px;
-	background-color: #EEE;
-	font-size: .8rem; color: #E00; text-align: center;
-	transition: margin-top .5s;
-}
-
-#editor ul {
-	display: flex;
-	flex-direction: row; justify-content: space-around; flex-wrap: wrap; align-content: flex-start;
-	font-size: 1.2rem; line-height: 1rem;
-	background-color: #EEE;
-}
-
-#editor span {
-	display: block; position: relative;
-	background-color: #EEE;
+	background-color: #77aaff;
+	transition: left .5s ease;
 	z-index: 2;
 }
 
+.panel-open #editor {
+	left: 0vw;
+}
+
+#delete-button {
+	display: block; padding: .5rem 1.1rem; margin: 0 auto; margin-top: 2rem; width: 8rem;
+	border: 1px solid black; border-radius: 5px;
+	background-color: #EEE;
+	font-size: .8rem; color: #E00; text-align: center;
+}
+
+#editor ul {
+	display: flex; margin: .5rem;
+	flex-direction: row; justify-content: space-around; flex-wrap: wrap; align-content: flex-start;
+	font-size: 1.2rem; line-height: 1rem;
+	/*background-color: #EEE;*/
+}
+
+#editor > span:first-child{
+	display: block;
+	font-size: 1.5rem; font-weight: bold; text-align: center;
+	/*z-index: 2;*/
+}
+
+#editor > ul {
+	margin: 0 auto;
+	justify-content: center;
+	text-align: center;
+}
+
+#editor > ul > div{
+	position: relative; left: 3.7rem; margin: 0 1rem;
+	z-index: 1;
+	transition: left .5s ease-in-out;
+}
+
+#editor > ul > div span {
+	width: 100%;
+	/*background-color: #77aaff;*/
+}
+
+#editor > ul > div:last-child{
+	left: -3.7rem;
+	z-index: 0;
+}
+
+#editor > ul.new > div{
+	left: 0;
+}
+
+#editor > ul > div li{
+	justify-content: center;
+}
+
+#editor > ul > div:first-child li{
+	background-color: #FF2727;
+}
+
+#editor > ul.new > div:last-child li{
+	background-color: #28D628;
+}
+
+#wastelist{
+	margin: .3rem 0;
+}
+
 #editor .bins {
-	position: relative; height: 16vh;
+	position: relative;
 	z-index: 1; overflow-y: scroll; overflow-x: hidden;
 }
 
 #editor .bins li {
 	text-transform: capitalize;
-	height: 4rem;
-	width: 3rem;
+	height: 4rem; width: 3rem; margin: .3rem;
 }
 
 #editor svg {
@@ -52,14 +92,9 @@
 }
 
 .positions{
-	position: relative; margin-top: -9vh;
+	position: relative; /*margin-top: -9vh;*/
 	list-style-type: none; z-index: 0;
 	transition: margin-top .5s;
-}
-
-.positions.visible, #delete-button {
-	margin-top: 0;
-	/*top: 19vh;*/
 }
 
 .positions li {

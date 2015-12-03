@@ -13,24 +13,21 @@ export interface BinData {
     id: string; // separating id from position is relevant because you might have bin without associated position
     position: number;
     type: string;
-    instance: number;
     isAvailable: boolean;
-    sixelement_id?: number;
 }
 
 export interface BinPartialData {
     id?: string;
     position?: number;
     type?: string;
-    instance?: number;
     isAvailable?: boolean;
-    sixelement_id?: number;
 }
 
 export interface BinProps extends BinData{
-    isPending: boolean;
+    // isPending: boolean;
     isEditing: boolean;
     isSelected: boolean;
+    isBinPanelOpen: boolean;
     onAvailabilityChange: (id: string, isAvailable: boolean) => void;
     onSelection: (id: string) => void;
     onDeletion: (id: string) => void;
@@ -43,6 +40,7 @@ export default class Bin extends React.Component<BinProps, BinState> {
     mixins = [PureRenderMixin]
 
     render() {
+
         var props = this.props;
 
         var imageURL = binDico.get(props.type);
@@ -59,20 +57,23 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     'bin',
                     props.isSelected ? 'selected' : '',
                     props.isAvailable ? 'available' : '',
-                    props.isPending ? 'pending' : '',
+                    // props.isPending ? 'pending' : '',
                     'noselect'
                 ].join(' '),
                 onClick: props.isEditing ?
                     // select/deselect Bin
-                    () => { 
-                        var toSelect: string = props.isSelected ? undefined : props.id;
-                        props.onSelection(toSelect);
+                    () => {
+                        console.log('Bin', props.isBinPanelOpen);
+                        if (!props.isBinPanelOpen) {
+                            var toSelect: string = props.isSelected ? undefined : props.id;
+                            props.onSelection(toSelect);
+                        }
                     }
                     // set Bin Availability
                     : () => { props.onAvailabilityChange(props.id, !props.isAvailable) }
             },
-            React.createElement('div', {className: 'position'}, props.position),
             mySVG,
+            React.createElement('div', {className: 'position'}, props.position),
             React.createElement('div', {}, props.type.toLowerCase())
         );
     }

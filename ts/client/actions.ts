@@ -7,6 +7,7 @@ import { sendToServer } from './serverLink';
 
 export interface Action {
     type: string;
+    position?: number;
     waste?: string;
     bin?: BinPartialData;
     bins?: Map<string, BinData>;
@@ -36,8 +37,8 @@ export function setBins(bins: Map<string, BinData>) {
 };
 
 export const ADD_BIN = 'ADD_BIN';
-export function addBin(index: number, waste: string) {
-    return { type: ADD_BIN, index, waste };
+export function addBin(bin: BinData) {
+    return { type: ADD_BIN, bin};
 };
 
 export const UPDATE_BIN = 'UPDATE_BIN'; // can be sent
