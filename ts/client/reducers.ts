@@ -1,7 +1,7 @@
 'use strict';
 
 import { combineReducers } from 'redux';
-import { List, Map, OrderedMap } from 'immutable';
+import { List, Map } from 'immutable';
 
 import { BinData } from './Components/Dumb/Bin';
 import { Action } from './actions';
@@ -11,7 +11,7 @@ import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
 import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN } from './actions';
 
 // Bins is the state of all bins
-var initialBinState = OrderedMap<string, BinData>({});
+var initialBinState = Map<string, BinData>({});
 function bins (state = initialBinState, action: Action) {
     switch (action.type) {
         case SET_BINS:
