@@ -44,11 +44,13 @@ export function BinServer(): void {
 				case 'UPDATE_BIN': // only when availability changes
 					console.log(data.action.type, 'is valid, => 6brain');
 
-					var shortBin = {
-						id: action.bin.id,
-						p: action.bin.position,
-						a: action.bin.isAvailable,
-						t: action.bin.type
+					var bin = data.action.bin;
+
+					var shortBin: any = {
+						id: bin.id,
+						p: bin.position,
+						a: bin.isAvailable,
+						t: bin.type
 					};
 
 					this.emit('measurementRequest', {	
@@ -63,7 +65,7 @@ export function BinServer(): void {
 					console.log(data.action.type, 'is valid, => 6brain');
 
 					// shortening bin info
-					var shortBins = [];
+					var shortBins: any[] = [];
 					Map(data.action.bins).forEach((bin) => { // for some reason, action.bins is not a Immutable.Map anymore ...
 						shortBins.push({
 							id: bin.id,
