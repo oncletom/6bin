@@ -13,22 +13,18 @@ export interface BinData {
     id: string; // separating id from position is relevant because you might have bin without associated position
     position: number;
     type: string;
-    instance: number;
     isAvailable: boolean;
-    sixelement_id?: number;
 }
 
 export interface BinPartialData {
     id?: string;
     position?: number;
     type?: string;
-    instance?: number;
     isAvailable?: boolean;
-    sixelement_id?: number;
 }
 
 export interface BinProps extends BinData{
-    isPending: boolean;
+    // isPending: boolean;
     isEditing: boolean;
     isSelected: boolean;
     isBinPanelOpen: boolean;
@@ -55,15 +51,13 @@ export default class Bin extends React.Component<BinProps, BinState> {
             }
         );
         
-        console.log('isPending', props.isPending);
-
         return React.createElement('li', 
             {
                 className: [
                     'bin',
                     props.isSelected ? 'selected' : '',
                     props.isAvailable ? 'available' : '',
-                    props.isPending ? 'pending' : '',
+                    // props.isPending ? 'pending' : '',
                     'noselect'
                 ].join(' '),
                 onClick: props.isEditing ?

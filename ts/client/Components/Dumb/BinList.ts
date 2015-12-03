@@ -33,7 +33,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
             var binProps = Object.assign({}, bin, {
                 key: index,
                 isSelected: props.selectedId === bin.id,
-                isPending: bin.isPending,
+                // isPending: bin.isPending,
                 isEditing: props.isEditing,
                 // isBinPanelOpen: props.isBinPanelOpen,
                 onAvailabilityChange: props.onBinAvailabilityChange,

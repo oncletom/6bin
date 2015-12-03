@@ -39,7 +39,6 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
     }
 
     componentWillReceiveProps(nextProps: BinPanelProps){
-
         var selectedId: string = nextProps.display.get('selectedBin');
         var selectedBin: BinData = nextProps.bins.get(selectedId);
 
@@ -72,6 +71,11 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
                         setBinAddMode(false));
             },
             onValidation: () => { // unselect bin, close BinPanel + ...
+                dispatch(
+                    selectBin(undefined));
+                dispatch(
+                    openBinPanel(false));
+
                 var nextId: number = 1;
                 var nonPositionedBin: BinData;
                 var position = state.modifiedBin.position;
@@ -93,25 +97,31 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
                 if (isAddingBins) { // ... disable AddMode and add bin
                     dispatch(
                         setBinAddMode(false));
-                    dispatch(
-                        addBin(nextId, type, position));
-                }
-                else { // ... update bin
-                    var updatedBin = Object.assign({}, selectedBin, {
+
+                    var newBin: BinData = {
+                        id: type + '_' + nextId,
+                        isAvailable: true,
                         type,
                         position
-                    });
-
-                    console.log('VALIDATION', position, type);
+                    };
 
                     dispatch(
-                        updateBin(selectedId, updatedBin));
+                        addBin(newBin));
                 }
+                else { // ... remove bin and add bin => because we need to update the id if type has changed
+                    var updatedBin = {
+                        id: type + '_' + nextId,
+                        isAvailable: selectedBin.isAvailable,
+                        type,
+                        position
+                    };
 
-                dispatch(
-                    selectBin(undefined));
-                dispatch(
-                    openBinPanel(false));
+                    console.log('VALIDATION', position, type);
+                    dispatch(
+                        deleteBin(selectedId));
+                    dispatch(
+                        addBin(updatedBin));
+                }
             }
         });
 
