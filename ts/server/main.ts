@@ -44,9 +44,16 @@ export function BinServer(): void {
 				case 'UPDATE_BIN': // only when availability changes
 					console.log(data.action.type, 'is valid, => 6brain');
 
+					var shortBin = {
+						id: action.bin.id,
+						p: action.bin.position,
+						a: action.bin.isAvailable,
+						t: action.bin.type
+					};
+
 					this.emit('measurementRequest', {	
 						date: new Date(Date.now()).toISOString(),
-						value: data.action.bin,
+						value: shortBin,
 						index: data.index,
 						origin: '6bin'
 					});
