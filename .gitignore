@@ -1,5 +1,5 @@
-*.js
-!gulpfile.js
+js
+browserify-bundle.js
 *.js.map
 
 typings/
