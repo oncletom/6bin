@@ -31,6 +31,11 @@ export interface State {
 }
 
 // Bin Actions
+export const GET_BINS = 'GET_BINS'; // can be sent
+export function getBins() {
+    return { type: GET_BINS };
+};
+
 export const SET_BINS = 'SET_BINS'; // can be sent
 export function setBins(bins: Map<string, BinData>) {
     return { type: SET_BINS, bins };
@@ -51,7 +56,7 @@ export function deleteBin(id: string) {
     return { type: DELETE_BIN, id };
 };
 
-export const actionsToBeSent = Set([UPDATE_BIN, SET_BINS]);
+export const actionsToBeSent = Set([UPDATE_BIN, SET_BINS, GET_BINS]);
 
 // Temp Bins
 export const STORE_TEMP_BINS = 'STORE_TEMP_BINS';

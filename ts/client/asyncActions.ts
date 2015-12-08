@@ -1,7 +1,11 @@
 'use strict';
 
+import { Map } from 'immutable';
+
+import { BinData } from './Components/Dumb/Bin';
+
 import { sendToServer } from './serverLink';
-import { addPendingAction, deletePendingAction, Action } from './actions'; // Pending actions
+import { addPendingAction, deletePendingAction, getBins, setBins, Action } from './actions'; // Pending actions
 
 export function sendData(action: Action, id: number, after?: Action[]) {
 
@@ -27,4 +31,30 @@ export function sendData(action: Action, id: number, after?: Action[]) {
             // DO SOMETHING IF REJECTED
         });
     };
+}
+
+export function getBinsFromServer(id: number) {
+
+    return function (dispatch: any){
+        var action: Action = getBins();
+
+        dispatch(
+            addPendingAction(id, action));
+
+        sendToServer(action)
+        .then((bins) => {
+
+            console.log('Bins received from server');
+
+            dispatch(
+                setBins(Map<string, BinData>(bins)));
+            dispatch(
+                deletePendingAction(id));
+
+        })
+        .catch((error) => {
+            console.log('Couldnt get bins from server', error);
+        });
+
+    }
 }
