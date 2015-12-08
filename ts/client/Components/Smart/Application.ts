@@ -32,6 +32,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBin: boolean = display.get('isAddingBin');
         var isEditingBins: boolean = display.get('isEditingBins');
+        var error: string = display.get('error');
 
 
         // Create the info text
@@ -46,7 +47,28 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                 'En cours de transfert:',
                 pendingActions
             );
-        } 
+        }
+
+        var manager: ReactElement<any>;
+        var panel: ReactElement<any>;
+        var footer: ReactElement<any>;
+        var errorMsg: ReactElement<any>;
+
+        if (!error){
+            manager = React.createElement('div', {id: 'manager', className: isEditingBins ? 'edit' : ''},
+                React.createElement(BinManager)
+            );
+
+            panel = React.createElement(BinPanel);
+
+            footer = React.createElement('div', {id: 'footer'},
+                infos
+            );
+        }
+        else
+            errorMsg = React.createElement('div', {id: 'error'},
+                'Le capteur ne s\'est pas initialisé correctement'
+            );
 
         return React.createElement('div', {
                 id: 'app',
@@ -55,13 +77,10 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                     isBinPanelOpen ? 'panel-open' : ''
                 ].join(' ')
             },
-            React.createElement('div', {id: 'manager', className: isEditingBins ? 'edit' : ''},
-                React.createElement(BinManager)
-            ),
-            React.createElement(BinPanel),
-            React.createElement('div', {id: 'footer'},
-                infos
-            )
+            manager,
+            panel,
+            footer,
+            errorMsg
         );
     }
 };

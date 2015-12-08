@@ -13,6 +13,7 @@ export interface Action {
     bins?: Map<string, BinData>;
     // bin?: BinData;
     delta?: BinPartialData;
+    error?: string;
     index?: number;
     id?: string;
     isAvailable?: boolean;
@@ -31,6 +32,11 @@ export interface State {
 }
 
 // Bin Actions
+export const GET_BINS = 'GET_BINS'; // can be sent
+export function getBins() {
+    return { type: GET_BINS };
+};
+
 export const SET_BINS = 'SET_BINS'; // can be sent
 export function setBins(bins: Map<string, BinData>) {
     return { type: SET_BINS, bins };
@@ -51,7 +57,7 @@ export function deleteBin(id: string) {
     return { type: DELETE_BIN, id };
 };
 
-export const actionsToBeSent = Set([UPDATE_BIN, SET_BINS]);
+export const actionsToBeSent = Set([UPDATE_BIN, SET_BINS, GET_BINS]);
 
 // Temp Bins
 export const STORE_TEMP_BINS = 'STORE_TEMP_BINS';
@@ -83,6 +89,11 @@ export function setBinAddMode(isAddingBins: boolean) {
 export const OPEN_BIN_PANEL = 'OPEN_BIN_PANEL';
 export function openBinPanel(isBinPanelOpen: boolean) {
     return { type: OPEN_BIN_PANEL, isBinPanelOpen};
+};
+
+export const SET_ERROR_MODE = 'SET_ERROR_MODE';
+export function setErrorMode(error: string) {
+    return { type: SET_ERROR_MODE, error};
 };
 
 // Pending Actions

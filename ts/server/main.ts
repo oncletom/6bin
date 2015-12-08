@@ -75,12 +75,21 @@ export function BinServer(): void {
 						});
 					});
 
-					this.emit('binsRequest', {
+					this.emit('setBinsRequest', {
 						bins: shortBins,
 						index: data.index,
 						origin: '6bin'
 					});
 					break;
+
+				case 'GET_BINS':
+					console.log(data.action.type, 'is valid, => 6brain');
+					this.emit('getBinsRequest', {
+						index: data.index,
+						origin: '6bin'
+					});
+					break;
+
 
 				default:
 					console.log(data.action.type, 'is not valid');

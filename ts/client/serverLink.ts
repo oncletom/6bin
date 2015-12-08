@@ -24,7 +24,7 @@ socket.on('response', (response: any) => {
     console.log('myPromise', myPromise);
 
     if (response.isSuccessful)
-        myPromise.resolve();
+        myPromise.resolve(response.data);
     else
         myPromise.reject();
 });

@@ -1,7 +1,14 @@
 'use strict';
 
+import { Map } from 'immutable';
+
+import { BinData } from './Components/Dumb/Bin';
+
+import makeMap from '../tools/makeMap';
 import { sendToServer } from './serverLink';
-import { addPendingAction, deletePendingAction, Action } from './actions'; // Pending actions
+import { getBins, setBins, Action } from './actions'; // Bin actions
+import { setErrorMode } from './actions'; // Display actions
+import { addPendingAction, deletePendingAction } from './actions'; // Pending actions
 
 export function sendData(action: Action, id: number, after?: Action[]) {
 
@@ -27,4 +34,48 @@ export function sendData(action: Action, id: number, after?: Action[]) {
             // DO SOMETHING IF REJECTED
         });
     };
+}
+
+export function getBinsFromServer(id: number) {
+
+    return function (dispatch: any){
+        var action: Action = getBins();
+
+        dispatch(
+            addPendingAction(id, action));
+
+        sendToServer(action)
+        .then((shortBins: any[]) => {
+
+            console.log('Bins received from server');
+            var bins: BinData[] = [];
+
+            shortBins.forEach((shortBin) => { // for some reason, action.bins is not a Immutable.Map anymore ...
+                bins.push({
+                    id: shortBin.id,
+                    position: shortBin.p,
+                    isAvailable: shortBin.a,
+                    type: shortBin.t
+                });
+            });
+
+            var binMap = makeMap(bins, 'id');
+            
+            dispatch(
+                setBins(Map<string, BinData>(binMap)));
+            dispatch(
+                deletePendingAction(id));
+
+        })
+        .catch((error) => {
+            console.log('Couldnt get bins from server', error);
+
+            dispatch(
+                setErrorMode(error));
+
+            dispatch(
+                deletePendingAction(id));
+        });
+
+    }
 }

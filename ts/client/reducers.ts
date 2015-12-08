@@ -8,7 +8,7 @@ import { Action } from './actions';
 import { SET_BINS, ADD_BIN, UPDATE_BIN, DELETE_BIN } from './actions';
 import { STORE_TEMP_BINS, CLEAR_TEMP_BINS } from './actions';
 import { ADD_PENDING_ACTION, DELETE_PENDING_ACTION } from './actions';
-import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN } from './actions';
+import { SET_BIN_EDIT_MODE, SET_BIN_ADD_MODE, OPEN_BIN_PANEL, SELECT_BIN, SET_ERROR_MODE } from './actions';
 
 // Bins is the state of all bins
 var initialBinState = Map<string, BinData>({});
@@ -67,13 +67,15 @@ interface DisplayState {
     isAddingBins: boolean;
     isBinPanelOpen: boolean;
     selectedBin: string;
+    error: string;
 }
 
 var displayState: DisplayState = {
     isEditingBins: false,
     isAddingBins: false,
     isBinPanelOpen: false,
-    selectedBin: undefined
+    selectedBin: undefined,
+    error: undefined
 };
 
 var initialDisplayState = Map(displayState);
@@ -91,6 +93,9 @@ function display (state = initialDisplayState, action: Action){
 
         case SELECT_BIN:
             return state.set('selectedBin', action.id);
+
+        case SET_ERROR_MODE:
+            return state.set('error', action.error);
 
         default:
             return state;
