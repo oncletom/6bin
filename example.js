@@ -7,9 +7,7 @@ var server = new BinServer();
 
 server.start();
 
-var initialBins = new Map({
-    CARTONS_1: { id: 'CARTONS_1', position: 1, type: 'CARTONS', isAvailable: true }
-});
+var initialBins = [{ id: 'CARTONS_1', position: 1, type: 'CARTONS', isAvailable: true }];
 
 server.on('measurementRequest', function(request){
     var self = this;
@@ -48,7 +46,7 @@ server.on('getBinsRequest', function(request){
         self.emit('6bin', {
             index: request.index,
             isSuccessful: true,
-            bins: initialBins
+            data: initialBins
         });
     }, 1000);
 });

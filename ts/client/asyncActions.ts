@@ -4,6 +4,7 @@ import { Map } from 'immutable';
 
 import { BinData } from './Components/Dumb/Bin';
 
+import makeMap from '../tools/makeMap';
 import { sendToServer } from './serverLink';
 import { addPendingAction, deletePendingAction, getBins, setBins, Action } from './actions'; // Pending actions
 
@@ -46,8 +47,10 @@ export function getBinsFromServer(id: number) {
 
             console.log('Bins received from server');
 
+            var binMap = makeMap(bins);
+            
             dispatch(
-                setBins(Map<string, BinData>(bins)));
+                setBins(Map<string, BinData>(binMap)));
             dispatch(
                 deletePendingAction(id));
 
