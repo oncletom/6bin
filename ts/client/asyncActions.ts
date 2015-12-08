@@ -43,11 +43,21 @@ export function getBinsFromServer(id: number) {
             addPendingAction(id, action));
 
         sendToServer(action)
-        .then((bins) => {
+        .then((shortBins: any[]) => {
 
             console.log('Bins received from server');
+            var bins: BinData[] = [];
 
-            var binMap = makeMap(bins);
+            shortBins.forEach((shortBin) => { // for some reason, action.bins is not a Immutable.Map anymore ...
+                bins.push({
+                    id: shortBin.id,
+                    position: shortBin.p,
+                    isAvailable: shortBin.a,
+                    type: shortBin.t
+                });
+            });
+
+            var binMap = makeMap(bins, 'id');
             
             dispatch(
                 setBins(Map<string, BinData>(binMap)));
