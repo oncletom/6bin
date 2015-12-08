@@ -46,7 +46,7 @@ server.on('getBinsRequest', function(request){
         self.emit('6bin', {
             index: request.index,
             isSuccessful: true,
-            data: initialBins
+            data: initialBins // comment this to make the app crash on init
         });
     }, 1000);
 });

@@ -13,6 +13,7 @@ export interface Action {
     bins?: Map<string, BinData>;
     // bin?: BinData;
     delta?: BinPartialData;
+    error?: string;
     index?: number;
     id?: string;
     isAvailable?: boolean;
@@ -88,6 +89,11 @@ export function setBinAddMode(isAddingBins: boolean) {
 export const OPEN_BIN_PANEL = 'OPEN_BIN_PANEL';
 export function openBinPanel(isBinPanelOpen: boolean) {
     return { type: OPEN_BIN_PANEL, isBinPanelOpen};
+};
+
+export const SET_ERROR_MODE = 'SET_ERROR_MODE';
+export function setErrorMode(error: string) {
+    return { type: SET_ERROR_MODE, error};
 };
 
 // Pending Actions

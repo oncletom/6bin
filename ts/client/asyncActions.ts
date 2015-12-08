@@ -6,7 +6,9 @@ import { BinData } from './Components/Dumb/Bin';
 
 import makeMap from '../tools/makeMap';
 import { sendToServer } from './serverLink';
-import { addPendingAction, deletePendingAction, getBins, setBins, Action } from './actions'; // Pending actions
+import { getBins, setBins, Action } from './actions'; // Bin actions
+import { setErrorMode } from './actions'; // Display actions
+import { addPendingAction, deletePendingAction } from './actions'; // Pending actions
 
 export function sendData(action: Action, id: number, after?: Action[]) {
 
@@ -67,6 +69,12 @@ export function getBinsFromServer(id: number) {
         })
         .catch((error) => {
             console.log('Couldnt get bins from server', error);
+
+            dispatch(
+                setErrorMode(error));
+
+            dispatch(
+                deletePendingAction(id));
         });
 
     }
