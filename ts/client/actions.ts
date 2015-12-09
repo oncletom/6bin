@@ -21,6 +21,7 @@ export interface Action {
     isEditingBins?: boolean;
     isAddingBins?: boolean;
     isBinPanelOpen?: boolean;
+    isInit?: boolean;
     pendingAction?: Action;
 }
 
@@ -94,6 +95,11 @@ export function openBinPanel(isBinPanelOpen: boolean) {
 export const SET_ERROR_MODE = 'SET_ERROR_MODE';
 export function setErrorMode(error: string) {
     return { type: SET_ERROR_MODE, error};
+};
+
+export const SET_INIT_MODE = 'SET_INIT_MODE';
+export function setInitMode(isInit: boolean) {
+    return { type: SET_INIT_MODE, isInit};
 };
 
 // Pending Actions

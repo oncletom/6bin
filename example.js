@@ -48,5 +48,5 @@ server.on('getBinsRequest', function(request){
             isSuccessful: true,
             data: initialBins // comment this to make the app crash on init
         });
-    }, 1000);
+    }, 2000);
 });

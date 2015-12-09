@@ -7,7 +7,7 @@ import { BinData } from './Components/Dumb/Bin';
 import makeMap from '../tools/makeMap';
 import { sendToServer } from './serverLink';
 import { getBins, setBins, Action } from './actions'; // Bin actions
-import { setErrorMode } from './actions'; // Display actions
+import { setErrorMode, setInitMode } from './actions'; // Display actions
 import { addPendingAction, deletePendingAction } from './actions'; // Pending actions
 
 export function sendData(action: Action, id: number, after?: Action[]) {
@@ -44,7 +44,14 @@ export function getBinsFromServer(id: number) {
         dispatch(
             addPendingAction(id, action));
 
-        sendToServer(action)
+        var sendToServerP = sendToServer(action);
+        var timeoutP = new Promise(function(resolve, reject){
+            setTimeout(function(){
+                reject('Timeout');
+            }, 3000);
+        });
+
+        Promise.race([sendToServerP, timeoutP])
         .then((shortBins: any[]) => {
 
             console.log('Bins received from server');
@@ -63,6 +70,8 @@ export function getBinsFromServer(id: number) {
             
             dispatch(
                 setBins(Map<string, BinData>(binMap)));
+            dispatch(
+                setInitMode(false));
             dispatch(
                 deletePendingAction(id));
 

@@ -44,6 +44,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         var isEditingBins: boolean = display.get('isEditingBins');
         var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBins: boolean = display.get('isAddingBins');
+        var isInit: boolean = display.get('isInit');
         var selectedId: string = display.get('selectedBin');
 
         var orderedBins = bins.sort((a: BinData, b: BinData) => {
@@ -97,39 +98,40 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         });
 
         // Create the button to edit bins
-        var editBinsButton = React.createElement('div', {
-                id: 'edit-bins-button',
-                className: isEditingBins ? 'editing' : '',
-                onClick: () => {
-                    if(!isEditingBins) {
-                        dispatch(
-                            storeTempBins(bins));
-                        dispatch(
-                            setBinEditMode(true));
-                    }
-                    else {
-                        // after actions will be dispatched after async action
-                        var action = setBins(bins);
+        var editBinsButton = !isInit ?
+            React.createElement('div', {
+                    id: 'edit-bins-button',
+                    className: isEditingBins ? 'editing' : '',
+                    onClick: () => {
+                        if(!isEditingBins) {
+                            dispatch(
+                                storeTempBins(bins));
+                            dispatch(
+                                setBinEditMode(true));
+                        }
+                        else {
+                            // after actions will be dispatched after async action
+                            var action = setBins(bins);
 
-                        dispatch(
-                            setBinEditMode(false));
-                        dispatch(
-                            selectBin(undefined));
-                        dispatch(
-                            clearTempBins());
+                            dispatch(
+                                setBinEditMode(false));
+                            dispatch(
+                                selectBin(undefined));
+                            dispatch(
+                                clearTempBins());
 
-                        dispatch(
-                            sendData(action, nextPending));
-                        nextPending ++;
+                            dispatch(
+                                sendData(action, nextPending));
+                            nextPending ++;
+                        }
+                            
+                        if (isBinPanelOpen)
+                            dispatch(
+                                openBinPanel(false));
                     }
-                        
-                    if (isBinPanelOpen)
-                        dispatch(
-                            openBinPanel(false));
-                }
-            }, 
-            isEditingBins ? 'Valider': 'Gérer'
-        );
+                }, 
+                isEditingBins ? 'Valider': 'Gérer'
+            ): undefined;
 
         var cancelButton = isEditingBins ?
             React.createElement('div', {
