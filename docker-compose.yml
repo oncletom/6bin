@@ -10,6 +10,7 @@ server: &server
 
 tests:
   <<: *server
+  command: npm test
   links:
       - server
   ports:
